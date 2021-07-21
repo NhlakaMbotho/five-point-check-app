@@ -1,0 +1,13 @@
+{
+  "app": {
+    "dimensions": {
+      "compoments": {
+        "scheduler": {
+          "leftSideBar": 100,
+          "rightSideBar": 40
+        }
+      }
+    },
+    "scales": {}
+  }
+}
