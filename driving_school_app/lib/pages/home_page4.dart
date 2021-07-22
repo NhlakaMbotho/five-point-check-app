@@ -47,11 +47,13 @@ class MainContainer extends StatelessWidget {
 class MainSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    double rowHeight = 400;
+    var uiProvider = Provider.of<UIEventsProvider>(context, listen: true);
+
+    double rowHeight = 430;
     return Row(
       children: [
-        AvatarWrapper(rowHeight),
-        ScheduleWrapper(rowHeight),
+        AvatarWrapper(rowHeight, uiProvider.sharedController),
+        ScheduleWrapper(rowHeight, uiProvider.sharedController),
         RightScrolWrapper(),
       ],
     );

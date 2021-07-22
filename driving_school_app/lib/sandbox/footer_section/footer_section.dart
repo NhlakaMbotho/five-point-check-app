@@ -6,7 +6,6 @@ class FooterSection extends StatelessWidget with BaseAppWidget {
   Widget build(BuildContext context) {
     var dimensions = getDimensions(["dimensions", "compoments", "scheduler"]);
 
-    print(dimensions);
     return Container(
       height: 40,
       child: Container(

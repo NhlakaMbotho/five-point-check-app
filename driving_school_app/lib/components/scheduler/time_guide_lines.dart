@@ -30,8 +30,6 @@ class GuidePainter extends CustomPainter {
       var width = 10.0;
       var height = size.height;
       canvas.drawRect(Rect.fromLTWH(left, top, width, -height), paint);
-      print(
-          'drawing point: $guideWidth * i, 0 => $guideWidth * i, $size.height');
     }
   }
 

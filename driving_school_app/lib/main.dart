@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
         // Define the default brightness and colors.
         brightness: Brightness.dark,
         primaryColor: Color(0xFF0099B4),
-        accentColor: Colors.cyan[600],
+        accentColor: Color(0xFFF2F2F2),
 
         // Define the default font family.
         fontFamily: 'Helvetica Neue',

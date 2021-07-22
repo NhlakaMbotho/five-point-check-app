@@ -1,18 +1,38 @@
 import 'package:driving_school_app/models/instructor.dart';
 import 'package:driving_school_app/providers/instructor_provider.dart';
+import 'package:driving_school_app/providers/ui_events_provider.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AvatarWrapper extends StatelessWidget {
-  ScrollController controller = new ScrollController();
+  final ScrollController _localController = new ScrollController();
+  final ScrollController sharedController;
   final double height;
+  final ScrollPhysics physics = BouncingScrollPhysics();
 
-  AvatarWrapper(this.height);
+  AvatarWrapper(this.height, this.sharedController);
 
   @override
   Widget build(BuildContext context) {
+    print('avatar list rebuild!!! - ' + physics.minFlingDistance.toString());
     var instructors =
         Provider.of<InstructorProvider>(context, listen: false).getAll();
+
+    sharedController.addListener(() {
+      if (_localController.hasClients &&
+          _localController.offset != sharedController.offset) {
+        _localController.jumpTo(sharedController.offset);
+      }
+    });
+
+    _localController.addListener(() {
+      if (sharedController.hasClients &&
+          _localController.offset != sharedController.offset &&
+          !_localController.position.outOfRange) {
+        sharedController.jumpTo(_localController.offset);
+      }
+    });
 
     return Container(
       child: ListView.separated(
@@ -24,7 +44,8 @@ class AvatarWrapper extends StatelessWidget {
           );
         },
         itemCount: instructors.length,
-        physics: PageScrollPhysics(),
+        physics: physics,
+        controller: _localController,
       ),
       height: height,
       width: 100,
@@ -54,6 +75,7 @@ class InstructorWidget extends StatelessWidget {
             child: Center(
               child: Image(
                 image: this.insrtuctor.image.image,
+                height: 70,
               ),
             ),
           ),

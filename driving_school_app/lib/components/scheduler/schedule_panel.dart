@@ -18,7 +18,7 @@ class SwimlanePanel extends StatelessWidget {
         height: double.infinity,
         width: double.infinity,
         child: ListView.separated(
-            itemBuilder: (_, index) => Swimlane(this.swimlaneHeight),
+            itemBuilder: (_, index) => Swimlane(this.swimlaneHeight, index),
             separatorBuilder: (_, index) => Divider(
                   color: Color(0xFFF8F7F7),
                 ),
