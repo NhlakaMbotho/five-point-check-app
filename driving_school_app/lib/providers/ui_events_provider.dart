@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 class UIEventsProvider with ChangeNotifier {
   double _horizontalScrollPosition = 0;
   double _verticalScrollPosition = 0;
-  ScrollController sharedController = new ScrollController();
+  // TrackingScrollController sharedVerticalController =
+  // new TrackingScrollController();
+  // ScrollController sharedHorizontalController = new ScrollController();
+  // ScrollController sharedVerticalController = new ScrollController();
 
   updateScrollPosition(double offset) {
     _horizontalScrollPosition = offset;

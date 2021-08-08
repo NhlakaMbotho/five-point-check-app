@@ -1,38 +1,37 @@
 import 'package:driving_school_app/models/instructor.dart';
 import 'package:driving_school_app/providers/instructor_provider.dart';
 import 'package:driving_school_app/providers/ui_events_provider.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AvatarWrapper extends StatelessWidget {
   final ScrollController _localController = new ScrollController();
-  final ScrollController sharedController;
   final double height;
   final ScrollPhysics physics = BouncingScrollPhysics();
 
-  AvatarWrapper(this.height, this.sharedController);
+  AvatarWrapper(this.height);
 
   @override
   Widget build(BuildContext context) {
-    print('avatar list rebuild!!! - ' + physics.minFlingDistance.toString());
     var instructors =
         Provider.of<InstructorProvider>(context, listen: false).getAll();
+    var _position = Provider.of<UIEventsProvider>(context, listen: false)
+        .horizontalScrollPosition;
 
-    sharedController.addListener(() {
-      if (_localController.hasClients &&
-          _localController.offset != sharedController.offset) {
-        _localController.jumpTo(sharedController.offset);
-      }
-    });
+    // sharedVerticalController.addListener(() {
+    //   if (_localController.hasClients &&
+    //       _localController.offset != sharedVerticalController.offset) {
+    //     _localController.jumpTo(sharedVerticalController.offset);
+    //   }
+    // });
 
-    _localController.addListener(() {
-      if (sharedController.hasClients &&
-          _localController.offset != sharedController.offset &&
-          !_localController.position.outOfRange) {
-        sharedController.jumpTo(_localController.offset);
-      }
-    });
+    // _localController.addListener(() {
+    //   if (sharedVerticalController.hasClients &&
+    //       _localController.offset != sharedVerticalController.offset &&
+    //       !_localController.position.outOfRange) {
+    //     sharedVerticalController.jumpTo(_localController.offset);
+    //   }
+    // });
 
     return Container(
       child: ListView.separated(

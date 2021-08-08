@@ -50,12 +50,15 @@ class MainSection extends StatelessWidget {
     var uiProvider = Provider.of<UIEventsProvider>(context, listen: true);
 
     double rowHeight = 430;
-    return Row(
-      children: [
-        AvatarWrapper(rowHeight, uiProvider.sharedController),
-        ScheduleWrapper(rowHeight, uiProvider.sharedController),
-        RightScrolWrapper(),
-      ],
+    return Container(
+      padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
+      child: Row(
+        children: [
+          AvatarWrapper(rowHeight),
+          ScheduleWrapper(rowHeight),
+          RightScrollBar(rowHeight),
+        ],
+      ),
     );
   }
 }

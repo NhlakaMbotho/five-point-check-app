@@ -1,4 +1,3 @@
-import 'package:driving_school_app/components/scheduler/swimlane.dart';
 import 'package:driving_school_app/models/instructor.dart';
 import 'package:driving_school_app/providers/instructor_provider.dart';
 import 'package:driving_school_app/providers/ui_events_provider.dart';
@@ -7,22 +6,19 @@ import 'package:provider/provider.dart';
 
 class ScheduleWrapper extends StatelessWidget {
   final double height;
-  final ScrollController scrollController = new ScrollController();
-  final ScrollController sharedController;
+  final ScrollController _scrollController = new ScrollController();
+  ScheduleWrapper(this.height);
 
-  ScheduleWrapper(this.height, this.sharedController);
-
-  void _broadcastScrollPosition(
-    UIEventsProvider uiEvents,
-  ) {
-    if (scrollController.offset != uiEvents.horizontalScrollPosition) {
-      uiEvents.updateScrollPosition(scrollController.offset);
-    }
-  }
-
-  _updateScrollPosition(double val) {
-    scrollController.jumpTo(val);
-  }
+  // void _broadcastScrollPosition(
+  //   UIEventsProvider uiEvents,
+  // ) {
+  //   if (scrollController.offset != uiEvents.horizontalScrollPosition) {
+  //     uiEvents.updateScrollPosition(scrollController.offset);
+  //   }
+  // }
+  // _updateScrollPosition(double val) {
+  //   scrollController.jumpTo(val);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +31,22 @@ class ScheduleWrapper extends StatelessWidget {
     // scrollController.addListener(() => _broadcastScrollPosition(uiProvider));
 
     return Flexible(
-      child: SingleChildScrollView(
-        child: Container(
-          child: SwimlaneList(instructors, height, sharedController),
-          width: 3000,
+      child: NotificationListener<ScrollNotification>(
+        child: SingleChildScrollView(
+          child: Container(
+            child: SwimlaneList(instructors, height),
+            width: 3000,
+          ),
+          scrollDirection: Axis.horizontal,
+          controller: _scrollController,
         ),
-        scrollDirection: Axis.horizontal,
-        controller: scrollController,
+        onNotification: (ScrollNotification scrollInfo) {
+          print("swimlane horizontal offset: " +
+              _scrollController.offset.toString());
+          // HEY!! LISTEN!!
+          // this will set controller1's offset the same as controller2's
+          return false;
+        },
       ),
     );
   }
@@ -50,13 +55,15 @@ class ScheduleWrapper extends StatelessWidget {
 class SwimlaneList extends StatelessWidget {
   final List<Instructor> instructors;
   final double height;
-  final ScrollController sharedController;
   final ScrollPhysics physics = BouncingScrollPhysics();
+  final ScrollController _controller = ScrollController();
 
-  SwimlaneList(this.instructors, this.height, this.sharedController);
+  SwimlaneList(this.instructors, this.height);
 
   @override
   Widget build(BuildContext context) {
+    var uiProvider = Provider.of<UIEventsProvider>(context, listen: false);
+
     /**
      * Syncronize scroll
      */
@@ -69,28 +76,34 @@ class SwimlaneList extends StatelessWidget {
           colors: <Color>[
             Colors.transparent,
             Colors.transparent,
-            Colors.grey.withOpacity(.1),
-            Colors.grey.withOpacity(.1),
+            Colors.grey.withOpacity(.14),
+            Colors.grey.withOpacity(.07),
           ],
           stops: <double>[0, .5, .5, 0],
         ),
       ),
-      child: ListView.separated(
-        itemBuilder: (BuildContext ctx, int index) => Container(
-          height: 100,
-          child: Container(
-            color: Colors.transparent,
+      child: NotificationListener<ScrollNotification>(
+        child: ListView.separated(
+          itemBuilder: (BuildContext ctx, int index) => Container(
+            height: 100,
+            child: Container(
+              color: Colors.transparent,
+            ),
           ),
+          separatorBuilder: (BuildContext ctx, int index) {
+            return Container(
+              height: 10,
+              color: Theme.of(context).accentColor,
+            );
+          },
+          itemCount: instructors.length,
+          physics: physics,
+          controller: _controller,
         ),
-        separatorBuilder: (BuildContext ctx, int index) {
-          return Container(
-            height: 10,
-            color: Theme.of(context).accentColor,
-          );
+        onNotification: (ScrollNotification scrollInfo) {
+          uiProvider.updateScrollPosition(_controller.offset);
+          return true;
         },
-        itemCount: instructors.length,
-        physics: physics,
-        controller: sharedController,
       ),
       height: height,
       width: 3000,
