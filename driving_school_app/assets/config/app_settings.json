@@ -4,7 +4,8 @@
       "compoments": {
         "scheduler": {
           "leftSideBar": 100,
-          "rightSideBar": 40
+          "rightSideBar": 40,
+          "mainWidth": 3000
         }
       }
     },

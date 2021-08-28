@@ -11,27 +11,34 @@ class AvatarWrapper extends StatelessWidget {
 
   AvatarWrapper(this.height);
 
+  syncController(context) {
+    var vertcicallScroll = Provider.of<UIEventsProvider>(context, listen: true)
+        .sharedVerticalController;
+
+    vertcicallScroll.addListener(() {
+      if (_localController.hasClients &&
+          _localController.offset != vertcicallScroll.offset &&
+          !vertcicallScroll.position.outOfRange) {
+        _localController.jumpTo(vertcicallScroll.offset);
+      }
+    });
+
+    _localController.addListener(() {
+      if (vertcicallScroll.hasClients &&
+          vertcicallScroll.offset != _localController.offset &&
+          !_localController.position.outOfRange) {
+        vertcicallScroll.jumpTo(_localController.offset);
+      }
+    });
+  }
+
+  getInstructors(context) =>
+      Provider.of<InstructorProvider>(context, listen: false).getAll();
+
   @override
   Widget build(BuildContext context) {
-    var instructors =
-        Provider.of<InstructorProvider>(context, listen: false).getAll();
-    var _position = Provider.of<UIEventsProvider>(context, listen: false)
-        .horizontalScrollPosition;
-
-    // sharedVerticalController.addListener(() {
-    //   if (_localController.hasClients &&
-    //       _localController.offset != sharedVerticalController.offset) {
-    //     _localController.jumpTo(sharedVerticalController.offset);
-    //   }
-    // });
-
-    // _localController.addListener(() {
-    //   if (sharedVerticalController.hasClients &&
-    //       _localController.offset != sharedVerticalController.offset &&
-    //       !_localController.position.outOfRange) {
-    //     sharedVerticalController.jumpTo(_localController.offset);
-    //   }
-    // });
+    syncController(context);
+    var instructors = getInstructors(context);
 
     return Container(
       child: ListView.separated(

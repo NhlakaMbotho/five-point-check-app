@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HeaderSection extends StatelessWidget with BaseAppWidget {
-  ScrollController localScroller = new ScrollController();
+  // ScrollController localScroller = new ScrollController();
 
   // _syncScrollConrtoller(UIEventsProvider uiEvents) {
   //   uiEvents.addListener(
@@ -37,18 +37,18 @@ class HeaderSection extends StatelessWidget with BaseAppWidget {
 
     return Container(
       height: 40,
+      margin: EdgeInsets.only(
+        left: 100,
+        right: 22,
+      ),
       child: Container(
         child: SingleChildScrollView(
           child: Container(
             child: Placeholder(),
-            width: 3000,
+            width: dimensions["mainWidth"] as double,
           ),
           scrollDirection: Axis.horizontal,
-          controller: localScroller,
-        ),
-        padding: EdgeInsets.only(
-          left: dimensions["leftSideBar"] as double,
-          right: dimensions["rightSideBar"] as double,
+          controller: null,
         ),
       ),
     );

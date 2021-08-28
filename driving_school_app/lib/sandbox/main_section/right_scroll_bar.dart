@@ -15,24 +15,24 @@ class RightScrollBar extends StatelessWidget {
   }
 
   syncController(context) {
-    // var verticalScroll = Provider.of<UIEventsProvider>(context, listen: true)
-    //     .sharedVerticalController;
+    var verticalScroll = Provider.of<UIEventsProvider>(context, listen: true)
+        .sharedVerticalController;
 
-    // verticalScroll.addListener(() {
-    //   if (_localController.hasClients &&
-    //       _localController.offset != verticalScroll.offset &&
-    //       !verticalScroll.position.outOfRange) {
-    //     _localController.jumpTo(verticalScroll.offset);
-    //   }
-    // });
+    verticalScroll.addListener(() {
+      if (_localController.hasClients &&
+          _localController.offset != verticalScroll.offset &&
+          !verticalScroll.position.outOfRange) {
+        _localController.jumpTo(verticalScroll.offset);
+      }
+    });
 
-    // _localController.addListener(() {
-    //   if (verticalScroll.hasClients &&
-    //       verticalScroll.offset != _localController.offset &&
-    //       !_localController.position.outOfRange) {
-    //     verticalScroll.jumpTo(_localController.offset);
-    //   }
-    // });
+    _localController.addListener(() {
+      if (verticalScroll.hasClients &&
+          verticalScroll.offset != _localController.offset &&
+          !_localController.position.outOfRange) {
+        verticalScroll.jumpTo(_localController.offset);
+      }
+    });
   }
 
   @override

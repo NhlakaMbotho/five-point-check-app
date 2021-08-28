@@ -5,8 +5,8 @@ class UIEventsProvider with ChangeNotifier {
   double _verticalScrollPosition = 0;
   // TrackingScrollController sharedVerticalController =
   // new TrackingScrollController();
-  // ScrollController sharedHorizontalController = new ScrollController();
-  // ScrollController sharedVerticalController = new ScrollController();
+  ScrollController sharedHorizontalController = new ScrollController();
+  ScrollController sharedVerticalController = new ScrollController();
 
   updateScrollPosition(double offset) {
     _horizontalScrollPosition = offset;

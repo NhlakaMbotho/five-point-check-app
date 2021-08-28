@@ -22,7 +22,7 @@ class GuidePainter extends CustomPainter {
     paint.strokeWidth = 10.0;
     var guideWidth = (size.width / 7);
 
-    print('total width: ${size.width}');
+    // print('total width: ${size.width}');
 
     for (var i = 0; i < 7; i++) {
       var left = guideWidth * i;

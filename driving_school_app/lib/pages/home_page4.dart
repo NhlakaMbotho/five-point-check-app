@@ -20,7 +20,7 @@ class MainContainer extends StatelessWidget {
             FooterSection(),
           ],
         ),
-        padding: EdgeInsets.all(4.0),
+        padding: EdgeInsets.all(40),
         width: 200,
         height: 300,
         decoration: BoxDecoration(
@@ -51,7 +51,6 @@ class MainSection extends StatelessWidget {
 
     double rowHeight = 430;
     return Container(
-      padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
       child: Row(
         children: [
           AvatarWrapper(rowHeight),
