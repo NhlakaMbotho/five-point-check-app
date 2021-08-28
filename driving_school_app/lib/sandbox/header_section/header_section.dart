@@ -1,42 +1,76 @@
 import 'package:driving_school_app/core_widgets/base_app_widget.dart';
+import 'package:driving_school_app/models/instructor.dart';
+import 'package:driving_school_app/providers/instructor_provider.dart';
 import 'package:driving_school_app/providers/ui_events_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HeaderSection extends StatelessWidget with BaseAppWidget {
-  // ScrollController localScroller = new ScrollController();
+  final ScrollController _localController = ScrollController();
 
-  // _syncScrollConrtoller(UIEventsProvider uiEvents) {
-  //   uiEvents.addListener(
-  //     () => localScroller.jumpTo(uiEvents.horizontalScrollPosition),
-  //   );
+  syncController(context) {
+    var horizontalScroll = Provider.of<UIEventsProvider>(context, listen: true)
+        .sharedHorizontalController;
 
-  //   localScroller.addListener(
-  //     () => _broadcastScrollPosition(uiEvents),
-  //   );
-  // }
+    horizontalScroll.addListener(() {
+      if (_localController.hasClients &&
+          _localController.offset != horizontalScroll.offset &&
+          !horizontalScroll.position.outOfRange) {
+        _localController.jumpTo(horizontalScroll.offset);
+      }
+    });
 
-  // void _broadcastScrollPosition(
-  //   UIEventsProvider uiEvents,
-  // ) {
-  //   if (localScroller.offset != uiEvents.horizontalScrollPosition) {
-  //     uiEvents.updateScrollPosition(localScroller.offset);
-  //     print(
-  //         "HeaderSection current offset: ${localScroller.offset}, ui offset: ${uiEvents.horizontalScrollPosition}");
-  //   } else {
-  //     print('ignored broadcast event');
-  //   }
-  // }
+    _localController.addListener(() {
+      if (horizontalScroll.hasClients &&
+          horizontalScroll.offset != _localController.offset &&
+          !_localController.position.outOfRange) {
+        horizontalScroll.jumpTo(_localController.offset);
+      }
+    });
+  }
+
+  List<Instructor> getInstructors(context) =>
+      Provider.of<InstructorProvider>(context, listen: false).getAll();
+
+  List<Widget> getTimestamps(context) {
+    var hours = getConfigValue(["timestamps"]) as int;
+    var cardWidth =
+        getConfigValue(["dimensions", "compoments", "scheduler", "cardWidth"])
+            as double;
+
+    List<Widget> list = [];
+
+    for (var i = 0; i < hours; i++) {
+      list.add(
+        Container(
+          color: Colors.transparent,
+          width: cardWidth,
+          child: Row(
+            children: [
+              Container(
+                width: 60,
+                decoration: BoxDecoration(
+                  borderRadius:
+                      BorderRadius.only(topRight: Radius.circular(10)),
+                  color: Color(0xFF00B7CF),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return list;
+  }
 
   @override
   Widget build(BuildContext context) {
-    var dimensions = getDimensions(["dimensions", "compoments", "scheduler"]);
-    var uiProvider = Provider.of<UIEventsProvider>(context, listen: false);
-
-    // _syncScrollConrtoller(uiProvider);
+    var dimensions = getConfigValue(["dimensions", "compoments", "scheduler"]);
+    syncController(context);
 
     return Container(
-      height: 40,
+      height: 20,
       margin: EdgeInsets.only(
         left: 100,
         right: 22,
@@ -44,11 +78,13 @@ class HeaderSection extends StatelessWidget with BaseAppWidget {
       child: Container(
         child: SingleChildScrollView(
           child: Container(
-            child: Placeholder(),
+            child: Row(
+              children: getTimestamps(context),
+            ),
             width: dimensions["mainWidth"] as double,
           ),
           scrollDirection: Axis.horizontal,
-          controller: null,
+          controller: _localController,
         ),
       ),
     );

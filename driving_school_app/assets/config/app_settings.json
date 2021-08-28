@@ -5,10 +5,13 @@
         "scheduler": {
           "leftSideBar": 100,
           "rightSideBar": 40,
-          "mainWidth": 3000
+          "mainWidth": 4320,
+          "swimlane": 100,
+          "cardWidth": 180
         }
       }
     },
+    "timestamps": 24,
     "scales": {}
   }
 }
