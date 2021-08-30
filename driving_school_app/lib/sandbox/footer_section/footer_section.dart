@@ -51,7 +51,7 @@ class FooterSection extends StatelessWidget with BaseAppWidget {
           child: Container(
             // color: Colors.lightBlue,
             height: _height,
-            width: dimensions["mainWidth"] as double,
+            width: getWidth(),
           ),
           scrollDirection: Axis.horizontal,
           controller: _localController,

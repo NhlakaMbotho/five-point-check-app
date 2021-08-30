@@ -12,6 +12,10 @@
       }
     },
     "timestamps": 24,
+    "tradingHours": {
+      "start": 7,
+      "end": 16
+    },
     "scales": {}
   }
 }

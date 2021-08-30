@@ -36,6 +36,7 @@ class ScheduleWrapper extends StatelessWidget with BaseAppWidget {
         ),
         scrollDirection: Axis.horizontal,
         controller: uiProvider.sharedHorizontalController,
+        physics: BouncingScrollPhysics(),
       ),
     );
   }
@@ -77,15 +78,14 @@ class SwimlaneList extends StatelessWidget with BaseAppWidget {
         separatorBuilder: (BuildContext ctx, int index) {
           return Container(
             height: 10,
-            color: Colors.white.withOpacity(0.5),
+            color: Color(0xFFF2F2F2),
           );
         },
         itemCount: instructors.length,
-        physics: physics,
         controller: uiProvider.sharedVerticalController,
       ),
       height: height,
-      width: dimensions["mainWidth"] as double,
+      width: getWidth(),
     );
   }
 }
@@ -104,8 +104,11 @@ class GuideLines extends StatelessWidget with BaseAppWidget {
 
     List<Widget> list = [];
     var height = instructors.length * 100.0;
+    var tradingHours = {"start": 7, "end": 16};
 
-    for (var i = 0; i < hours; i++) {
+    for (var i = tradingHours["start"];
+        i < hours && i <= tradingHours["end"];
+        i++) {
       list.add(
         Container(
           color: Colors.transparent,

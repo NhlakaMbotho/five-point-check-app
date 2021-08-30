@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:driving_school_app/core_widgets/base_app_widget.dart';
 import 'package:driving_school_app/models/instructor.dart';
 import 'package:driving_school_app/providers/instructor_provider.dart';
@@ -38,9 +40,13 @@ class HeaderSection extends StatelessWidget with BaseAppWidget {
         getConfigValue(["dimensions", "compoments", "scheduler", "cardWidth"])
             as double;
 
+    const HOUR_OFFSET = 7;
     List<Widget> list = [];
-
-    for (var i = 0; i < hours; i++) {
+    var tradingHours = {"start": 7, "end": 16};
+    for (var i = tradingHours["start"];
+        i < hours && i <= tradingHours["end"];
+        i++) {
+      String hourText = (i < 10 ? '0' : '').toString() + i.toString() + ':00';
       list.add(
         Container(
           color: Colors.transparent,
@@ -49,10 +55,21 @@ class HeaderSection extends StatelessWidget with BaseAppWidget {
             children: [
               Container(
                 width: 60,
+                height: 20,
                 decoration: BoxDecoration(
                   borderRadius:
                       BorderRadius.only(topRight: Radius.circular(10)),
                   color: Color(0xFF00B7CF),
+                ),
+                child: Center(
+                  child: Text(
+                    hourText,
+                    style: TextStyle(
+                      fontSize: 10,
+                      decoration: TextDecoration.none,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -81,7 +98,7 @@ class HeaderSection extends StatelessWidget with BaseAppWidget {
             child: Row(
               children: getTimestamps(context),
             ),
-            width: dimensions["mainWidth"] as double,
+            width: getWidth(),
           ),
           scrollDirection: Axis.horizontal,
           controller: _localController,

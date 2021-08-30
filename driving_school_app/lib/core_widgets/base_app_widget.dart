@@ -1,9 +1,8 @@
 import 'package:global_configuration/global_configuration.dart';
 
 class BaseAppWidget {
-  // ignore: non_constant_identifier_names
   dynamic getConfigValue(List<String> depth) {
-    var root = GlobalConfiguration().get("app");
+    dynamic root = GlobalConfiguration().get("app");
     for (var property in depth) {
       if (root[property] != null) {
         root = root[property];
@@ -12,5 +11,14 @@ class BaseAppWidget {
       }
     }
     return root;
+  }
+
+  double getWidth() {
+    var cardWidth =
+        getConfigValue(["dimensions", "compoments", "scheduler", "cardWidth"]);
+    var start = getConfigValue(["tradingHours", "start"]);
+    var end = getConfigValue(["tradingHours", "end"]);
+
+    return cardWidth * (end - start);
   }
 }
