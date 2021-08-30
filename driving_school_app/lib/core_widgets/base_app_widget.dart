@@ -19,6 +19,6 @@ class BaseAppWidget {
     var start = getConfigValue(["tradingHours", "start"]);
     var end = getConfigValue(["tradingHours", "end"]);
 
-    return cardWidth * (end - start);
+    return cardWidth * ((end - start) + 1);
   }
 }

@@ -29,7 +29,7 @@ class FooterSection extends StatelessWidget with BaseAppWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _height = 12.0;
+    var _height = 9.0;
     var dimensions = getConfigValue(["dimensions", "compoments", "scheduler"]);
 
     syncController(context);

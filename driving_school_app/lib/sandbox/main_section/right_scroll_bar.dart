@@ -42,22 +42,20 @@ class RightScrollBar extends StatelessWidget {
     syncController(context);
 
     return Container(
-      width: 12,
-      margin: EdgeInsets.only(left: 10),
+      width: 20,
       height: itemHeight,
-      color: Colors.transparent,
       child: RawScrollbar(
         controller: _localController,
         isAlwaysShown: true,
-        thickness: 12,
+        thickness: 9,
         radius: Radius.circular(5),
-        thumbColor: Colors.grey.withOpacity(.1),
+        thumbColor: Color(0xFFe6e6e6),
         child: SingleChildScrollView(
           child: Container(
             height: _height,
+            width: 9,
           ),
           scrollDirection: Axis.vertical,
-          physics: BouncingScrollPhysics(),
           controller: _localController,
         ),
       ),

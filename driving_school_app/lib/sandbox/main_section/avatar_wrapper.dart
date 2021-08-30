@@ -50,7 +50,6 @@ class AvatarWrapper extends StatelessWidget {
           );
         },
         itemCount: instructors.length,
-        physics: physics,
         controller: _localController,
       ),
       height: height,
