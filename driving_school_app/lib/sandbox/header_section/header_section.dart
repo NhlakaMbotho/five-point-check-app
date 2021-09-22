@@ -1,13 +1,13 @@
 import 'dart:ui';
 
-import 'package:driving_school_app/core_widgets/base_app_widget.dart';
 import 'package:driving_school_app/models/instructor.dart';
 import 'package:driving_school_app/providers/instructor_provider.dart';
 import 'package:driving_school_app/providers/ui_events_provider.dart';
+import 'package:driving_school_app/utilities/config_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HeaderSection extends StatelessWidget with BaseAppWidget {
+class HeaderSection extends StatelessWidget {
   final ScrollController _localController = ScrollController();
 
   syncController(context) {

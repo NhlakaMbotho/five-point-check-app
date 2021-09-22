@@ -1,8 +1,9 @@
 import 'package:driving_school_app/core_widgets/base_app_widget.dart';
 import 'package:driving_school_app/models/instructor.dart';
+import 'package:driving_school_app/utilities/config_helper.dart';
 import 'package:flutter/material.dart';
 
-class GuideLines extends StatelessWidget with BaseAppWidget {
+class GuideLines extends StatelessWidget {
   final List<Instructor> instructors;
   final double height;
 

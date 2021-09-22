@@ -1,4 +1,3 @@
-import 'package:driving_school_app/core_widgets/base_app_widget.dart';
 import 'package:driving_school_app/models/instructor.dart';
 import 'package:driving_school_app/providers/instructor_provider.dart';
 import 'package:driving_school_app/providers/ui_events_provider.dart';
@@ -16,7 +15,7 @@ class MyBehavior extends ScrollBehavior {
   }
 }
 
-class ScheduleWrapper extends StatelessWidget with BaseAppWidget {
+class ScheduleWrapper extends StatelessWidget {
   final double height;
   ScheduleWrapper(this.height);
 

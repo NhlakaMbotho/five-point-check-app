@@ -1,3 +1,4 @@
+import 'package:driving_school_app/constants/colors.dart';
 import 'package:driving_school_app/pages/example_page.dart';
 import 'package:driving_school_app/pages/home_page4.dart';
 import 'package:driving_school_app/pages/login_page.dart';
@@ -32,8 +33,8 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         // Define the default brightness and colors.
         brightness: Brightness.dark,
-        primaryColor: Color(0xFF0099B4),
-        accentColor: Color(0xFFF2F2F2),
+        primaryColor: AppColors.Primary,
+        accentColor: AppColors.GreyLight,
 
         // Define the default font family.
         fontFamily: 'Helvetica Neue',
@@ -46,7 +47,7 @@ class _MyAppState extends State<MyApp> {
           bodyText2: TextStyle(
             fontSize: 9.0,
             decoration: TextDecoration.none,
-            color: Color(0xFF0099B4),
+            color: AppColors.Primary,
           ),
         ),
       ),

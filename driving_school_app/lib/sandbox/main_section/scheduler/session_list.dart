@@ -1,9 +1,9 @@
-import 'package:driving_school_app/core_widgets/base_app_widget.dart';
 import 'package:driving_school_app/models/instructor.dart';
 import 'package:driving_school_app/models/lesson.dart';
+import 'package:driving_school_app/utilities/config_helper.dart';
 import 'package:flutter/material.dart';
 
-class SessionList extends StatelessWidget with BaseAppWidget {
+class SessionList extends StatelessWidget {
   double cardWidth;
   dynamic tradingHours;
   Instructor instructor;
@@ -41,6 +41,7 @@ class SessionList extends StatelessWidget with BaseAppWidget {
         ));
         width = 0;
       }
+
       // Lesson Start
       if (atBeginingOfLesson) {
         if (width > 0) {

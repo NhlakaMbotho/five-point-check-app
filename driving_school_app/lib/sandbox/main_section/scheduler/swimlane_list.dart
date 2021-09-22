@@ -1,11 +1,11 @@
-import 'package:driving_school_app/core_widgets/base_app_widget.dart';
 import 'package:driving_school_app/models/instructor.dart';
 import 'package:driving_school_app/providers/ui_events_provider.dart';
 import 'package:driving_school_app/sandbox/main_section/scheduler/session_list.dart';
+import 'package:driving_school_app/utilities/config_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SwimlaneList extends StatelessWidget with BaseAppWidget {
+class SwimlaneList extends StatelessWidget {
   final List<Instructor> instructors;
   final double height;
   final ScrollPhysics physics = BouncingScrollPhysics();
