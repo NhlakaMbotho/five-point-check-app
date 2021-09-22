@@ -1,6 +1,7 @@
 import 'package:driving_school_app/core_widgets/base_app_widget.dart';
 import 'package:driving_school_app/models/instructor.dart';
 import 'package:driving_school_app/providers/ui_events_provider.dart';
+import 'package:driving_school_app/sandbox/main_section/scheduler/session_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,6 +35,7 @@ class SwimlaneList extends StatelessWidget with BaseAppWidget {
                 stops: <double>[0, .5, .5, 0],
               ),
             ),
+            child: SessionList(instructors[index], height),
           ),
         ),
         separatorBuilder: (BuildContext ctx, int index) {

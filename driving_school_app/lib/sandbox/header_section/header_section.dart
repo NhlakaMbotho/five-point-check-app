@@ -83,7 +83,6 @@ class HeaderSection extends StatelessWidget with BaseAppWidget {
 
   @override
   Widget build(BuildContext context) {
-    var dimensions = getConfigValue(["dimensions", "compoments", "scheduler"]);
     syncController(context);
 
     return Container(

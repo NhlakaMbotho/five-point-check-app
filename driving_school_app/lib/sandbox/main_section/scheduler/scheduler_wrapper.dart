@@ -32,7 +32,7 @@ class ScheduleWrapper extends StatelessWidget with BaseAppWidget {
       /**
        * Vertical Scroll View
        */
-      child: NotificationListener<ScrollEndNotification>(
+      child: NotificationListener<OverscrollIndicatorNotification>(
         child: SingleChildScrollView(
           child: Stack(
             children: [
@@ -49,8 +49,8 @@ class ScheduleWrapper extends StatelessWidget with BaseAppWidget {
           scrollDirection: Axis.horizontal,
           controller: uiProvider.sharedHorizontalController,
         ),
-        onNotification: (ScrollNotification notification) {
-          print(notification);
+        onNotification: (notification) {
+          notification.disallowGlow();
           return false;
         },
       ),
