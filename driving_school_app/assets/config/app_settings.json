@@ -16,6 +16,9 @@
       "start": 7,
       "end": 16
     },
-    "scales": {}
+    "scales": {},
+    "http": {
+      "root": "http://localhost:3000"
+    }
   }
 }
