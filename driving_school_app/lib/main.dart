@@ -1,9 +1,9 @@
 import 'package:driving_school_app/constants/colors.dart';
-import 'package:driving_school_app/pages/example_page.dart';
 import 'package:driving_school_app/pages/home_page4.dart';
 import 'package:driving_school_app/pages/login_page.dart';
 import 'package:driving_school_app/providers/authentication_provider.dart';
 import 'package:driving_school_app/providers/ui_events_provider.dart';
+import 'package:driving_school_app/providers/user.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:provider/provider.dart';
@@ -11,12 +11,12 @@ import 'package:provider/provider.dart';
 import 'providers/instructor_provider.dart';
 
 void main() async {
-  try {
-    WidgetsFlutterBinding.ensureInitialized();
-    await GlobalConfiguration().loadFromPath("config/app_settings.json");
-  } catch (error) {
-    print('Error: $error');
-  }
+  // try {
+  //   WidgetsFlutterBinding.ensureInitialized();
+  //   await GlobalConfiguration().loadFromPath("config/app_settings.json");
+  // } catch (error) {
+  //   // print('Error: $error');
+  // }
   runApp(MyApp());
 }
 
@@ -34,15 +34,17 @@ class MyApp extends StatelessWidget {
           ListenableProvider(
             create: (_) => AuthProvider(),
           ),
+          ListenableProvider(
+            create: (_) => UserProvider(),
+          ),
         ],
         child: Consumer<AuthProvider>(builder: (context, authentication, _) {
           return MaterialApp(
-            initialRoute: authentication.isAuthenticated ? '/' : '/login',
-            routes: {
-              '/': (context) => MainContainer(),
-              '/login': (context) => LoginPage(),
-              ExamplePage.routeName: (context) => ExamplePage(),
-            },
+            // routes: {
+            //   '/': (context) => MainContainer(),
+            //   '/login': (context) => LoginPage(),
+            //   ExamplePage.routeName: (context) => ExamplePage(),
+            // },
             theme: ThemeData(
               // Define the default brightness and colors.
               brightness: Brightness.light,
@@ -65,6 +67,8 @@ class MyApp extends StatelessWidget {
                 ),
               ),
             ),
+            home:
+                !authentication.isAuthenticated ? MainContainer() : LoginPage(),
           );
         }));
   }

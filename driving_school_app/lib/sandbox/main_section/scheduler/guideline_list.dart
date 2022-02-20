@@ -10,7 +10,7 @@ class GuideLines extends StatelessWidget {
   GuideLines(this.instructors, this.height);
 
   List<Widget> getGuidelinesWidget(context) {
-    var hours = getConfigValue(["timestamps"]) as int;
+    var hours = getConfigValue(["timestamps"]);
     var cardWidth =
         getConfigValue(["dimensions", "compoments", "scheduler", "cardWidth"])
             as double;

@@ -5,7 +5,7 @@
         "scheduler": {
           "leftSideBar": 100,
           "rightSideBar": 40,
-          "mainWidth": 4320,
+          "mainWidth": 400,
           "swimlane": 100,
           "cardWidth": 140
         }

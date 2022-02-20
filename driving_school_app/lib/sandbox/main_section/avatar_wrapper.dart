@@ -5,55 +5,33 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AvatarWrapper extends StatelessWidget {
-  final ScrollController _localController = new ScrollController();
+  final ScrollController _localController;
   final double height;
-  final ScrollPhysics physics = BouncingScrollPhysics();
+  final double width;
 
-  AvatarWrapper(this.height);
-
-  syncController(context) {
-    var vertcicallScroll = Provider.of<UIEventsProvider>(context, listen: true)
-        .sharedVerticalController;
-
-    vertcicallScroll.addListener(() {
-      if (_localController.hasClients &&
-          _localController.offset != vertcicallScroll.offset &&
-          !vertcicallScroll.position.outOfRange) {
-        _localController.jumpTo(vertcicallScroll.offset);
-      }
-    });
-
-    _localController.addListener(() {
-      if (vertcicallScroll.hasClients &&
-          vertcicallScroll.offset != _localController.offset &&
-          !_localController.position.outOfRange) {
-        vertcicallScroll.jumpTo(_localController.offset);
-      }
-    });
-  }
+  AvatarWrapper(
+    this.height,
+    this.width,
+    this._localController,
+  );
 
   getInstructors(context) =>
       Provider.of<InstructorProvider>(context, listen: false).getAll();
 
   @override
   Widget build(BuildContext context) {
-    syncController(context);
     var instructors = getInstructors(context);
 
-    return Container(
-      child: ListView.separated(
-        itemBuilder: (BuildContext ctx, int index) =>
-            InstructorWidget(instructors[index]),
-        separatorBuilder: (BuildContext ctx, int index) {
-          return Container(
-            height: 10,
-          );
-        },
-        itemCount: instructors.length,
-        controller: _localController,
-      ),
-      height: height,
-      width: 100,
+    return ListView.separated(
+      itemBuilder: (BuildContext ctx, int index) =>
+          InstructorWidget(instructors[index]),
+      separatorBuilder: (BuildContext ctx, int index) {
+        return Container(
+          height: 10,
+        );
+      },
+      itemCount: instructors.length,
+      controller: _localController,
     );
   }
 }

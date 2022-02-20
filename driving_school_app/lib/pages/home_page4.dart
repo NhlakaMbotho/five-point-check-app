@@ -1,9 +1,9 @@
+import 'package:driving_school_app/config/config.dev.dart';
+import 'package:driving_school_app/models/scheduler_dimensions.dart';
+import 'package:driving_school_app/pages/top_component.dart';
 import 'package:driving_school_app/providers/instructor_provider.dart';
-import 'package:driving_school_app/sandbox/footer_section/footer_section.dart';
-import 'package:driving_school_app/sandbox/header_section/header_section.dart';
 import 'package:driving_school_app/sandbox/main_section/avatar_wrapper.dart';
-import 'package:driving_school_app/sandbox/main_section/right_scroll_bar.dart';
-import 'package:driving_school_app/sandbox/main_section/scheduler/scheduler_wrapper.dart';
+import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 import '../providers/ui_events_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,19 +13,7 @@ class MainContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       child: Container(
-        child: Column(
-          children: [
-            HeaderSection(),
-            MainSection(),
-            FooterSection(),
-          ],
-        ),
-        padding: EdgeInsets.all(40),
-        width: 200,
-        height: 300,
-        decoration: BoxDecoration(
-          color: Color(0xFFF2F2F2),
-        ),
+        child: Center(child: MainSchedulerPanel()),
       ),
       providers: [
         ListenableProvider(
@@ -39,18 +27,130 @@ class MainContainer extends StatelessWidget {
   }
 }
 
-class MainSection extends StatelessWidget {
+class MainSchedulerPanel extends StatefulWidget {
+  const MainSchedulerPanel();
+
+  @override
+  _MainSchedulerPanelState createState() => _MainSchedulerPanelState();
+}
+
+class _MainSchedulerPanelState extends State<MainSchedulerPanel> {
+  LinkedScrollControllerGroup _horizontalControllers;
+  LinkedScrollControllerGroup _verticalControllers;
+  ScrollController _topBarHorizontalController;
+  ScrollController _middleSwimlaneHorizontalController;
+  ScrollController _bottomBarHorizontalController;
+  ScrollController _leftBarVerticalController;
+  ScrollController _middleSwimlaneVerticalController;
+  ScrollController _rightBarVerticalController;
+
+  @override
+  void initState() {
+    super.initState();
+    _horizontalControllers = LinkedScrollControllerGroup();
+    _verticalControllers = LinkedScrollControllerGroup();
+    /**
+     * Horizontal Controllers
+     */
+    _topBarHorizontalController = _horizontalControllers.addAndGet();
+    _middleSwimlaneHorizontalController = _horizontalControllers.addAndGet();
+    _bottomBarHorizontalController = _horizontalControllers.addAndGet();
+    /**
+     * Vertical Controllers
+     */
+    _leftBarVerticalController = _verticalControllers.addAndGet();
+    _middleSwimlaneVerticalController = _verticalControllers.addAndGet();
+    _rightBarVerticalController = _verticalControllers.addAndGet();
+  }
+
+  @override
+  void dispose() {
+    _topBarHorizontalController.dispose();
+    _middleSwimlaneHorizontalController.dispose();
+    _bottomBarHorizontalController.dispose();
+    _leftBarVerticalController.dispose();
+    _middleSwimlaneVerticalController.dispose();
+    _rightBarVerticalController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    var uiProvider = Provider.of<UIEventsProvider>(context, listen: true);
+    var schedulerDimensions = SchedulerDimensions(context);
+    print(
+        'height: ${schedulerDimensions.middlePanelHeight} outer height: ${schedulerDimensions.outerHeight}');
 
-    double rowHeight = 430;
     return Container(
-      child: Row(
+      width: schedulerDimensions.outerWidth,
+      height: schedulerDimensions.outerHeight,
+      child: Column(
         children: [
-          AvatarWrapper(rowHeight),
-          ScheduleWrapper(rowHeight),
-          RightScrollBar(rowHeight),
+          Container(
+            child: TopComponent(_topBarHorizontalController),
+            height: schedulerDimensions.topPaneHeight,
+            margin: EdgeInsets.only(
+              left: schedulerDimensions.leftPanelWidth,
+              right: schedulerDimensions.rightPanelWidth,
+            ),
+          ),
+          SizedBox(
+            child: Row(
+              children: [
+                SizedBox(
+                  child: AvatarWrapper(
+                    schedulerDimensions.middlePanelHeight,
+                    schedulerDimensions.leftPanelWidth,
+                    _leftBarVerticalController,
+                  ),
+                  width: schedulerDimensions.leftPanelWidth,
+                  height: schedulerDimensions.middlePanelHeight,
+                ),
+                SizedBox(
+                  width: schedulerDimensions.middlePanelWidth,
+                  child: SingleChildScrollView(
+                    child: SingleChildScrollView(
+                      child: Placeholder(
+                        color: Colors.orange,
+                        fallbackWidth: schedulerDimensions.swimLaneWidth,
+                        fallbackHeight: 1000,
+                      ),
+                      controller: _middleSwimlaneVerticalController,
+                    ),
+                    scrollDirection: Axis.horizontal,
+                    controller: _middleSwimlaneHorizontalController,
+                  ),
+                  height: schedulerDimensions.middlePanelHeight,
+                ),
+                SingleChildScrollView(
+                  child: SizedBox(
+                    child: Placeholder(color: Colors.blue),
+                    height: 1000,
+                    width: schedulerDimensions.rightPanelWidth,
+                  ),
+                  controller: _rightBarVerticalController,
+                ),
+              ],
+            ),
+            height: schedulerDimensions.middlePanelHeight,
+          ),
+          Container(
+            child: SizedBox(
+              child: SingleChildScrollView(
+                child: Placeholder(
+                  fallbackWidth: schedulerDimensions.swimLaneWidth,
+                  color: Colors.pink,
+                ),
+                scrollDirection: Axis.horizontal,
+                controller: _bottomBarHorizontalController,
+              ),
+              height: schedulerDimensions.bottomPanelHeight,
+              width: schedulerDimensions.middlePanelWidth,
+            ),
+            margin: EdgeInsets.only(
+              left: schedulerDimensions.leftPanelWidth,
+              right: schedulerDimensions.rightPanelWidth,
+            ),
+          )
         ],
       ),
     );

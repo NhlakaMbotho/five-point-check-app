@@ -35,7 +35,7 @@ class HeaderSection extends StatelessWidget {
       Provider.of<InstructorProvider>(context, listen: false).getAll();
 
   List<Widget> getTimestamps(context) {
-    var hours = getConfigValue(["timestamps"]) as int;
+    var hours = getConfigValue(["timestamps"]);
     var cardWidth =
         getConfigValue(["dimensions", "compoments", "scheduler", "cardWidth"])
             as double;
