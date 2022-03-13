@@ -1,4 +1,6 @@
+import 'package:driving_school_app/constants/colors.dart';
 import 'package:driving_school_app/models/instructor.dart';
+import 'package:driving_school_app/models/scheduler_dimensions.dart';
 import 'package:driving_school_app/providers/instructor_provider.dart';
 import 'package:driving_school_app/providers/ui_events_provider.dart';
 import 'package:flutter/material.dart';
@@ -22,16 +24,17 @@ class AvatarWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     var instructors = getInstructors(context);
 
-    return ListView.separated(
-      itemBuilder: (BuildContext ctx, int index) =>
-          InstructorWidget(instructors[index]),
-      separatorBuilder: (BuildContext ctx, int index) {
-        return Container(
-          height: 10,
-        );
-      },
-      itemCount: instructors.length,
-      controller: _localController,
+    return ScrollConfiguration(
+      behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+      child: ListView.separated(
+        itemBuilder: (_, int index) => InstructorWidget(instructors[index]),
+        separatorBuilder: (_, int index) => Divider(
+          height: 16,
+          color: AppColors.GreyLight,
+        ),
+        itemCount: instructors.length,
+        controller: _localController,
+      ),
     );
   }
 }
@@ -41,9 +44,12 @@ class InstructorWidget extends StatelessWidget {
   InstructorWidget(this.insrtuctor);
   @override
   Widget build(BuildContext context) {
+    SchedulerDimensions dimensions = SchedulerDimensions(context);
+
     return Container(
-      height: 100,
-      width: 100,
+      height: dimensions.cardHeight,
+      width: dimensions.leftPanelWidth,
+      margin: EdgeInsets.only(left: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(16),
@@ -54,7 +60,7 @@ class InstructorWidget extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: 80,
+            height: dimensions.cardHeight * 0.8,
             child: Center(
               child: Image(
                 image: this.insrtuctor.image.image,
@@ -63,7 +69,7 @@ class InstructorWidget extends StatelessWidget {
             ),
           ),
           Container(
-            height: 20,
+            height: dimensions.cardHeight * 0.2,
             child: Center(
               child: Text(
                 this.insrtuctor.name,

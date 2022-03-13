@@ -8,39 +8,8 @@ class RightScrollBar extends StatelessWidget {
   final double itemHeight;
   RightScrollBar(this.itemHeight);
 
-  calcHeight(context) {
-    var length =
-        Provider.of<InstructorProvider>(context, listen: false).getAll().length;
-    return (length * 100) + (10 * length - 1);
-  }
-
-  syncController(context) {
-    var verticalScroll = Provider.of<UIEventsProvider>(context, listen: true)
-        .sharedVerticalController;
-
-    verticalScroll.addListener(() {
-      if (_localController.hasClients &&
-          _localController.offset != verticalScroll.offset &&
-          !verticalScroll.position.outOfRange) {
-        _localController.jumpTo(verticalScroll.offset);
-      }
-    });
-
-    _localController.addListener(() {
-      if (verticalScroll.hasClients &&
-          verticalScroll.offset != _localController.offset &&
-          !_localController.position.outOfRange) {
-        verticalScroll.jumpTo(_localController.offset);
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    var _height = calcHeight(context);
-
-    syncController(context);
-
     return Container(
       width: 20,
       height: itemHeight,
@@ -52,7 +21,7 @@ class RightScrollBar extends StatelessWidget {
         thumbColor: Color(0xFFe6e6e6),
         child: SingleChildScrollView(
           child: Container(
-            height: _height,
+            // height: _height,
             width: 9,
           ),
           scrollDirection: Axis.vertical,

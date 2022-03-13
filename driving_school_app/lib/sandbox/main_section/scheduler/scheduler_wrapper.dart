@@ -7,17 +7,10 @@ import 'package:provider/provider.dart';
 
 import 'guideline_list.dart';
 
-class MyBehavior extends ScrollBehavior {
-  @override
-  Widget buildViewportChrome(
-      BuildContext context, Widget child, AxisDirection axisDirection) {
-    return child;
-  }
-}
-
 class ScheduleWrapper extends StatelessWidget {
   final double height;
-  ScheduleWrapper(this.height);
+  final ScrollController _controller;
+  ScheduleWrapper(this.height, this._controller);
 
   List<Instructor> getInstructors(context) =>
       Provider.of<InstructorProvider>(context, listen: false).getAll();
@@ -31,27 +24,21 @@ class ScheduleWrapper extends StatelessWidget {
       /**
        * Vertical Scroll View
        */
-      child: NotificationListener<OverscrollIndicatorNotification>(
-        child: SingleChildScrollView(
-          child: Stack(
-            children: [
-              /**
+      child: SingleChildScrollView(
+        child: Stack(
+          children: [
+            /**
                * Timestamp Guidelines
                */
-              GuideLines(instructors, height),
-              /**
+            // GuideLines(t),
+            /**
                * Horizontal Scroll View
                */
-              SwimlaneList(instructors, height),
-            ],
-          ),
-          scrollDirection: Axis.horizontal,
-          controller: uiProvider.sharedHorizontalController,
+            // SwimlaneList(instructors, height),
+          ],
         ),
-        onNotification: (notification) {
-          notification.disallowGlow();
-          return false;
-        },
+        scrollDirection: Axis.horizontal,
+        controller: _controller,
       ),
     );
   }

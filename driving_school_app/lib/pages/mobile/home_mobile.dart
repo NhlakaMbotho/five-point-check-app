@@ -47,9 +47,9 @@ class MainSection extends StatelessWidget {
     return Container(
       child: Row(
         children: [
-          AvatarWrapper(rowHeight),
-          ScheduleWrapper(rowHeight),
-          RightScrollBar(rowHeight),
+          // AvatarWrapper(rowHeight),
+          // ScheduleWrapper(rowHeight),
+          // RightScrollBar(rowHeight),
         ],
       ),
     );

@@ -1,8 +1,12 @@
+import 'dart:html';
 import 'package:driving_school_app/config/config.dev.dart';
+import 'package:driving_school_app/constants/colors.dart';
+import 'package:driving_school_app/models/instructor.dart';
 import 'package:driving_school_app/models/scheduler_dimensions.dart';
 import 'package:driving_school_app/pages/top_component.dart';
 import 'package:driving_school_app/providers/instructor_provider.dart';
 import 'package:driving_school_app/sandbox/main_section/avatar_wrapper.dart';
+import 'package:driving_school_app/sandbox/main_section/scheduler/guideline_list.dart';
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 import '../providers/ui_events_provider.dart';
 import 'package:flutter/material.dart';
@@ -11,14 +15,13 @@ import 'package:provider/provider.dart';
 class MainContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var instructors =
+        Provider.of<InstructorProvider>(context, listen: false).getAll();
     return MultiProvider(
       child: Container(
-        child: Center(child: MainSchedulerPanel()),
+        child: Center(child: MainSchedulerPanel(instructors)),
       ),
       providers: [
-        ListenableProvider(
-          create: (_) => UIEventsProvider(),
-        ),
         ListenableProvider(
           create: (_) => InstructorProvider(),
         ),
@@ -28,10 +31,13 @@ class MainContainer extends StatelessWidget {
 }
 
 class MainSchedulerPanel extends StatefulWidget {
-  const MainSchedulerPanel();
+  final List<Instructor> _instructors;
+
+  const MainSchedulerPanel(this._instructors);
 
   @override
-  _MainSchedulerPanelState createState() => _MainSchedulerPanelState();
+  _MainSchedulerPanelState createState() =>
+      _MainSchedulerPanelState(_instructors);
 }
 
 class _MainSchedulerPanelState extends State<MainSchedulerPanel> {
@@ -43,6 +49,7 @@ class _MainSchedulerPanelState extends State<MainSchedulerPanel> {
   ScrollController _leftBarVerticalController;
   ScrollController _middleSwimlaneVerticalController;
   ScrollController _rightBarVerticalController;
+  List<Instructor> _instructors;
 
   @override
   void initState() {
@@ -74,15 +81,26 @@ class _MainSchedulerPanelState extends State<MainSchedulerPanel> {
     super.dispose();
   }
 
+  _MainSchedulerPanelState(this._instructors);
+
+  double fullSwimlaneHeight(BuildContext context) {
+    var schedulerDimensions = SchedulerDimensions(context);
+    return _instructors.length * schedulerDimensions.cardHeight;
+  }
+
   @override
   Widget build(BuildContext context) {
     var schedulerDimensions = SchedulerDimensions(context);
     print(
         'height: ${schedulerDimensions.middlePanelHeight} outer height: ${schedulerDimensions.outerHeight}');
+    var swimlaneHeight = fullSwimlaneHeight(context);
+
+    print('inner height: ${swimlaneHeight}');
 
     return Container(
       width: schedulerDimensions.outerWidth,
       height: schedulerDimensions.outerHeight,
+      color: AppColors.GreyLight,
       child: Column(
         children: [
           Container(
@@ -108,13 +126,10 @@ class _MainSchedulerPanelState extends State<MainSchedulerPanel> {
                 SizedBox(
                   width: schedulerDimensions.middlePanelWidth,
                   child: SingleChildScrollView(
-                    child: SingleChildScrollView(
-                      child: Placeholder(
-                        color: Colors.orange,
-                        fallbackWidth: schedulerDimensions.swimLaneWidth,
-                        fallbackHeight: 1000,
-                      ),
-                      controller: _middleSwimlaneVerticalController,
+                    child: MainPanel(
+                      _middleSwimlaneVerticalController,
+                      swimlaneHeight,
+                      _instructors,
                     ),
                     scrollDirection: Axis.horizontal,
                     controller: _middleSwimlaneHorizontalController,
@@ -124,7 +139,7 @@ class _MainSchedulerPanelState extends State<MainSchedulerPanel> {
                 SingleChildScrollView(
                   child: SizedBox(
                     child: Placeholder(color: Colors.blue),
-                    height: 1000,
+                    height: swimlaneHeight,
                     width: schedulerDimensions.rightPanelWidth,
                   ),
                   controller: _rightBarVerticalController,
@@ -153,6 +168,40 @@ class _MainSchedulerPanelState extends State<MainSchedulerPanel> {
           )
         ],
       ),
+    );
+  }
+}
+
+class MainPanel extends StatelessWidget {
+  final ScrollController _controller;
+  final double height;
+  final List<Instructor> _instructors;
+  MainPanel(this._controller, this.height, this._instructors);
+
+  double getHeight(cardHeight) {
+    var fullLength = _instructors.length * cardHeight;
+    return fullLength + ((_instructors.length - 1) * 16);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Provider.of<InstructorProvider>(context, listen: false).getAll();
+
+    var schedulerDimensions = SchedulerDimensions(context);
+    return SingleChildScrollView(
+      child: SizedBox(
+        height: getHeight(schedulerDimensions.cardHeight),
+        width: schedulerDimensions.swimLaneWidth,
+        child: Stack(
+          children: [
+            ListView(),
+            Placeholder(
+              color: Colors.yellow,
+            )
+          ],
+        ),
+      ),
+      controller: _controller,
     );
   }
 }

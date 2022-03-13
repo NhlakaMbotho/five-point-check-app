@@ -5,6 +5,7 @@ class SchedulerDimensions {
   double outerWidth;
   double outerHeight;
   double cardWidth;
+  double cardHeight;
   double swimLaneWidth;
   double leftPanelWidth;
   double rightPanelWidth;
@@ -19,6 +20,7 @@ class SchedulerDimensions {
     this.outerWidth = size.width * 0.70;
     this.outerHeight = size.height * 0.70;
     this.cardWidth = size.width * 0.10;
+    this.cardHeight = outerHeight * 0.20;
     this.swimLaneWidth = this.cardWidth * totalHours;
     print(
         'card width: ${this.swimLaneWidth}, fwith: ${this.swimLaneWidth / this.cardWidth}');
