@@ -1,4 +1,5 @@
 import 'package:driving_school_app/config/config.dev.dart';
+import 'package:driving_school_app/models/instructor.dart';
 import 'package:flutter/material.dart';
 
 class SchedulerDimensions {
@@ -13,17 +14,17 @@ class SchedulerDimensions {
   double topPaneHeight;
   double middlePanelHeight;
   double bottomPanelHeight;
+  double cardSeparatorHeight;
+  int totalHours;
 
   SchedulerDimensions(BuildContext context) {
-    var totalHours = GlobalConfig['app']['tradingHours']['count'];
+    this.totalHours = GlobalConfig['app']['tradingHours']['count'];
     var size = MediaQuery.of(context).size;
     this.outerWidth = size.width * 0.70;
     this.outerHeight = size.height * 0.70;
     this.cardWidth = size.width * 0.10;
     this.cardHeight = outerHeight * 0.20;
-    this.swimLaneWidth = this.cardWidth * totalHours;
-    print(
-        'card width: ${this.swimLaneWidth}, fwith: ${this.swimLaneWidth / this.cardWidth}');
+    this.swimLaneWidth = this.cardWidth * this.totalHours;
     this.leftPanelWidth = this.outerWidth * 0.18;
     this.rightPanelWidth = this.outerWidth * 0.04;
     this.middlePanelWidth =
@@ -31,5 +32,12 @@ class SchedulerDimensions {
     this.topPaneHeight = this.outerHeight * 0.05;
     this.middlePanelHeight = this.outerHeight * 0.90;
     this.bottomPanelHeight = this.outerHeight * 0.05;
+    this.cardSeparatorHeight = 12;
+  }
+
+  double fullSwimlaneHeight(int count, BuildContext context) {
+    var schedulerDimensions = SchedulerDimensions(context);
+    return count * schedulerDimensions.cardHeight +
+        (schedulerDimensions.cardSeparatorHeight * (count + 1));
   }
 }

@@ -7,10 +7,13 @@ import 'package:driving_school_app/pages/top_component.dart';
 import 'package:driving_school_app/providers/instructor_provider.dart';
 import 'package:driving_school_app/sandbox/main_section/avatar_wrapper.dart';
 import 'package:driving_school_app/sandbox/main_section/scheduler/guideline_list.dart';
+import 'package:flutter/gestures.dart';
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 import '../providers/ui_events_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'main_swim_lane.dart';
 
 class MainContainer extends StatelessWidget {
   @override
@@ -85,7 +88,8 @@ class _MainSchedulerPanelState extends State<MainSchedulerPanel> {
 
   double fullSwimlaneHeight(BuildContext context) {
     var schedulerDimensions = SchedulerDimensions(context);
-    return _instructors.length * schedulerDimensions.cardHeight;
+    return _instructors.length * schedulerDimensions.cardHeight +
+        (schedulerDimensions.cardSeparatorHeight * (_instructors.length + 1));
   }
 
   @override
@@ -132,13 +136,17 @@ class _MainSchedulerPanelState extends State<MainSchedulerPanel> {
                       _instructors,
                     ),
                     scrollDirection: Axis.horizontal,
+                    dragStartBehavior: DragStartBehavior.down,
                     controller: _middleSwimlaneHorizontalController,
                   ),
                   height: schedulerDimensions.middlePanelHeight,
                 ),
                 SingleChildScrollView(
                   child: SizedBox(
-                    child: Placeholder(color: Colors.blue),
+                    child: Placeholder(
+                      color: Colors.grey,
+                      fallbackHeight: swimlaneHeight,
+                    ),
                     height: swimlaneHeight,
                     width: schedulerDimensions.rightPanelWidth,
                   ),
@@ -168,40 +176,6 @@ class _MainSchedulerPanelState extends State<MainSchedulerPanel> {
           )
         ],
       ),
-    );
-  }
-}
-
-class MainPanel extends StatelessWidget {
-  final ScrollController _controller;
-  final double height;
-  final List<Instructor> _instructors;
-  MainPanel(this._controller, this.height, this._instructors);
-
-  double getHeight(cardHeight) {
-    var fullLength = _instructors.length * cardHeight;
-    return fullLength + ((_instructors.length - 1) * 16);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    Provider.of<InstructorProvider>(context, listen: false).getAll();
-
-    var schedulerDimensions = SchedulerDimensions(context);
-    return SingleChildScrollView(
-      child: SizedBox(
-        height: getHeight(schedulerDimensions.cardHeight),
-        width: schedulerDimensions.swimLaneWidth,
-        child: Stack(
-          children: [
-            ListView(),
-            Placeholder(
-              color: Colors.yellow,
-            )
-          ],
-        ),
-      ),
-      controller: _controller,
     );
   }
 }
