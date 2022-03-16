@@ -2,7 +2,6 @@ import 'package:driving_school_app/constants/colors.dart';
 import 'package:driving_school_app/models/instructor.dart';
 import 'package:driving_school_app/models/scheduler_dimensions.dart';
 import 'package:driving_school_app/providers/instructor_provider.dart';
-import 'package:driving_school_app/providers/ui_events_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,49 +1,25 @@
-import 'dart:html';
-import 'package:driving_school_app/config/config.dev.dart';
-import 'package:driving_school_app/constants/colors.dart';
-import 'package:driving_school_app/models/instructor.dart';
-import 'package:driving_school_app/models/scheduler_dimensions.dart';
-import 'package:driving_school_app/pages/top_component.dart';
-import 'package:driving_school_app/providers/instructor_provider.dart';
-import 'package:driving_school_app/sandbox/main_section/avatar_wrapper.dart';
-import 'package:driving_school_app/sandbox/main_section/scheduler/guideline_list.dart';
 import 'package:flutter/gestures.dart';
-import 'package:linked_scroll_controller/linked_scroll_controller.dart';
-import '../providers/ui_events_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
-import 'main_swim_lane.dart';
+import '../../constants/colors.dart';
+import '../../models/instructor.dart';
+import '../../models/scheduler_dimensions.dart';
+import 'main_panel.dart';
+import 'avatar_wrapper.dart';
+import 'top_component.dart';
 
-class MainContainer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var instructors =
-        Provider.of<InstructorProvider>(context, listen: false).getAll();
-    return MultiProvider(
-      child: Container(
-        child: Center(child: MainSchedulerPanel(instructors)),
-      ),
-      providers: [
-        ListenableProvider(
-          create: (_) => InstructorProvider(),
-        ),
-      ],
-    );
-  }
-}
-
-class MainSchedulerPanel extends StatefulWidget {
+class SchedulerWrapperPanel extends StatefulWidget {
   final List<Instructor> _instructors;
 
-  const MainSchedulerPanel(this._instructors);
+  const SchedulerWrapperPanel(this._instructors);
 
   @override
-  _MainSchedulerPanelState createState() =>
-      _MainSchedulerPanelState(_instructors);
+  _SchedulerWrapperPanelState createState() =>
+      _SchedulerWrapperPanelState(_instructors);
 }
 
-class _MainSchedulerPanelState extends State<MainSchedulerPanel> {
+class _SchedulerWrapperPanelState extends State<SchedulerWrapperPanel> {
   LinkedScrollControllerGroup _horizontalControllers;
   LinkedScrollControllerGroup _verticalControllers;
   ScrollController _topBarHorizontalController;
@@ -84,7 +60,7 @@ class _MainSchedulerPanelState extends State<MainSchedulerPanel> {
     super.dispose();
   }
 
-  _MainSchedulerPanelState(this._instructors);
+  _SchedulerWrapperPanelState(this._instructors);
 
   double fullSwimlaneHeight(BuildContext context) {
     var schedulerDimensions = SchedulerDimensions(context);
@@ -95,11 +71,7 @@ class _MainSchedulerPanelState extends State<MainSchedulerPanel> {
   @override
   Widget build(BuildContext context) {
     var schedulerDimensions = SchedulerDimensions(context);
-    print(
-        'height: ${schedulerDimensions.middlePanelHeight} outer height: ${schedulerDimensions.outerHeight}');
     var swimlaneHeight = fullSwimlaneHeight(context);
-
-    print('inner height: ${swimlaneHeight}');
 
     return Container(
       width: schedulerDimensions.outerWidth,

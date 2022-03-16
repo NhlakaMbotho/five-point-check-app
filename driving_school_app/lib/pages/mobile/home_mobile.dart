@@ -1,7 +1,4 @@
 import 'package:driving_school_app/providers/instructor_provider.dart';
-import 'package:driving_school_app/sandbox/main_section/avatar_wrapper.dart';
-import 'package:driving_school_app/sandbox/main_section/right_scroll_bar.dart';
-import 'package:driving_school_app/sandbox/main_section/scheduler/scheduler_wrapper.dart';
 import '../../providers/ui_events_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -1,22 +1,15 @@
 import 'package:driving_school_app/constants/colors.dart';
-import 'package:driving_school_app/pages/home_page4.dart';
-import 'package:driving_school_app/pages/login_page.dart';
+import 'package:driving_school_app/pages/home_screen.dart';
+import 'package:driving_school_app/pages/login_screen.dart';
 import 'package:driving_school_app/providers/authentication_provider.dart';
 import 'package:driving_school_app/providers/ui_events_provider.dart';
 import 'package:driving_school_app/providers/user.provider.dart';
 import 'package:flutter/material.dart';
-import 'package:global_configuration/global_configuration.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/instructor_provider.dart';
 
 void main() async {
-  // try {
-  //   WidgetsFlutterBinding.ensureInitialized();
-  //   await GlobalConfiguration().loadFromPath("config/app_settings.json");
-  // } catch (error) {
-  //   // print('Error: $error');
-  // }
   runApp(MyApp());
 }
 
