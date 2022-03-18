@@ -25,25 +25,33 @@ class SchedulerTimeStamp extends StatelessWidget {
   }
 }
 
-class TopComponent extends StatelessWidget {
+class Header extends StatelessWidget {
   final int count = GlobalConfig['app']['tradingHours']['count'];
   final int startHour = GlobalConfig['app']['tradingHours']['start'];
-  ScrollController controller;
+  final ScrollController controller;
 
-  TopComponent(this.controller);
+  Header(this.controller);
 
   @override
   Widget build(BuildContext context) {
     var dimensions = SchedulerDimensions(context);
-    return ListView.separated(
-      itemBuilder: (_, index) => SizedBox(
-        child: SchedulerTimeStamp(startHour + index),
-        width: dimensions.cardWidth,
+
+    return Container(
+      child: ListView.separated(
+        itemBuilder: (_, index) => SizedBox(
+          child: SchedulerTimeStamp(startHour + index),
+          width: dimensions.cardWidth,
+        ),
+        separatorBuilder: (_, index) => Divider(),
+        itemCount: count,
+        controller: controller,
+        scrollDirection: Axis.horizontal,
       ),
-      separatorBuilder: (_, index) => Divider(),
-      itemCount: count,
-      controller: controller,
-      scrollDirection: Axis.horizontal,
+      height: dimensions.topPaneHeight,
+      margin: EdgeInsets.only(
+        left: dimensions.leftPanelWidth,
+        right: dimensions.rightPanelWidth,
+      ),
     );
   }
 }

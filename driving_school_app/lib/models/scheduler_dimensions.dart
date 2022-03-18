@@ -35,7 +35,7 @@ class SchedulerDimensions {
     this.cardSeparatorHeight = 12;
   }
 
-  double fullSwimlaneHeight(int count, BuildContext context) {
+  static double fullSwimlaneHeight(int count, BuildContext context) {
     var schedulerDimensions = SchedulerDimensions(context);
     return count * schedulerDimensions.cardHeight +
         (schedulerDimensions.cardSeparatorHeight * (count + 1));

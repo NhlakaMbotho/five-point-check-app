@@ -5,12 +5,12 @@ import 'package:driving_school_app/providers/instructor_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AvatarWrapper extends StatelessWidget {
+class LeftAvatarWrapper extends StatelessWidget {
   final ScrollController _localController;
   final double height;
   final double width;
 
-  AvatarWrapper(
+  LeftAvatarWrapper(
     this.height,
     this.width,
     this._localController,
@@ -22,18 +22,22 @@ class AvatarWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var instructors = getInstructors(context);
-
-    return ScrollConfiguration(
-      behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
-      child: ListView.separated(
-        itemBuilder: (_, int index) => InstructorWidget(instructors[index]),
-        separatorBuilder: (_, int index) => Divider(
-          height: 16,
-          color: AppColors.GreyLight,
+    var schedulerDimensions = SchedulerDimensions(context);
+    return SizedBox(
+      child: ScrollConfiguration(
+        behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+        child: ListView.separated(
+          itemBuilder: (_, int index) => InstructorWidget(instructors[index]),
+          separatorBuilder: (_, int index) => Divider(
+            height: 16,
+            color: AppColors.GreyLight,
+          ),
+          itemCount: instructors.length,
+          controller: _localController,
         ),
-        itemCount: instructors.length,
-        controller: _localController,
       ),
+      width: schedulerDimensions.leftPanelWidth,
+      height: schedulerDimensions.middlePanelHeight,
     );
   }
 }

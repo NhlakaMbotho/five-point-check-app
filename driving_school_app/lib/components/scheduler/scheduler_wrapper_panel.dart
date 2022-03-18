@@ -5,9 +5,11 @@ import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 import '../../constants/colors.dart';
 import '../../models/instructor.dart';
 import '../../models/scheduler_dimensions.dart';
+import 'footer.dart';
 import 'main_panel.dart';
 import 'avatar_wrapper.dart';
-import 'top_component.dart';
+import 'right_scroll_bar.dart';
+import 'header.dart';
 
 class SchedulerWrapperPanel extends StatefulWidget {
   final List<Instructor> _instructors;
@@ -79,73 +81,30 @@ class _SchedulerWrapperPanelState extends State<SchedulerWrapperPanel> {
       color: AppColors.GreyLight,
       child: Column(
         children: [
-          Container(
-            child: TopComponent(_topBarHorizontalController),
-            height: schedulerDimensions.topPaneHeight,
-            margin: EdgeInsets.only(
-              left: schedulerDimensions.leftPanelWidth,
-              right: schedulerDimensions.rightPanelWidth,
-            ),
-          ),
+          Header(_topBarHorizontalController),
           SizedBox(
             child: Row(
               children: [
-                SizedBox(
-                  child: AvatarWrapper(
-                    schedulerDimensions.middlePanelHeight,
-                    schedulerDimensions.leftPanelWidth,
-                    _leftBarVerticalController,
-                  ),
-                  width: schedulerDimensions.leftPanelWidth,
-                  height: schedulerDimensions.middlePanelHeight,
+                LeftAvatarWrapper(
+                  schedulerDimensions.middlePanelHeight,
+                  schedulerDimensions.leftPanelWidth,
+                  _leftBarVerticalController,
                 ),
-                SizedBox(
-                  width: schedulerDimensions.middlePanelWidth,
-                  child: SingleChildScrollView(
-                    child: MainPanel(
-                      _middleSwimlaneVerticalController,
-                      swimlaneHeight,
-                      _instructors,
-                    ),
-                    scrollDirection: Axis.horizontal,
-                    dragStartBehavior: DragStartBehavior.down,
-                    controller: _middleSwimlaneHorizontalController,
-                  ),
-                  height: schedulerDimensions.middlePanelHeight,
+                MainPanel(
+                  _middleSwimlaneVerticalController,
+                  _middleSwimlaneHorizontalController,
+                  swimlaneHeight,
+                  _instructors,
                 ),
-                SingleChildScrollView(
-                  child: SizedBox(
-                    child: Placeholder(
-                      color: Colors.grey,
-                      fallbackHeight: swimlaneHeight,
-                    ),
-                    height: swimlaneHeight,
-                    width: schedulerDimensions.rightPanelWidth,
-                  ),
-                  controller: _rightBarVerticalController,
+                RightScrollBar(
+                  _rightBarVerticalController,
+                  swimlaneHeight,
                 ),
               ],
             ),
             height: schedulerDimensions.middlePanelHeight,
           ),
-          Container(
-            child: SizedBox(
-              child: SingleChildScrollView(
-                child: Placeholder(
-                  fallbackWidth: schedulerDimensions.swimLaneWidth,
-                  color: Colors.pink,
-                ),
-                scrollDirection: Axis.horizontal,
-                controller: _bottomBarHorizontalController,
-              ),
-              height: schedulerDimensions.bottomPanelHeight,
-              width: schedulerDimensions.middlePanelWidth,
-            ),
-            margin: EdgeInsets.only(
-              left: schedulerDimensions.leftPanelWidth,
-              right: schedulerDimensions.rightPanelWidth,
-            ),
-          )
+          Footer(this._bottomBarHorizontalController)
         ],
       ),
     );
