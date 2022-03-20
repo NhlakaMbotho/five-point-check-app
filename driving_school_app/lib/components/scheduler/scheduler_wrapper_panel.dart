@@ -96,7 +96,7 @@ class _SchedulerWrapperPanelState extends State<SchedulerWrapperPanel> {
                   _instructors,
                 ),
                 RightScrollBar(
-                  _rightBarVerticalController,
+                  _verticalControllers,
                   swimlaneHeight,
                 ),
               ],

@@ -3,22 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
 class Footer extends StatelessWidget {
-  final LinkedScrollControllerGroup verticalControllersGroup;
+  final LinkedScrollControllerGroup horizontalControllerGroup;
   final ScrollController scrollBarController = new ScrollController();
 
-  Footer(this.verticalControllersGroup);
+  Footer(this.horizontalControllerGroup);
 
   handleScrollEvents() {
-    verticalControllersGroup.addOffsetChangedListener(() {
-      if (verticalControllersGroup.offset != scrollBarController.offset &&
+    horizontalControllerGroup.addOffsetChangedListener(() {
+      if (horizontalControllerGroup.offset != scrollBarController.offset &&
           scrollBarController.hasClients) {
-        this.scrollBarController.jumpTo(verticalControllersGroup.offset);
+        this.scrollBarController.jumpTo(horizontalControllerGroup.offset);
       }
     });
 
     this.scrollBarController.addListener(() {
-      if (verticalControllersGroup.offset != scrollBarController.offset) {
-        this.verticalControllersGroup.jumpTo(scrollBarController.offset);
+      if (horizontalControllerGroup.offset != scrollBarController.offset) {
+        this.horizontalControllerGroup.jumpTo(scrollBarController.offset);
       }
     });
   }
@@ -31,7 +31,8 @@ class Footer extends StatelessWidget {
       child: RawScrollbar(
         thickness: 8.0,
         isAlwaysShown: true,
-        thumbColor: Colors.red,
+        thumbColor: Color.fromARGB(255, 143, 143, 143),
+        radius: Radius.circular(10.0),
         controller: scrollBarController,
         notificationPredicate: (val) {
           return true;
@@ -39,14 +40,14 @@ class Footer extends StatelessWidget {
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           controller: scrollBarController,
-          child: Placeholder(
-            color: Colors.blueGrey,
-            fallbackHeight: schedulerDimensions.bottomPanelHeight,
-            fallbackWidth: schedulerDimensions.swimLaneWidth,
+          child: Container(
+            color: Colors.transparent,
+            height: schedulerDimensions.bottomPanelHeight,
+            width: schedulerDimensions.swimLaneWidth,
           ),
         ),
       ),
-      height: schedulerDimensions.bottomPanelHeight,
+      height: 14,
       width: schedulerDimensions.middlePanelWidth,
       margin: EdgeInsets.only(
         left: schedulerDimensions.leftPanelWidth,
