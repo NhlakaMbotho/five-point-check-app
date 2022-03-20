@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
@@ -104,7 +103,7 @@ class _SchedulerWrapperPanelState extends State<SchedulerWrapperPanel> {
             ),
             height: schedulerDimensions.middlePanelHeight,
           ),
-          Footer(this._bottomBarHorizontalController)
+          Footer(_horizontalControllers)
         ],
       ),
     );
