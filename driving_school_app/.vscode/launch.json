@@ -10,10 +10,10 @@
       "type": "dart"
     },
     {
-      "name": "driving_school_app (profile mode)",
+      "name": "driving_school_app (release mode)",
       "request": "launch",
       "type": "dart",
-      "flutterMode": "profile"
+      "flutterMode": "release"
     }
   ]
 }

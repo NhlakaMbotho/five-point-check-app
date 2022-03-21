@@ -5,11 +5,19 @@ import 'package:driving_school_app/providers/authentication_provider.dart';
 import 'package:driving_school_app/providers/ui_events_provider.dart';
 import 'package:driving_school_app/providers/user.provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/instructor_provider.dart';
 
 void main() async {
+  await WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ],
+  );
   runApp(MyApp());
 }
 

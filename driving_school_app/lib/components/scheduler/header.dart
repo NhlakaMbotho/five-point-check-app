@@ -1,27 +1,49 @@
+import 'dart:html';
 import 'dart:ui';
 
 import 'package:driving_school_app/config/config.dev.dart';
+import 'package:driving_school_app/constants/colors.dart';
 import 'package:driving_school_app/models/scheduler_dimensions.dart';
 import 'package:flutter/material.dart';
 
 class SchedulerTimeStamp extends StatelessWidget {
   final int hour;
   SchedulerTimeStamp(this.hour);
+
+  formatHour(int value) {
+    return value < 10 ? '0$value:00' : '$value:00';
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text(
-          '$hour',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 12,
-            decoration: TextDecoration.none,
-          ),
-        ),
-      ),
-      decoration: BoxDecoration(color: Colors.green),
-    );
+    return LayoutBuilder(builder: ((context, constraints) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: AppColors.Primary,
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(6.0),
+              ),
+            ),
+            height: constraints.maxHeight * 0.6,
+            width: constraints.maxWidth * 0.4,
+            child: Center(
+              child: Text(
+                '${formatHour(hour)}',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 8,
+                  decoration: TextDecoration.none,
+                ),
+              ),
+            ),
+          )
+        ],
+      );
+    }));
   }
 }
 
@@ -41,6 +63,7 @@ class Header extends StatelessWidget {
         itemBuilder: (_, index) => SizedBox(
           child: SchedulerTimeStamp(startHour + index),
           width: dimensions.cardWidth,
+          height: dimensions.topPaneHeight,
         ),
         separatorBuilder: (_, index) => Divider(),
         itemCount: count,
