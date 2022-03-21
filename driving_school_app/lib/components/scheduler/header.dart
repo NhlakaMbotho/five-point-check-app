@@ -1,6 +1,3 @@
-import 'dart:html';
-import 'dart:ui';
-
 import 'package:driving_school_app/config/config.dev.dart';
 import 'package:driving_school_app/constants/colors.dart';
 import 'package:driving_school_app/models/scheduler_dimensions.dart';
@@ -35,7 +32,8 @@ class SchedulerTimeStamp extends StatelessWidget {
                 '${formatHour(hour)}',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 8,
+                  fontSize: 7,
+                  fontWeight: FontWeight.w100,
                   decoration: TextDecoration.none,
                 ),
               ),

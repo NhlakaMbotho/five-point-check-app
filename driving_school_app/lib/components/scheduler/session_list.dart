@@ -1,75 +1,77 @@
+import 'dart:html';
+
+import 'package:driving_school_app/components/scheduler/lesson_widget.dart';
 import 'package:driving_school_app/models/instructor.dart';
 import 'package:driving_school_app/models/lesson.dart';
+import 'package:driving_school_app/models/scheduler_dimensions.dart';
 import 'package:driving_school_app/utilities/config_helper.dart';
 import 'package:flutter/material.dart';
 
-class SessionList extends StatelessWidget {
-  double cardWidth;
-  dynamic tradingHours;
-  Instructor instructor;
-  double height;
-  SessionList(Instructor instructor, height) {
-    this.cardWidth =
-        getConfigValue(["dimensions", "compoments", "scheduler", "cardWidth"]);
-    this.tradingHours = getConfigValue(["tradingHours"]);
-    this.instructor = instructor;
-    this.height = height;
+class InstructorSessionLine extends StatelessWidget {
+  final Instructor instructor;
+  InstructorSessionLine(this.instructor);
+
+  int getHourByIndex(int index, int startHour) {
+    return startHour + index;
   }
 
-  List<Widget> getBlocks(height, List<Lesson> lessons) {
+  List<Widget> getBlocks(SchedulerDimensions dimensions) {
+    int tradingHours = dimensions.totalHours;
+    int tradingStartHour = getConfigValue(["tradingHours", "start"]) as int;
     List<Widget> list = [];
-    double width = 0;
 
-    if (lessons.length == 0) {
+    if (instructor.lessons.length == 0) {
       return [
         Container(
           color: Colors.transparent,
-          width: getWidth(),
+          width: dimensions.cardWidth,
         )
       ];
     }
 
-    for (var i = tradingHours["start"]; i <= tradingHours["end"]; i++) {
-      var atBeginingOfLesson = lessons.any((lesson) => lesson.start.hour == i);
-      var atEndOfLesson = lessons.any((lesson) => lesson.endTime.hour == i);
+    int i = 0;
+    do {
+      int currentHour = getHourByIndex(i, tradingStartHour);
 
-      // Lesson End
-      if (atEndOfLesson) {
-        list.add(Container(
-          decoration: BoxDecoration(color: Colors.green),
-          width: width,
-        ));
-        width = 0;
-      }
-
-      // Lesson Start
-      if (atBeginingOfLesson) {
-        if (width > 0) {
-          list.add(Container(
-            color: Colors.transparent,
-            width: width,
-          ));
-          width = 0;
+      try {
+        Lesson _lesson = instructor.lessons
+            .firstWhere((lesson) => lesson.start.hour == currentHour);
+        if (_lesson.start.hour == _lesson.endTime.hour) {
+          i++;
+          continue;
         }
+        int hourCount = _lesson.endTime.hour - _lesson.start.hour;
+        double currentLessonWidth = dimensions.cardWidth * hourCount;
+        list.add(
+            LessonWidget(_lesson, currentLessonWidth, dimensions.cardHeight));
+        i += hourCount;
+      } on StateError {
+        int k = i;
+        double width = 0;
+        while (!instructor.lessons.any((lesson) =>
+                lesson.start.hour == getHourByIndex(k, tradingStartHour)) &&
+            k < tradingHours) {
+          width += dimensions.cardWidth;
+          k++;
+        }
+        if (k > i) {
+          list.add(SizedBox(width: width));
+        }
+        i = k;
       }
-
-      width += this.cardWidth;
-    }
-
-    if (width > 0) {
-      list.add(Container(
-        color: Colors.transparent,
-        width: width,
-      ));
-    }
+    } while (i < tradingHours);
 
     return list;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: getBlocks(height, instructor.lessons),
+    var dimensions = SchedulerDimensions(context);
+    return SizedBox(
+      height: dimensions.cardHeight,
+      child: Row(
+        children: getBlocks(dimensions),
+      ),
     );
   }
 }

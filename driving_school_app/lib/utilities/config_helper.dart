@@ -16,12 +16,3 @@ dynamic getConfigValue(List<String> depth) {
   }
   return root;
 }
-
-double getWidth() {
-  var cardWidth =
-      getConfigValue(["dimensions", "compoments", "scheduler", "cardWidth"]);
-  var start = getConfigValue(["tradingHours", "start"]);
-  var end = getConfigValue(["tradingHours", "end"]);
-
-  return cardWidth * ((end - start) + 1);
-}

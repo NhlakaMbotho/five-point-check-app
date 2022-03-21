@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../models/instructor.dart';
 import '../../models/scheduler_dimensions.dart';
 import 'background_swimlane.dart';
+import 'session_list.dart';
 import 'time_stamp_guidelines.dart';
 
 class MainPanel extends StatelessWidget {

@@ -38,11 +38,11 @@ class InstructorProvider with ChangeNotifier {
       [
         Lesson(DateTime(20201, 07, 30, 9), DateTime(20201, 07, 30, 11),
             'Bongani Gumede'),
-        Lesson(DateTime(20201, 07, 30, 13), DateTime(20201, 07, 30, 14),
+        Lesson(DateTime(20201, 07, 30, 14), DateTime(20201, 07, 30, 17),
             'Qiniso Smelane'),
       ],
       [
-        Lesson(DateTime(20201, 07, 30, 7), DateTime(20201, 07, 30, 7, 30),
+        Lesson(DateTime(20201, 07, 30, 7), DateTime(20201, 07, 30, 9),
             'Bongani Gumede'),
         Lesson(DateTime(20201, 07, 30, 11), DateTime(20201, 07, 30, 12),
             'Qiniso Smelane'),
