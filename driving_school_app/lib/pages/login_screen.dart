@@ -15,7 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordKey = GlobalKey<FormFieldState>();
   bool _loaderState = false;
 
-  String _username = "1388848603";
+  String _username = "2271782119";
   String _password = "pass123";
 
   @override
@@ -46,6 +46,8 @@ class _LoginPageState extends State<LoginPage> {
         print('navigate to next page !!!');
       } on ServiceError catch (error) {
         showError(error.message);
+      } on Error catch (error) {
+        showError(error.toString());
       } finally {
         _showLoader(false);
       }
@@ -57,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
       context: context,
       builder: (BuildContext context) => AlertDialog(
         title: const Text('Authentication Error'),
-        content: Text(message),
+        content: Text(message ?? 'Error'),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context, 'Cancel'),

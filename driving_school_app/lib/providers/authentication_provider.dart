@@ -19,6 +19,7 @@ class AuthProvider extends BaseHttpProvider with ChangeNotifier {
         _expiryDate.isAfter(DateTime.now())) {
       return _token;
     }
+    return null;
   }
 
   setToken(String token) {
@@ -31,14 +32,14 @@ class AuthProvider extends BaseHttpProvider with ChangeNotifier {
 
   Future<User> signIn(String cellNo, String password) async {
     var response = await post<User>(
-        '/api/v1/auth/login', {"cellNo": cellNo, "password": password});
+        '/api/auth/login', {"cellNo": cellNo, "password": password});
     var body = User.fromJson(response.getBody());
     this.setToken(body.token);
     return body;
   }
 
   Future<User> signUp(SignUp form) async {
-    var response = await post<User>('/api/v1/auth/register', {
+    var response = await post<User>('/api/auth/register', {
       "firstName": form.firstName,
       "lastName": form.lastName,
       "identity": form.identity,

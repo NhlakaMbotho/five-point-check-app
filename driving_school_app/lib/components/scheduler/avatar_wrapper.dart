@@ -55,8 +55,8 @@ class InstructorWidget extends StatelessWidget {
       margin: EdgeInsets.only(left: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16),
-          bottomLeft: Radius.circular(16),
+          topLeft: Radius.circular(10),
+          bottomLeft: Radius.circular(10),
         ),
         color: Colors.white,
       ),

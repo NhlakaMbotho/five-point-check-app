@@ -1,4 +1,5 @@
-import 'package:driving_school_app/models/response.dart';
+import './response.dart';
+import './role.dart';
 
 class User implements ResponseModel {
   int userId;
@@ -9,11 +10,11 @@ class User implements ResponseModel {
   String lastName;
   String email;
   String phoneNo;
-  String role;
+  Role role;
   String token;
 
   User.fromJson(data) {
-    userId = data['userId'];
+    userId = data['Id'];
     username = data['username'];
     identity = data['identity'];
     dateOfBirth = data['dateOfBirth'];
@@ -21,7 +22,7 @@ class User implements ResponseModel {
     lastName = data['lastName'];
     email = data['email'];
     phoneNo = data['phoneNo'];
-    role = data['role'];
+    role = Role(data['role']);
     token = data['token'];
   }
 }

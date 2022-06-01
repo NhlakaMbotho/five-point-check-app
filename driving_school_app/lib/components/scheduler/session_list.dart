@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:driving_school_app/components/scheduler/lesson_widget.dart';
 import 'package:driving_school_app/models/instructor.dart';
 import 'package:driving_school_app/models/lesson.dart';

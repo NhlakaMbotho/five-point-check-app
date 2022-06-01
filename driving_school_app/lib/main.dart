@@ -12,12 +12,12 @@ import 'providers/instructor_provider.dart';
 
 void main() async {
   await WidgetsFlutterBinding.ensureInitialized();
-  await SystemChrome.setPreferredOrientations(
-    [
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ],
-  );
+  // await SystemChrome.setPreferredOrientations(
+  //   [
+  //     DeviceOrientation.landscapeLeft,
+  //     DeviceOrientation.landscapeRight,
+  //   ],
+  // );
   runApp(MyApp());
 }
 
@@ -50,6 +50,7 @@ class MyApp extends StatelessWidget {
               // Define the default brightness and colors.
               brightness: Brightness.light,
               primaryColor: AppColors.Primary,
+              backgroundColor: Colors.white,
 
               // Define the default font family.
               fontFamily: 'Helvetica Neue',
@@ -69,7 +70,7 @@ class MyApp extends StatelessWidget {
               ),
             ),
             home:
-                !authentication.isAuthenticated ? MainContainer() : LoginPage(),
+                authentication.isAuthenticated ? MainContainer() : LoginPage(),
           );
         }));
   }

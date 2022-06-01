@@ -58,7 +58,7 @@ class LessonWidget extends StatelessWidget {
                   width: lesson.name.length * 5.0,
                   child: Center(
                     child: Text(
-                      '${lesson.name}',
+                      '${lesson.name}' ?? '',
                       style: TextStyle(
                         fontSize: 8,
                         fontWeight: FontWeight.w100,
@@ -69,7 +69,7 @@ class LessonWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${formatHour(lesson.start.hour)}',
+                  '${formatHour(lesson.start.hour)}' ?? '',
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w800,
