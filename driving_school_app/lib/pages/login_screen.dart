@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:driving_school_app/models/error.dart';
 import 'package:driving_school_app/providers/authentication_provider.dart';
 import 'package:driving_school_app/providers/user.provider.dart';
@@ -46,6 +48,8 @@ class _LoginPageState extends State<LoginPage> {
         print('navigate to next page !!!');
       } on ServiceError catch (error) {
         showError(error.message);
+      } on SocketException catch (error) {
+        showError('Could not reach server, please check network connection!');
       } on Error catch (error) {
         showError(error.toString());
       } finally {

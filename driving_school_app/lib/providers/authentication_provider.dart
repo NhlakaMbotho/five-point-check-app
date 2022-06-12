@@ -38,6 +38,12 @@ class AuthProvider extends BaseHttpProvider with ChangeNotifier {
     return body;
   }
 
+  void logOut() {
+    _token = null;
+    _expiryDate = null;
+    this.notifyListeners();
+  }
+
   Future<User> signUp(SignUp form) async {
     var response = await post<User>('/api/auth/register', {
       "firstName": form.firstName,

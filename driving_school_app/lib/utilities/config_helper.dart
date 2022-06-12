@@ -1,5 +1,4 @@
 import 'package:driving_school_app/config/config.dev.dart';
-import 'package:global_configuration/global_configuration.dart';
 
 dynamic getConfigValue(List<String> depth) {
   dynamic root = GlobalConfig["app"];
