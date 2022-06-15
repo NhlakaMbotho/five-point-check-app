@@ -6,11 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../components/scheduler/scheduler_wrapper_panel.dart';
 
-class MainContainer extends StatelessWidget {
-  User user;
-  AuthProvider authProvider;
+@immutable
+class MainPage extends StatelessWidget {
+  User? user;
+  AuthProvider? authProvider;
   String get userName {
-    return user != null ? '${user.firstName} ${user.lastName}' : 'N/A';
+    return user != null ? '${user?.firstName} ${user?.lastName}' : 'N/A';
   }
 
   @override
@@ -118,9 +119,9 @@ class MainContainer extends StatelessWidget {
             ListTile(
               title: const Text('Logout'),
               onTap: () {
-                print('auth before: ${authProvider.isAuthenticated}');
-                authProvider.logOut();
-                print('auth: ${authProvider.isAuthenticated}');
+                print('auth before: ${authProvider?.isAuthenticated}');
+                authProvider?.logOut();
+                print('auth: ${authProvider?.isAuthenticated}');
               },
               leading: const Icon(Icons.logout, color: Colors.green),
             ),

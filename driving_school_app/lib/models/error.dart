@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'dart:io';
 
 class ServiceError {
-  String code;
-  String name;
-  String message;
-  String statusCode;
+  late String code;
+  late String name;
+  late String message;
+  late String statusCode;
   ServiceError(String body) {
     dynamic _body = jsonDecode(body);
     this.code = _body["code"];

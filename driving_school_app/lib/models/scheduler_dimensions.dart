@@ -3,19 +3,19 @@ import 'package:driving_school_app/models/instructor.dart';
 import 'package:flutter/material.dart';
 
 class SchedulerDimensions {
-  double outerWidth;
-  double outerHeight;
-  double cardWidth;
-  double cardHeight;
-  double swimLaneWidth;
-  double leftPanelWidth;
-  double rightPanelWidth;
-  double middlePanelWidth;
-  double topPaneHeight;
-  double middlePanelHeight;
-  double bottomPanelHeight;
-  double cardSeparatorHeight;
-  int totalHours;
+  late double outerWidth;
+  late double outerHeight;
+  late double cardWidth;
+  late double cardHeight;
+  late double swimLaneWidth;
+  late double leftPanelWidth;
+  late double rightPanelWidth;
+  late double middlePanelWidth;
+  late double topPaneHeight;
+  late double middlePanelHeight;
+  late double bottomPanelHeight;
+  late double cardSeparatorHeight;
+  late int totalHours;
 
   SchedulerDimensions(BuildContext context) {
     this.totalHours = GlobalConfig['app']['tradingHours']['count'];

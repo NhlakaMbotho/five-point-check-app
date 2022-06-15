@@ -1,11 +1,11 @@
 class SignUp {
-  String username;
-  String password;
-  String firstName;
-  String lastName;
-  DateTime dateOfBirth;
-  String identity;
-  String email;
-  String cellNo;
-  String role = "CLIENT";
+  late String username;
+  late String password;
+  late String firstName;
+  late String lastName;
+  late DateTime dateOfBirth;
+  late String identity;
+  late String email;
+  late String cellNo;
+  late String role = "CLIENT";
 }

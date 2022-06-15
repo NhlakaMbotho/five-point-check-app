@@ -25,7 +25,7 @@ class BaseHttpProvider {
 
   @protected
   Future<ServiceResponse> post<T>(url, body) async {
-    var response = await http.post('$_root$url',
+    var response = await http.post(Uri.parse('$_root$url'),
         body: jsonEncode(body),
         headers: {
           'Content-type': 'application/json',
@@ -36,6 +36,6 @@ class BaseHttpProvider {
 
   @protected
   Future get<Response>(url, body) {
-    return http.post('$_root/$url', body: body);
+    return http.post(Uri.parse('$_root$url'), body: body);
   }
 }

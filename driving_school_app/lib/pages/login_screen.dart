@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:driving_school_app/models/error.dart';
 import 'package:driving_school_app/providers/authentication_provider.dart';
 import 'package:driving_school_app/providers/user.provider.dart';
+import 'package:driving_school_app/routes/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,8 +34,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> submitForm(context) async {
-    if (_form.currentState.validate()) {
-      _form.currentState.save();
+    if (_form.currentState!.validate()) {
+      _form.currentState!.save();
 
       _showLoader(true);
       try {
@@ -45,10 +47,14 @@ class _LoginPageState extends State<LoginPage> {
           context,
           listen: false,
         ).setUser(user);
-        print('navigate to next page !!!');
+        print('Auth checked for route login - ${Provider.of<AuthProvider>(
+          context,
+          listen: false,
+        ).isAuthenticated}');
+        AutoRouter.of(context).replace(MainRoute());
       } on ServiceError catch (error) {
         showError(error.message);
-      } on SocketException catch (error) {
+      } on SocketException {
         showError('Could not reach server, please check network connection!');
       } on Error catch (error) {
         showError(error.toString());
@@ -58,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  void showError(String message) {
+  void showError(String? message) {
     showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -101,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           TextFormField(
                             onChanged: (value) =>
-                                _usernameKey.currentState.validate(),
+                                _usernameKey.currentState?.validate(),
                             decoration:
                                 InputDecoration(labelText: 'Phone Number'),
                             key: _usernameKey,
@@ -109,10 +115,10 @@ class _LoginPageState extends State<LoginPage> {
                             textInputAction: TextInputAction.next,
                             onFieldSubmitted: (_) =>
                                 FocusScope.of(context).nextFocus(),
-                            onSaved: (_) => _username = _,
-                            validator: (value) => value.length > 0
+                            onSaved: (_) => _username = _!,
+                            validator: (value) => value!.length > 0
                                 ? null
-                                : 'Please enter a valid usernmae',
+                                : 'Please enter a valid username',
                           ),
                           TextFormField(
                             decoration: InputDecoration(labelText: 'Password'),
@@ -120,12 +126,12 @@ class _LoginPageState extends State<LoginPage> {
                             obscureText: true,
                             initialValue: _password,
                             key: _passwordKey,
-                            onSaved: (_) => _password = _,
-                            validator: (value) => value.length > 0
+                            onSaved: (_) => _password = _ == null ? '' : _,
+                            validator: (value) => value!.length > 0
                                 ? null
-                                : 'Please enter a valid usernmae',
+                                : 'Please enter a valid username',
                             onChanged: (_) =>
-                                _passwordKey.currentState.validate(),
+                                _passwordKey.currentState?.validate(),
                           ),
                           Container(
                             margin: EdgeInsets.only(top: 20),

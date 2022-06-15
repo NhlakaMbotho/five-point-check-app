@@ -21,15 +21,15 @@ class SchedulerWrapperPanel extends StatefulWidget {
 }
 
 class _SchedulerWrapperPanelState extends State<SchedulerWrapperPanel> {
-  LinkedScrollControllerGroup _horizontalControllers;
-  LinkedScrollControllerGroup _verticalControllers;
-  ScrollController _topBarHorizontalController;
-  ScrollController _middleSwimlaneHorizontalController;
-  ScrollController _bottomBarHorizontalController;
-  ScrollController _leftBarVerticalController;
-  ScrollController _middleSwimlaneVerticalController;
-  ScrollController _rightBarVerticalController;
-  List<Instructor> _instructors;
+  late LinkedScrollControllerGroup _horizontalControllers;
+  late LinkedScrollControllerGroup _verticalControllers;
+  late ScrollController _topBarHorizontalController;
+  late ScrollController _middleSwimlaneHorizontalController;
+  late ScrollController _bottomBarHorizontalController;
+  late ScrollController _leftBarVerticalController;
+  late ScrollController _middleSwimlaneVerticalController;
+  late ScrollController _rightBarVerticalController;
+  late List<Instructor> _instructors;
 
   @override
   void initState() {
