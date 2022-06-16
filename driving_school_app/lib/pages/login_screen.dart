@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:driving_school_app/constants/colors.dart';
 import 'package:driving_school_app/models/error.dart';
 import 'package:driving_school_app/providers/authentication_provider.dart';
 import 'package:driving_school_app/providers/user.provider.dart';
@@ -89,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('DX3 Driving School'),
-        backgroundColor: Colors.green,
+        backgroundColor: AppColors.Primary,
       ),
       body: Center(
         child: _loaderState

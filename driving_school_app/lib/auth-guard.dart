@@ -3,8 +3,6 @@ import 'package:driving_school_app/routes/router.gr.dart';
 import 'utilities/global.dart';
 
 class AuthGuard extends AutoRouteGuard {
-  AuthGuard();
-
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) {
     // the navigation is paused until resolver.next() is called with either

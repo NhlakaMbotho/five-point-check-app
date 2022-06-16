@@ -61,7 +61,7 @@ class LessonWidget extends StatelessWidget {
                       '${lesson.name}',
                       style: TextStyle(
                         fontSize: 8,
-                        fontWeight: FontWeight.w100,
+                        fontWeight: FontWeight.w300,
                         decoration: TextDecoration.none,
                         color: Colors.white,
                       ),
