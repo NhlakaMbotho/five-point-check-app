@@ -16,8 +16,8 @@ import 'package:flutter/material.dart' as _i7;
 import '../auth-guard.dart' as _i8;
 import '../pages/dashboard_screen.dart' as _i3;
 import '../pages/example_screen.dart' as _i5;
-import '../pages/home_screen.dart' as _i1;
 import '../pages/login_screen.dart' as _i2;
+import '../pages/main_screen.dart' as _i1;
 import '../pages/settings_screen.dart' as _i4;
 
 class MainRouter extends _i6.RootStackRouter {
@@ -40,7 +40,7 @@ class MainRouter extends _i6.RootStackRouter {
     },
     DashboardRoute.name: (routeData) {
       return _i6.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i3.DashboardPage());
+          routeData: routeData, child: _i3.DashboardPage());
     },
     SettingsRoute.name: (routeData) {
       return _i6.MaterialPageX<dynamic>(
