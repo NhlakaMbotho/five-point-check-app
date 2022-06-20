@@ -15,9 +15,9 @@ import 'package:flutter/material.dart' as _i7;
 
 import '../auth-guard.dart' as _i8;
 import '../pages/dashboard_screen.dart' as _i3;
-import '../pages/example_screen.dart' as _i5;
 import '../pages/login_screen.dart' as _i2;
 import '../pages/main_screen.dart' as _i1;
+import '../pages/profile_screen.dart' as _i5;
 import '../pages/settings_screen.dart' as _i4;
 
 class MainRouter extends _i6.RootStackRouter {
@@ -46,9 +46,9 @@ class MainRouter extends _i6.RootStackRouter {
       return _i6.MaterialPageX<dynamic>(
           routeData: routeData, child: _i4.SettingsPage());
     },
-    ExampleRoute.name: (routeData) {
+    ProfileRoute.name: (routeData) {
       return _i6.MaterialPageX<dynamic>(
-          routeData: routeData, child: _i5.ExamplePage());
+          routeData: routeData, child: const _i5.ProfilePage());
     }
   };
 
@@ -63,8 +63,13 @@ class MainRouter extends _i6.RootStackRouter {
               path: '', parent: MainRoute.name),
           _i6.RouteConfig(SettingsRoute.name,
               path: 'settings', parent: MainRoute.name),
-          _i6.RouteConfig(ExampleRoute.name,
-              path: 'example', parent: MainRoute.name)
+          _i6.RouteConfig(ProfileRoute.name,
+              path: 'profile', parent: MainRoute.name),
+          _i6.RouteConfig('login#redirect',
+              path: 'login',
+              parent: MainRoute.name,
+              redirectTo: '/login',
+              fullMatch: true)
         ]),
         _i6.RouteConfig(LoginRoute.name, path: '/login')
       ];
@@ -104,9 +109,9 @@ class SettingsRoute extends _i6.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i5.ExamplePage]
-class ExampleRoute extends _i6.PageRouteInfo<void> {
-  const ExampleRoute() : super(ExampleRoute.name, path: 'example');
+/// [_i5.ProfilePage]
+class ProfileRoute extends _i6.PageRouteInfo<void> {
+  const ProfileRoute() : super(ProfileRoute.name, path: 'profile');
 
-  static const String name = 'ExampleRoute';
+  static const String name = 'ProfileRoute';
 }

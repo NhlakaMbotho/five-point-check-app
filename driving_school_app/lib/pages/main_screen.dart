@@ -5,24 +5,35 @@ import '../models/app-nav.dart';
 import '../routes/router.gr.dart';
 
 class MainPage extends StatelessWidget {
-  final List<AppNav> navOptions = [
+  List<AppNav> _navOptions = [
     AppNav('Home', Icons.home, DashboardRoute()),
-    AppNav('Profile', Icons.person, ExampleRoute()),
+    AppNav('Profile', Icons.person, ProfileRoute()),
     AppNav('Settings', Icons.settings, SettingsRoute()),
-    AppNav('Logout', Icons.logout, LoginRoute()),
+    AppNav('Logout', Icons.logout_outlined, LoginRoute())
   ];
+
+  /**
+   * These are routes that cant be appended to AutoTabsRouter instance because they are not children of the tabs router '/main'
+   */
+  List<String> excludedRoutes = [
+    LoginRoute.name,
+  ];
+
+  List<PageRouteInfo<dynamic>> get routes {
+    return _navOptions
+        .map((nav) => nav.pageRoute)
+        .takeWhile((value) => !excludedRoutes.contains(value.routeName))
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
     return AutoTabsRouter(
-      routes: const [
-        DashboardRoute(),
-        SettingsRoute(),
-      ],
+      routes: routes,
       builder: (ctx, child, _) {
         return Row(
           children: [
-            LeftMenu(navOptions),
+            LeftMenu(_navOptions),
             Flexible(
               child: child,
             ),

@@ -41,7 +41,7 @@ class LessonWidget extends StatelessWidget {
           height: height,
           width: width - leftBarWidth,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(topRight: Radius.circular(10)),
+            borderRadius: BorderRadius.only(topRight: Radius.circular(20)),
             color: Colors.white,
           ),
           child: Center(

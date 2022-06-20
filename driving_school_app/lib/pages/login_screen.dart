@@ -37,7 +37,6 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> submitForm(context) async {
     if (_form.currentState!.validate()) {
       _form.currentState!.save();
-
       _showLoader(true);
       try {
         var user = await Provider.of<AuthProvider>(
@@ -139,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: ElevatedButton(
                               style: TextButton.styleFrom(
                                 primary: Colors.white,
-                                minimumSize: Size(88, 36),
+                                // minimumSize: Size(88, 36),
                               ),
                               onPressed: () {
                                 submitForm(context);
@@ -152,8 +151,8 @@ class _LoginPageState extends State<LoginPage> {
                             margin: EdgeInsets.only(top: 20),
                             child: TextButton(
                               style: TextButton.styleFrom(
-                                primary: Colors.blue,
-                                minimumSize: Size(88, 36),
+                                primary: AppColors.Primary,
+                                // minimumSize: Size(88, 36),
                               ),
                               onPressed: () {
                                 print("logging up...");
