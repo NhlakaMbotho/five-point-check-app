@@ -23,27 +23,29 @@ class NavItem extends StatelessWidget {
         child: TextButton(
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(
-                selected ? AppColors.Primary : Colors.white),
+              selected ? AppColors.Primary : Colors.white,
+            ),
             foregroundColor: MaterialStateProperty.all(
-                selected ? Colors.white : AppColors.Primary),
+              selected ? Colors.white : AppColors.Primary,
+            ),
+            elevation: MaterialStateProperty.all(0),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18),
+                side: BorderSide.none,
+              ),
+            ),
           ),
           onPressed: handler,
           child: Container(
             child: Row(
               children: [
-                Icon(
-                  icon,
-                  size: 16,
-                  // color: selected ? AppColors.Primary : Colors.white,
-                ),
+                Icon(icon, size: 16),
                 SizedBox(width: 10),
                 Text(
                   label,
-                  style: TextStyle(
-                    // color: selected ? AppColors.Primary : Colors.white,
-                    fontSize: 13,
-                    decoration: TextDecoration.none,
-                  ),
+                  style:
+                      TextStyle(fontSize: 13, decoration: TextDecoration.none),
                 ),
               ],
             ),

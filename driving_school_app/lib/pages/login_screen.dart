@@ -9,6 +9,8 @@ import 'package:driving_school_app/routes/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../components/app_input.dart';
+
 class LoginPage extends StatefulWidget {
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -97,6 +99,9 @@ class _LoginPageState extends State<LoginPage> {
                 semanticsLabel: 'Signing in...',
               )
             : Card(
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
                 child: Form(
                   key: _form,
                   child: SingleChildScrollView(
@@ -104,12 +109,12 @@ class _LoginPageState extends State<LoginPage> {
                       padding: EdgeInsets.all(40),
                       width: 300,
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          TextFormField(
+                          AppTextFormField(
                             onChanged: (value) =>
                                 _usernameKey.currentState?.validate(),
-                            decoration:
-                                InputDecoration(labelText: 'Phone Number'),
+                            label: 'Phone Number',
                             key: _usernameKey,
                             initialValue: _username,
                             textInputAction: TextInputAction.next,
@@ -120,8 +125,11 @@ class _LoginPageState extends State<LoginPage> {
                                 ? null
                                 : 'Please enter a valid username',
                           ),
-                          TextFormField(
-                            decoration: InputDecoration(labelText: 'Password'),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          AppTextFormField(
+                            label: 'Password',
                             textInputAction: TextInputAction.next,
                             obscureText: true,
                             initialValue: _password,
