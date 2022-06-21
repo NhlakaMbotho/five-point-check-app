@@ -43,16 +43,15 @@ class _ProfileEditState extends State<ProfileEdit> {
           flex: 4,
           child: Column(
             children: [
-              Expanded(
-                flex: 1,
+              SizedBox(
+                height: 200,
                 child: Placeholder(
-                  color: Colors.transparent,
+                  color: Colors.green,
                 ),
               ),
               Expanded(
                 flex: 3,
-                child: Expanded(
-                    child: Form(
+                child: Form(
                   key: _form,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -123,7 +122,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                       ],
                     ),
                   ),
-                )),
+                ),
               ),
             ],
           ),
@@ -131,7 +130,7 @@ class _ProfileEditState extends State<ProfileEdit> {
         Expanded(
           flex: 2,
           child: Placeholder(
-            color: Colors.transparent,
+            color: Colors.red,
           ),
         )
       ]),
