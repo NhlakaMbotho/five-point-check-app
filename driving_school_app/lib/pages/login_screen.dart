@@ -9,7 +9,8 @@ import 'package:driving_school_app/routes/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../components/app_input.dart';
+import '../components/app_button.dart';
+import '../components/app_text_form_field.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -143,11 +144,8 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           Container(
                             margin: EdgeInsets.only(top: 20),
-                            child: ElevatedButton(
-                              style: TextButton.styleFrom(
-                                primary: Colors.white,
-                                // minimumSize: Size(88, 36),
-                              ),
+                            child: AppButton(
+                              selected: true,
                               onPressed: () {
                                 submitForm(context);
                                 print("logging in...");
@@ -157,11 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           Container(
                             margin: EdgeInsets.only(top: 20),
-                            child: TextButton(
-                              style: TextButton.styleFrom(
-                                primary: AppColors.Primary,
-                                // minimumSize: Size(88, 36),
-                              ),
+                            child: AppButton(
                               onPressed: () {
                                 print("logging up...");
                               },
