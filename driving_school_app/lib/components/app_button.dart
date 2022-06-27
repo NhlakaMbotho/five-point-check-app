@@ -15,27 +15,32 @@ class AppButton extends StatelessWidget {
         child = child;
 
   Widget build(BuildContext context) {
-    print('button parent width ${MediaQuery.of(context).size.width}');
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(
-          selected ? AppColors.Primary : Colors.white,
-        ),
-        shadowColor:
-            MaterialStateProperty.all(AppColors.Primary.withOpacity(.1)),
-        foregroundColor: MaterialStateProperty.all(
-          selected ? Colors.white : AppColors.Primary,
-        ),
-        elevation: MaterialStateProperty.all(20),
-        shape: MaterialStateProperty.all(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18),
-            side: BorderSide.none,
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return ElevatedButton(
+          onPressed: onPressed,
+          style: ButtonStyle(
+            minimumSize:
+                MaterialStateProperty.all(Size(constraints.maxWidth, 50)),
+            backgroundColor: MaterialStateProperty.all(
+              selected ? AppColors.Primary : Colors.white,
+            ),
+            shadowColor:
+                MaterialStateProperty.all(AppColors.Primary.withOpacity(.1)),
+            foregroundColor: MaterialStateProperty.all(
+              selected ? Colors.white : AppColors.Primary,
+            ),
+            elevation: MaterialStateProperty.all(20),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18),
+                side: BorderSide.none,
+              ),
+            ),
           ),
-        ),
-      ),
-      child: child,
+          child: child,
+        );
+      },
     );
   }
 }

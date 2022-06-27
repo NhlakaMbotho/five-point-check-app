@@ -2,11 +2,38 @@ import 'package:driving_school_app/constants/colors.dart';
 import 'package:driving_school_app/models/user.dart';
 import 'package:driving_school_app/providers/user.provider.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'app_button.dart';
 import 'app_text_form_field.dart';
+
+Future<void> _showMyDialog(context) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('AlertDialog Title'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: const <Widget>[
+              Text('This is a demo alert dialog.'),
+              Text('Would you like to approve of this message?'),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Approve'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
 
 class ProfileEdit extends StatefulWidget {
   @override
@@ -41,81 +68,104 @@ class _ProfileEditState extends State<ProfileEdit> {
               Flexible(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Form(
-                    child: GridView(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 20,
-                        mainAxisExtent: 60,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Form(
+                          child: GridView(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 10,
+                              crossAxisSpacing: 20,
+                              mainAxisExtent: 60,
+                            ),
+                            children: [
+                              AppTextFormField(
+                                label: 'First Name',
+                                onChanged: (value) {
+                                  setState(() => _firstName = value);
+                                  _firstNameKey.currentState?.validate();
+                                },
+                                key: _firstNameKey,
+                                initialValue: user.firstName,
+                                textInputAction: TextInputAction.next,
+                                onFieldSubmitted: (_) =>
+                                    FocusScope.of(context).nextFocus(),
+                                onSaved: (_) => _firstName = _!,
+                                validator: (value) => value!.length > 0
+                                    ? null
+                                    : 'Please enter a valid first name',
+                              ),
+                              AppTextFormField(
+                                label: 'Last Name',
+                                onChanged: (value) {
+                                  setState(() => _lastName = value);
+                                  _lastNameKey.currentState?.validate();
+                                },
+                                key: _lastNameKey,
+                                initialValue: user.lastName,
+                                textInputAction: TextInputAction.next,
+                                onFieldSubmitted: (_) =>
+                                    FocusScope.of(context).nextFocus(),
+                                onSaved: (_) => _lastName = _!,
+                                validator: (value) => value!.length > 0
+                                    ? null
+                                    : 'Please enter a valid last name',
+                              ),
+                              AppTextFormField(
+                                label: 'Email',
+                                onChanged: (value) {
+                                  setState(() => _email = value);
+                                  _emailKey.currentState?.validate();
+                                },
+                                key: _emailKey,
+                                initialValue: user.email,
+                                textInputAction: TextInputAction.next,
+                                onFieldSubmitted: (_) =>
+                                    FocusScope.of(context).nextFocus(),
+                                onSaved: (_) => _email = _!,
+                                validator: (value) => value!.length > 0
+                                    ? null
+                                    : 'Please enter a valid email address',
+                              ),
+                              AppTextFormField(
+                                onChanged: (value) {
+                                  setState(() => _cellNo = value);
+                                  _cellNoKey.currentState?.validate();
+                                },
+                                label: 'Cell Number',
+                                key: _cellNoKey,
+                                initialValue: user.phoneNo,
+                                textInputAction: TextInputAction.next,
+                                onFieldSubmitted: (_) =>
+                                    FocusScope.of(context).nextFocus(),
+                                onSaved: (_) => _cellNo = _!,
+                                validator: (value) => value!.length > 0
+                                    ? null
+                                    : 'Please enter a valid cell number',
+                              ),
+                              // AppButton(
+                              //   child: Text('Save'),
+                              //   selected: true,
+                              //   onPressed: () {
+                              //     _showMyDialog(context);
+                              //   },
+                              // )
+                            ],
+                          ),
+                        ),
                       ),
-                      children: [
-                        AppTextFormField(
-                          label: 'First Name',
-                          onChanged: (value) {
-                            setState(() => _firstName = value);
-                            _firstNameKey.currentState?.validate();
-                          },
-                          key: _firstNameKey,
-                          initialValue: user.firstName,
-                          textInputAction: TextInputAction.next,
-                          onFieldSubmitted: (_) =>
-                              FocusScope.of(context).nextFocus(),
-                          onSaved: (_) => _firstName = _!,
-                          validator: (value) => value!.length > 0
-                              ? null
-                              : 'Please enter a valid first name',
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 20),
+                        width: 300,
+                        child: AppButton(
+                          child: Text('Save'),
+                          onPressed: () {},
+                          selected: true,
                         ),
-                        AppTextFormField(
-                          label: 'Last Name',
-                          onChanged: (value) {
-                            setState(() => _lastName = value);
-                            _lastNameKey.currentState?.validate();
-                          },
-                          key: _lastNameKey,
-                          initialValue: user.lastName,
-                          textInputAction: TextInputAction.next,
-                          onFieldSubmitted: (_) =>
-                              FocusScope.of(context).nextFocus(),
-                          onSaved: (_) => _lastName = _!,
-                          validator: (value) => value!.length > 0
-                              ? null
-                              : 'Please enter a valid last name',
-                        ),
-                        AppTextFormField(
-                          label: 'Email',
-                          onChanged: (value) {
-                            setState(() => _email = value);
-                            _emailKey.currentState?.validate();
-                          },
-                          key: _emailKey,
-                          initialValue: user.email,
-                          textInputAction: TextInputAction.next,
-                          onFieldSubmitted: (_) =>
-                              FocusScope.of(context).nextFocus(),
-                          onSaved: (_) => _email = _!,
-                          validator: (value) => value!.length > 0
-                              ? null
-                              : 'Please enter a valid email address',
-                        ),
-                        AppTextFormField(
-                          onChanged: (value) {
-                            setState(() => _cellNo = value);
-                            _cellNoKey.currentState?.validate();
-                          },
-                          label: 'Cell Number',
-                          key: _cellNoKey,
-                          initialValue: user.phoneNo,
-                          textInputAction: TextInputAction.next,
-                          onFieldSubmitted: (_) =>
-                              FocusScope.of(context).nextFocus(),
-                          onSaved: (_) => _cellNo = _!,
-                          validator: (value) => value!.length > 0
-                              ? null
-                              : 'Please enter a valid cell number',
-                        ),
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ),
               )
