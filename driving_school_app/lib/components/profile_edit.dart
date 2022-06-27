@@ -1,4 +1,5 @@
 import 'package:driving_school_app/constants/colors.dart';
+import 'package:driving_school_app/models/user.dart';
 import 'package:driving_school_app/providers/user.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -26,20 +27,10 @@ class _ProfileEditState extends State<ProfileEdit> {
   String _cellNo = '';
   DateTime _dateOfBirth = DateTime.now();
 
-  void initValues(BuildContext context) {
-    final user = Provider.of<UserProvider>(context).user;
-    setState(() {
-      _firstName = user.firstName;
-      _lastName = user.lastName;
-      _email = user.email;
-      _cellNo = user.phoneNo;
-      _dateOfBirth = DateTime.parse(user.dateOfBirth);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    initValues(context);
+    final user = Provider.of<UserProvider>(context).user;
+    initValues(user);
     return Center(
       child: Row(children: [
         Flexible(
@@ -48,72 +39,86 @@ class _ProfileEditState extends State<ProfileEdit> {
             children: [
               ProfileAvatarWrapper(firstName: _firstName, lastName: _lastName),
               Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Form(
-                child: GridView(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
-                    mainAxisExtent: 60,
+                    child: GridView(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 20,
+                        mainAxisExtent: 60,
+                      ),
+                      children: [
+                        AppTextFormField(
+                          label: 'First Name',
+                          onChanged: (value) {
+                            setState(() => _firstName = value);
+                            _firstNameKey.currentState?.validate();
+                          },
+                          key: _firstNameKey,
+                          initialValue: user.firstName,
+                          textInputAction: TextInputAction.next,
+                          onFieldSubmitted: (_) =>
+                              FocusScope.of(context).nextFocus(),
+                          onSaved: (_) => _firstName = _!,
+                          validator: (value) => value!.length > 0
+                              ? null
+                              : 'Please enter a valid first name',
+                        ),
+                        AppTextFormField(
+                          label: 'Last Name',
+                          onChanged: (value) {
+                            setState(() => _lastName = value);
+                            _lastNameKey.currentState?.validate();
+                          },
+                          key: _lastNameKey,
+                          initialValue: user.lastName,
+                          textInputAction: TextInputAction.next,
+                          onFieldSubmitted: (_) =>
+                              FocusScope.of(context).nextFocus(),
+                          onSaved: (_) => _lastName = _!,
+                          validator: (value) => value!.length > 0
+                              ? null
+                              : 'Please enter a valid last name',
+                        ),
+                        AppTextFormField(
+                          label: 'Email',
+                          onChanged: (value) {
+                            setState(() => _email = value);
+                            _emailKey.currentState?.validate();
+                          },
+                          key: _emailKey,
+                          initialValue: user.email,
+                          textInputAction: TextInputAction.next,
+                          onFieldSubmitted: (_) =>
+                              FocusScope.of(context).nextFocus(),
+                          onSaved: (_) => _email = _!,
+                          validator: (value) => value!.length > 0
+                              ? null
+                              : 'Please enter a valid email address',
+                        ),
+                        AppTextFormField(
+                          onChanged: (value) {
+                            setState(() => _cellNo = value);
+                            _cellNoKey.currentState?.validate();
+                          },
+                          label: 'Cell Number',
+                          key: _cellNoKey,
+                          initialValue: user.phoneNo,
+                          textInputAction: TextInputAction.next,
+                          onFieldSubmitted: (_) =>
+                              FocusScope.of(context).nextFocus(),
+                          onSaved: (_) => _cellNo = _!,
+                          validator: (value) => value!.length > 0
+                              ? null
+                              : 'Please enter a valid cell number',
+                        ),
+                      ],
+                    ),
                   ),
-                  children: [
-                    AppTextFormField(
-                      label: 'First Name',
-                      onChanged: (value) =>
-                          _firstNameKey.currentState?.validate(),
-                      key: _firstNameKey,
-                      initialValue: _firstName,
-                      textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (_) =>
-                          FocusScope.of(context).nextFocus(),
-                      onSaved: (_) => _firstName = _!,
-                      validator: (value) => value!.length > 0
-                          ? null
-                          : 'Please enter a valid first name',
-                    ),
-                    AppTextFormField(
-                      label: 'Last Name',
-                      onChanged: (value) =>
-                          _lastNameKey.currentState?.validate(),
-                      key: _lastNameKey,
-                      initialValue: _lastName,
-                      textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (_) =>
-                          FocusScope.of(context).nextFocus(),
-                      onSaved: (_) => _lastName = _!,
-                      validator: (value) => value!.length > 0
-                          ? null
-                          : 'Please enter a valid last name',
-                    ),
-                    AppTextFormField(
-                      label: 'Email',
-                      onChanged: (value) => _emailKey.currentState?.validate(),
-                      key: _emailKey,
-                      initialValue: _email,
-                      textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (_) =>
-                          FocusScope.of(context).nextFocus(),
-                      onSaved: (_) => _email = _!,
-                      validator: (value) => value!.length > 0
-                          ? null
-                          : 'Please enter a valid email address',
-                    ),
-                    AppTextFormField(
-                      onChanged: (value) => _cellNoKey.currentState?.validate(),
-                      label: 'Cell Number',
-                      key: _cellNoKey,
-                      initialValue: _cellNo,
-                      textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (_) =>
-                          FocusScope.of(context).nextFocus(),
-                      onSaved: (_) => _cellNo = _!,
-                      validator: (value) => value!.length > 0
-                          ? null
-                          : 'Please enter a valid cell number',
-                    ),
-                  ],
                 ),
-              ))
+              )
             ],
           ),
         ),
@@ -125,6 +130,11 @@ class _ProfileEditState extends State<ProfileEdit> {
         )
       ]),
     );
+  }
+
+  void initValues(User user) {
+    _firstName = _firstName.length > 0 ? _firstName : user.firstName;
+    _lastName = _lastName.length > 0 ? _lastName : user.lastName;
   }
 }
 
