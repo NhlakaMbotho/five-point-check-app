@@ -32,6 +32,7 @@ class AppTextFormField extends TextFormField {
     ValueChanged<String>? onFieldSubmitted,
     FormFieldSetter<String>? onSaved,
     FormFieldValidator<String>? validator,
+    List<TextInputFormatter>? inputFormatters,
   }) : super(
           key: key,
           onChanged: onChanged,
@@ -41,6 +42,7 @@ class AppTextFormField extends TextFormField {
           obscureText: obscureText,
           onSaved: onSaved,
           validator: validator,
+          inputFormatters: inputFormatters,
           decoration: AppInputDecoration(label),
           style: TextStyle(
             color: AppColors.Primary,

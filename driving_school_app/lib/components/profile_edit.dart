@@ -2,6 +2,7 @@ import 'package:driving_school_app/constants/colors.dart';
 import 'package:driving_school_app/models/user.dart';
 import 'package:driving_school_app/providers/user.provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:provider/provider.dart';
 
 import 'app_button.dart';
@@ -136,6 +137,9 @@ class _ProfileEditState extends State<ProfileEdit> {
                                 },
                                 label: 'Cell Number',
                                 key: _cellNoKey,
+                                inputFormatters: [
+                                  MaskedInputFormatter('(###) ###-####')
+                                ],
                                 initialValue: user.phoneNo,
                                 textInputAction: TextInputAction.next,
                                 onFieldSubmitted: (_) =>
@@ -144,25 +148,30 @@ class _ProfileEditState extends State<ProfileEdit> {
                                 validator: (value) => value!.length > 0
                                     ? null
                                     : 'Please enter a valid cell number',
-                              ),
-                              // AppButton(
-                              //   child: Text('Save'),
-                              //   selected: true,
-                              //   onPressed: () {
-                              //     _showMyDialog(context);
-                              //   },
-                              // )
+                              )
                             ],
                           ),
                         ),
                       ),
                       Container(
                         margin: const EdgeInsets.only(bottom: 20),
-                        width: 300,
-                        child: AppButton(
-                          child: Text('Save'),
-                          onPressed: () {},
-                          selected: true,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: AppButton(
+                                child: Text('Reset'),
+                                onPressed: () {},
+                              ),
+                            ),
+                            SizedBox(width: 20),
+                            Expanded(
+                              child: AppButton(
+                                child: Text('Save'),
+                                onPressed: () {},
+                                selected: true,
+                              ),
+                            ),
+                          ],
                         ),
                       )
                     ],

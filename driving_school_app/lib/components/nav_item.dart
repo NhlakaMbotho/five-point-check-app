@@ -44,8 +44,10 @@ class NavItem extends StatelessWidget {
                 SizedBox(width: 10),
                 Text(
                   label,
-                  style:
-                      TextStyle(fontSize: 13, decoration: TextDecoration.none),
+                  style: TextStyle(
+                      fontSize: 13,
+                      decoration: TextDecoration.none,
+                      color: selected ? Colors.white : AppColors.Dark),
                 ),
               ],
             ),

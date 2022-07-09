@@ -8,6 +8,7 @@ class MainPage extends StatelessWidget {
   List<AppNav> _navOptions = [
     AppNav('Home', Icons.home, DashboardRoute()),
     AppNav('Profile', Icons.person, ProfileRoute()),
+    AppNav('Accounts', Icons.person, AccountsRoute()),
     AppNav('Settings', Icons.settings, SettingsRoute()),
     AppNav('Logout', Icons.logout_outlined, LoginRoute())
   ];

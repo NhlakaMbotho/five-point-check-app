@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../constants/colors.dart';
 
 class AppButton extends StatelessWidget {
-  VoidCallback? onPressed;
-  Widget child;
-  bool selected;
+  final VoidCallback? onPressed;
+  final Widget child;
+  final bool selected;
   AppButton({
     required VoidCallback? onPressed,
     required Widget child,
@@ -30,6 +30,8 @@ class AppButton extends StatelessWidget {
             foregroundColor: MaterialStateProperty.all(
               selected ? Colors.white : AppColors.Primary,
             ),
+            // textStyle: MaterialStateProperty.all(
+            //     TextStyle(color: selected ? Colors.white : AppColors.Dark)),
             elevation: MaterialStateProperty.all(20),
             shape: MaterialStateProperty.all(
               RoundedRectangleBorder(
