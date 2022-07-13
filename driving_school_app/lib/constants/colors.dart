@@ -9,6 +9,8 @@ class AppColors {
   static const Color Dark = Color(0xFF455A64);
 }
 
+enum AppStyleTypes { PRIMARY, SECONDARY, TERTIARY }
+
 enum LessonStatus {
   PLANNED,
   MISSED,

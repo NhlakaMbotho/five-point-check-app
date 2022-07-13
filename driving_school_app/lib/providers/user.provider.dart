@@ -9,4 +9,10 @@ class UserProvider extends BaseHttpProvider with ChangeNotifier {
   setUser(User user) {
     this.user = user;
   }
+
+  Future<List<User>> getAll() async {
+    var response = await get<List<User>>('/api/user');
+    var list = response.getBody() as List<dynamic>;
+    return list.map((user) => new User.fromJson(user)).toList();
+  }
 }

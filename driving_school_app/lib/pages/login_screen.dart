@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:driving_school_app/constants/colors.dart';
+import 'package:driving_school_app/mixins/base.mixin.dart';
 import 'package:driving_school_app/models/error.dart';
 import 'package:driving_school_app/providers/authentication_provider.dart';
 import 'package:driving_school_app/providers/user.provider.dart';
@@ -17,7 +18,7 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> with BaseMixin {
   final _form = GlobalKey<FormState>();
   final _usernameKey = GlobalKey<FormFieldState>();
   final _passwordKey = GlobalKey<FormFieldState>();
@@ -56,35 +57,16 @@ class _LoginPageState extends State<LoginPage> {
         ).isAuthenticated}');
         AutoRouter.of(context).replace(MainRoute());
       } on ServiceError catch (error) {
-        showError(error.message);
+        showError(error.message, context);
       } on SocketException {
-        showError('Could not reach server, please check network connection!');
+        showError('Could not reach server, please check network connection!',
+            context);
       } on Error catch (error) {
-        showError(error.toString());
+        showError(error.toString(), context);
       } finally {
         _showLoader(false);
       }
     }
-  }
-
-  void showError(String? message) {
-    showDialog<String>(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: const Text('Authentication Error'),
-        content: Text(message ?? 'Error'),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.pop(context, 'Cancel'),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, 'OK'),
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
   }
 
   @override
@@ -96,9 +78,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
       body: Center(
         child: _loaderState
-            ? CircularProgressIndicator(
-                semanticsLabel: 'Signing in...',
-              )
+            ? appLoader
             : Card(
                 elevation: 0,
                 shape: RoundedRectangleBorder(

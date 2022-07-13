@@ -91,6 +91,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                 key: _firstNameKey,
                                 initialValue: user.firstName,
                                 textInputAction: TextInputAction.next,
+                                styleType: AppStyleTypes.SECONDARY,
                                 onFieldSubmitted: (_) =>
                                     FocusScope.of(context).nextFocus(),
                                 onSaved: (_) => _firstName = _!,
@@ -107,6 +108,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                 key: _lastNameKey,
                                 initialValue: user.lastName,
                                 textInputAction: TextInputAction.next,
+                                styleType: AppStyleTypes.SECONDARY,
                                 onFieldSubmitted: (_) =>
                                     FocusScope.of(context).nextFocus(),
                                 onSaved: (_) => _lastName = _!,
@@ -123,6 +125,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                 key: _emailKey,
                                 initialValue: user.email,
                                 textInputAction: TextInputAction.next,
+                                styleType: AppStyleTypes.SECONDARY,
                                 onFieldSubmitted: (_) =>
                                     FocusScope.of(context).nextFocus(),
                                 onSaved: (_) => _email = _!,
@@ -142,6 +145,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                 ],
                                 initialValue: user.phoneNo,
                                 textInputAction: TextInputAction.next,
+                                styleType: AppStyleTypes.SECONDARY,
                                 onFieldSubmitted: (_) =>
                                     FocusScope.of(context).nextFocus(),
                                 onSaved: (_) => _cellNo = _!,

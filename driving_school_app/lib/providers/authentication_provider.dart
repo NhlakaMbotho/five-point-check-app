@@ -52,7 +52,11 @@ class AuthProvider extends BaseHttpProvider with ChangeNotifier {
     var response = await post<User>(
         '/api/auth/login', {"cellNo": cellNo, "password": password});
     var body = User.fromJson(response.getBody());
-    this.setToken(body.token);
+    if (body.token != null) {
+      this.setToken(body.token!);
+    } else {
+      throw Exception('Invalid token');
+    }
     return body;
   }
 

@@ -4,11 +4,14 @@ import 'package:flutter/services.dart';
 import '../constants/colors.dart';
 
 class AppInputDecoration extends InputDecoration {
-  AppInputDecoration(String label)
+  AppInputDecoration(String label, AppStyleTypes styleType)
       : super(
             labelText: label,
             filled: true,
-            fillColor: AppColors.Primary.withOpacity(.05),
+            fillColor: (styleType == AppStyleTypes.PRIMARY
+                    ? AppColors.Primary
+                    : AppColors.Dark)
+                .withOpacity(.05),
             floatingLabelBehavior: FloatingLabelBehavior.never,
             floatingLabelAlignment: FloatingLabelAlignment.center,
             border: OutlineInputBorder(
@@ -16,12 +19,15 @@ class AppInputDecoration extends InputDecoration {
               borderSide: BorderSide.none,
             ),
             labelStyle: TextStyle(
-              color: AppColors.Primary.withOpacity(.4),
-            ));
+              color: styleType == AppStyleTypes.PRIMARY
+                  ? AppColors.Primary
+                  : AppColors.Dark.withOpacity(.4),
+            )) {
+    print('style type: $styleType}');
+  }
 }
 
 class AppTextFormField extends TextFormField {
-  var controller;
   AppTextFormField({
     required String label,
     Key? key,
@@ -33,6 +39,7 @@ class AppTextFormField extends TextFormField {
     FormFieldSetter<String>? onSaved,
     FormFieldValidator<String>? validator,
     List<TextInputFormatter>? inputFormatters,
+    AppStyleTypes styleType = AppStyleTypes.PRIMARY,
   }) : super(
           key: key,
           onChanged: onChanged,
@@ -43,9 +50,11 @@ class AppTextFormField extends TextFormField {
           onSaved: onSaved,
           validator: validator,
           inputFormatters: inputFormatters,
-          decoration: AppInputDecoration(label),
+          decoration: AppInputDecoration(label, styleType),
           style: TextStyle(
-            color: AppColors.Primary,
+            color: (styleType == AppStyleTypes.PRIMARY
+                ? AppColors.Primary
+                : AppColors.Dark),
             fontWeight: FontWeight.w400,
           ),
         );

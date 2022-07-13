@@ -1,6 +1,7 @@
+import 'dart:math';
+
 import 'package:driving_school_app/constants/colors.dart';
 import 'package:flutter/material.dart';
-
 import '../components/instructor_list.dart';
 import '../components/nav_item.dart';
 
@@ -15,6 +16,7 @@ class AccountsPage extends StatefulWidget {
 
 class AccountsPageState extends State<AccountsPage> {
   AccountViews selectedView = AccountViews.INSTRUCTORS;
+  bool loading = true;
 
   void setView(AccountViews view) {
     if (view == selectedView) {
@@ -36,24 +38,37 @@ class AccountsPageState extends State<AccountsPage> {
               children: [
                 TableHeader(),
                 Expanded(
-                    flex: 4,
-                    child: Padding(
-                      padding: EdgeInsets.all(20),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        borderOnForeground: false,
-                        elevation: 0,
-                        color: Colors.white,
-                        child: getSelectedView(),
+                  flex: 4,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(14),
+                        bottomRight: Radius.circular(14),
                       ),
-                    )),
+                    ),
+                    margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                    borderOnForeground: false,
+                    elevation: 0,
+                    color: Colors.white,
+                    child: getSelectedView(),
+                  ),
+                ),
               ],
             ),
           ),
         ],
       )),
       backgroundColor: AppColors.GreyLight,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: FloatingActionButton.small(
+        onPressed: () => print('Awe!'),
+        backgroundColor: AppColors.Primary,
+        foregroundColor: Colors.white,
+        elevation: 12,
+        focusElevation: 5,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Text('+'),
+      ),
     );
   }
 
@@ -78,10 +93,13 @@ class TableHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 20, left: 20),
       height: 40,
+      margin: EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 2),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(14),
+          topRight: Radius.circular(14),
+        ),
         color: Colors.white,
       ),
       child: Row(
@@ -93,7 +111,7 @@ class TableHeader extends StatelessWidget {
           Expanded(flex: 2, child: Center(child: RowText('Status'))),
           Expanded(flex: 2, child: Center(child: RowText('Planned Lessons'))),
           Expanded(flex: 2, child: Center(child: RowText('Total Hours'))),
-          Expanded(flex: 2, child: Center(child: RowText('Rating'))),
+          Expanded(flex: 2, child: Center(child: RowText('Av. Rating'))),
         ],
       ),
     );

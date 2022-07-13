@@ -35,7 +35,8 @@ class BaseHttpProvider {
   }
 
   @protected
-  Future get<Response>(url, body) {
-    return http.post(Uri.parse('$_root$url'), body: body);
+  Future<ServiceResponse> get<T>(String url) async {
+    var response = await http.get(Uri.parse('$_root$url'));
+    return ServiceResponse.fromResponse(response);
   }
 }
