@@ -3,13 +3,11 @@
 // @CustomAutoRouter
 import 'package:auto_route/auto_route.dart';
 import 'package:driving_school_app/auth-guard.dart';
-import 'package:driving_school_app/pages/accounts_screen.dart';
 import 'package:driving_school_app/pages/dashboard_screen.dart';
-import 'package:driving_school_app/pages/example_screen.dart';
 import 'package:driving_school_app/pages/profile_screen.dart';
 import 'package:driving_school_app/pages/settings_screen.dart';
-
-import '../components/scheduler/scheduler_wrapper_panel.dart';
+import '../pages/clients_screen.dart';
+import '../pages/instructors_screen.dart';
 import '../pages/login_screen.dart';
 import '../pages/main_screen.dart';
 
@@ -25,7 +23,8 @@ import '../pages/main_screen.dart';
         AutoRoute(page: DashboardPage, path: ''),
         AutoRoute(page: SettingsPage, path: 'settings'),
         AutoRoute(page: ProfilePage, path: 'profile'),
-        AutoRoute(page: AccountsPage, path: 'accounts'),
+        AutoRoute(page: InstructorsPage, path: 'instructors'),
+        AutoRoute(page: ClientsPage, path: 'clients'),
         RedirectRoute(path: 'login', redirectTo: '/login')
       ],
     ),

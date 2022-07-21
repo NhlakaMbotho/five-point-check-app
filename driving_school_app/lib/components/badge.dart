@@ -1,12 +1,12 @@
 import 'package:driving_school_app/constants/colors.dart';
-import 'package:driving_school_app/pages/accounts_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class Badge extends StatelessWidget {
   final String value;
-  Badge(String value) : value = value;
+  final bool primary;
+  Badge(String value, {bool primary = false})
+      : value = value,
+        primary = primary;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -14,13 +14,13 @@ class Badge extends StatelessWidget {
           child: Text(
         value,
         style: TextStyle(
-          color: AppColors.Dark,
+          color: primary ? Colors.white : AppColors.Dark,
         ),
       )),
       width: 30,
       height: 30,
       decoration: BoxDecoration(
-        color: AppColors.GreyLight,
+        color: primary ? AppColors.Primary : AppColors.GreyLight,
         borderRadius: BorderRadius.circular(16),
       ),
     );

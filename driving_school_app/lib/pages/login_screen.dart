@@ -57,12 +57,14 @@ class _LoginPageState extends State<LoginPage> with BaseMixin {
         ).isAuthenticated}');
         AutoRouter.of(context).replace(MainRoute());
       } on ServiceError catch (error) {
-        showError(error.message, context);
+        showError('Authentication', error.message, context);
       } on SocketException {
-        showError('Could not reach server, please check network connection!',
+        showError(
+            'Network',
+            'Server could not be reached, please check network connection!',
             context);
       } on Error catch (error) {
-        showError(error.toString(), context);
+        showError('Unknown Error', error.toString(), context);
       } finally {
         _showLoader(false);
       }

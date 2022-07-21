@@ -11,7 +11,7 @@ class ServiceResponse<T extends ResponseModel> extends http.Response {
   ServiceResponse.fromResponse(http.Response response)
       : super(response.body, response.statusCode) {
     if (statusCode != 200 && statusCode != 201) {
-      throw new ServiceError(body);
+      throw new ServiceError(body, statusCode);
     }
   }
 

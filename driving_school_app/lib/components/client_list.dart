@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:driving_school_app/components/rating.dart';
+import 'package:driving_school_app/components/progress_bar.dart';
 import 'package:driving_school_app/providers/user.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -11,17 +11,11 @@ import '../mixins/post-frame.mixin.dart';
 import '../models/error.dart';
 import '../models/user.dart';
 import 'badge.dart';
-import 'status.dart';
+import 'row_text.dart';
 
-class RowText extends Text {
-  const RowText(String text)
-      : super(text,
-            style: const TextStyle(fontSize: 12, color: AppColors.Dark));
-}
-
-class InstructorRow extends StatelessWidget {
+class ClientRow extends StatelessWidget {
   final User user;
-  InstructorRow(User user) : user = user;
+  ClientRow(User user) : user = user;
 
   formatNumber(String number) {
     if (number.length == 10) {
@@ -56,25 +50,33 @@ class InstructorRow extends StatelessWidget {
         Expanded(flex: 2, child: RowText(formatNumber(user.phoneNo))),
         Flexible(
             flex: 2,
-            child: Center(child: StatusWidget(AvailabilityStatus.AVAILABLE))),
+            child: Center(child: ProgressBar(user.progressPercentage))),
         Expanded(
             flex: 2,
-            child: Center(child: Badge(user.pendingLessonsCount.toString()))),
+            child: Center(
+                child: Badge(
+              user.code.toString(),
+              primary: true,
+            ))),
         Expanded(
             flex: 2,
-            child: Center(child: Badge(user.totalHoursThisWeek.toString()))),
-        Expanded(flex: 2, child: Center(child: Rating(2))),
+            child:
+                Center(child: Badge(user.clientCompletedLessons.toString()))),
+        Expanded(
+            flex: 2,
+            child:
+                Center(child: Badge(user.clientRemainingLessons.toString()))),
       ],
     );
   }
 }
 
-class InstructorList extends StatefulWidget {
+class ClientList extends StatefulWidget {
   @override
-  State<InstructorList> createState() => _InstructorListState();
+  State<ClientList> createState() => _ClientListState();
 }
 
-class _InstructorListState extends State<InstructorList>
+class _ClientListState extends State<ClientList>
     with PostFrameMixin, BaseMixin {
   bool loading = false;
   List<User> users = [];
@@ -102,10 +104,7 @@ class _InstructorListState extends State<InstructorList>
       List<User> _users =
           await Provider.of<UserProvider>(context, listen: false).getAll();
       setState(() {
-        users = _users
-            .where((user) =>
-                user.role.name == 'INSTRUCTOR' || user.role.name == 'ADMIN')
-            .toList();
+        users = _users.where((user) => user.role.name == 'CLIENT').toList();
         loading = false;
         print('setting users ${users.length}');
       });
@@ -134,7 +133,7 @@ class _InstructorListState extends State<InstructorList>
     return ListView.separated(
       itemBuilder: (context, index) {
         return SizedBox(
-          child: InstructorRow(users[index]),
+          child: ClientRow(users[index]),
           height: 60,
         );
       },

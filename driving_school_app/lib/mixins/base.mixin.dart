@@ -14,20 +14,48 @@ mixin BaseMixin<T extends Widget> {
     );
   }
 
-  void showError(String? message, context) {
+  void showError(String title, String? message, context) {
     showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('Authentication Error'),
-        content: Text(message ?? 'Error'),
+        titleTextStyle: TextStyle(fontWeight: FontWeight.w700),
+        title: Row(
+          children: [
+            Container(
+              child: const Icon(
+                Icons.dangerous_rounded,
+                color: Color(0xFF63423F),
+              ),
+              margin: EdgeInsets.only(right: 10),
+            ),
+            Text(
+              title,
+              style: TextStyle(
+                color: Color(0xFF63423F),
+              ),
+            ),
+          ],
+        ),
+        content: SizedBox(
+          height: 40,
+          width: 140,
+          child: Center(
+            child: Text(message ?? 'Error',
+                style: TextStyle(
+                  color: Color(0xFF63423F),
+                )),
+          ),
+        ),
+        backgroundColor: Color(0xFFFEF8FA),
         actions: <Widget>[
           TextButton(
-            onPressed: () => Navigator.pop(context, 'Cancel'),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
             onPressed: () => Navigator.pop(context, 'OK'),
-            child: const Text('OK'),
+            child: const Text(
+              'OK',
+              style: TextStyle(
+                color: Color(0xFF63423F),
+              ),
+            ),
           ),
         ],
       ),

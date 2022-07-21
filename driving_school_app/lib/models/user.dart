@@ -12,8 +12,10 @@ class User implements ResponseModel {
   String firstName;
   String lastName;
   String email;
+  int code = 10;
   String phoneNo;
   List<Booking> instructorBookings = [];
+  List<Booking> clientBookings = [];
   Role role;
   String? token;
 
@@ -33,6 +35,11 @@ class User implements ResponseModel {
           .map((_rawBooking) => Booking(_rawBooking))
           .toList();
     }
+    if (data['clientBookings'] != null) {
+      clientBookings = (data['clientBookings'] as List<dynamic>)
+          .map((_rawBooking) => Booking(_rawBooking))
+          .toList();
+    }
   }
 
   int get pendingLessonsCount {
@@ -40,6 +47,24 @@ class User implements ResponseModel {
         .instructorBookings
         .where((b) => b.status == BookingStatus.REQUESTED)
         .length;
+  }
+
+  int get clientCompletedLessons {
+    return this
+        .clientBookings
+        .where((b) => b.status == BookingStatus.COMPLETED)
+        .length;
+  }
+
+  int get clientRemainingLessons {
+    return this
+        .clientBookings
+        .where((b) => b.status != BookingStatus.COMPLETED)
+        .length;
+  }
+
+  double get progressPercentage {
+    return 40.0;
   }
 
   int get totalHoursThisWeek {

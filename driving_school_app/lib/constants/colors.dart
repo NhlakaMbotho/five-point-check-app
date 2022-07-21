@@ -18,3 +18,5 @@ enum LessonStatus {
 }
 
 enum AvailabilityStatus { AVAILABLE, OFFLINE, BUSY }
+
+enum UserType { CLIENT, INSTRUCTOR, ADMIN }
