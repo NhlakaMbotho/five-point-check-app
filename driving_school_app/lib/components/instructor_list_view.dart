@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../constants/colors.dart';
-import 'client_list.dart';
 import 'instructor_list.dart';
 import 'table_header.dart';
 
 class InstructorListView extends StatelessWidget {
-  const InstructorListView({
-    Key? key,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Column(

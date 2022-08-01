@@ -35,14 +35,14 @@ packages:
       name: auto_route
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.1"
+    version: "4.2.1"
   auto_route_generator:
     dependency: "direct dev"
     description:
       name: auto_route_generator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.0"
+    version: "4.2.0"
   base58check:
     dependency: transitive
     description:
@@ -257,14 +257,14 @@ packages:
       name: flutter_svg
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.23.0+1"
+    version: "1.1.1+1"
   flutter_svg_provider:
     dependency: "direct main"
     description:
       name: flutter_svg_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.11"
+    version: "1.0.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -437,21 +437,21 @@ packages:
       name: path_drawing
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.1+1"
+    version: "1.0.0"
   path_parsing:
     dependency: transitive
     description:
       name: path_parsing
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.1"
+    version: "1.0.0"
   petitparser:
     dependency: transitive
     description:
       name: petitparser
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.4.0"
+    version: "5.0.0"
   pool:
     dependency: transitive
     description:
@@ -610,7 +610,7 @@ packages:
       name: xml
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.3.1"
+    version: "6.1.0"
   yaml:
     dependency: transitive
     description:
@@ -619,5 +619,5 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=2.17.0-0 <3.0.0"
-  flutter: ">=2.0.0"
+  dart: ">=2.17.0 <3.0.0"
+  flutter: ">=3.0.0"
