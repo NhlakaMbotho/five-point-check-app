@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'constants/colors.dart';
 import 'providers/instructor_provider.dart';
-import 'providers/router_auth_provider.dart';
 import 'routes/router.gr.dart';
 
 void main() async {

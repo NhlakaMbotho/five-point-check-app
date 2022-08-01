@@ -30,7 +30,7 @@ class AppButton extends StatelessWidget {
             foregroundColor: MaterialStateProperty.all(
               selected ? Colors.white : AppColors.Primary,
             ),
-            elevation: MaterialStateProperty.all(20),
+            elevation: selected ? MaterialStateProperty.all(20) : null,
             shape: MaterialStateProperty.all(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18),

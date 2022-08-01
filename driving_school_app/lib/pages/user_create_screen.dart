@@ -6,19 +6,27 @@ class UserCreatePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.GreyDark,
-      body: Card(
-        child: UserForm(),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(14),
-            bottomRight: Radius.circular(14),
-          ),
-        ),
-        margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
-        borderOnForeground: false,
-        elevation: 10,
-        color: Colors.white,
+      // backgroundColor: AppColors.GreyLight,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return Center(
+            child: Container(
+              width: constraints.maxWidth / 1.6,
+              padding: const EdgeInsets.all(40),
+              child: Card(
+                child: UserForm(),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(14)),
+                ),
+                margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                borderOnForeground: false,
+                elevation: 140,
+                shadowColor: Colors.grey.withOpacity(.1),
+                color: Colors.white,
+              ),
+            ),
+          );
+        },
       ),
     );
   }

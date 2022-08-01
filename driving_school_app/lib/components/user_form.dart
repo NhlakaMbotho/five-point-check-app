@@ -21,11 +21,21 @@ class _UserFormState extends State<UserForm> {
   final _emailKey = GlobalKey<FormFieldState>();
   final _cellNoKey = GlobalKey<FormFieldState>();
   final _dateOfBirthKey = GlobalKey<FormFieldState>();
+  final _addressLine1Key = GlobalKey<FormFieldState>();
+  final _addressLine2Key = GlobalKey<FormFieldState>();
+  final _addressLine3Key = GlobalKey<FormFieldState>();
+  final _addressLine4Key = GlobalKey<FormFieldState>();
+  final _addressLine5Key = GlobalKey<FormFieldState>();
 
   String _firstName = '';
   String _lastName = '';
   String _email = '';
   String _cellNo = '';
+  String _addressLine1 = '';
+  String _addressLine2 = '';
+  String _addressLine3 = '';
+  String _addressLine4 = '';
+  String _addressLine5 = '';
   DateTime _dateOfBirth = DateTime.now();
   @override
   Widget build(BuildContext context) {
@@ -107,29 +117,91 @@ class _UserFormState extends State<UserForm> {
                             setState(() => _cellNo = value);
                             _cellNoKey.currentState?.validate();
                           },
-                          label: 'Cell Number',
+                          label: 'Phone No',
                           key: _cellNoKey,
+                          initialValue: '',
+                          textInputAction: TextInputAction.next,
+                          styleType: AppStyleTypes.SECONDARY,
                           inputFormatters: [
                             MaskedInputFormatter('(###) ###-####')
                           ],
-                          initialValue: user.phoneNo,
-                          textInputAction: TextInputAction.next,
-                          styleType: AppStyleTypes.SECONDARY,
                           onFieldSubmitted: (_) =>
                               FocusScope.of(context).nextFocus(),
                           onSaved: (_) => _cellNo = _!,
                           validator: (value) => value!.length > 0
                               ? null
-                              : 'Please enter a valid cell number',
-                        )
+                              : 'Please enter a valid address',
+                        ),
+                        AppTextFormField(
+                          onChanged: (value) {
+                            setState(() => _addressLine1 = value);
+                            _addressLine1Key.currentState?.validate();
+                          },
+                          label: 'Address Line 1',
+                          key: _addressLine1Key,
+                          initialValue: '',
+                          textInputAction: TextInputAction.next,
+                          styleType: AppStyleTypes.SECONDARY,
+                          onFieldSubmitted: (_) =>
+                              FocusScope.of(context).nextFocus(),
+                          onSaved: (_) => _addressLine1 = _!,
+                          validator: (value) => value!.length > 0
+                              ? null
+                              : 'Please enter a valid address',
+                        ),
+                        AppTextFormField(
+                          onChanged: (value) {
+                            setState(() => _addressLine2 = value);
+                            _addressLine2Key.currentState?.validate();
+                          },
+                          label: 'Address Line 2',
+                          key: _addressLine2Key,
+                          initialValue: '',
+                          textInputAction: TextInputAction.next,
+                          styleType: AppStyleTypes.SECONDARY,
+                          onFieldSubmitted: (_) =>
+                              FocusScope.of(context).nextFocus(),
+                          onSaved: (_) => _addressLine2 = _!,
+                          validator: (value) => value!.length > 0
+                              ? null
+                              : 'Please enter a valid address',
+                        ),
+                        AppTextFormField(
+                          onChanged: (value) {
+                            setState(() => _addressLine3 = value);
+                            _addressLine3Key.currentState?.validate();
+                          },
+                          label: 'Address Line 3',
+                          key: _addressLine3Key,
+                          initialValue: '',
+                          textInputAction: TextInputAction.next,
+                          styleType: AppStyleTypes.SECONDARY,
+                          onFieldSubmitted: (_) =>
+                              FocusScope.of(context).nextFocus(),
+                          onSaved: (_) => _addressLine3 = _!,
+                          validator: (value) => value!.length > 0
+                              ? null
+                              : 'Please enter a valid address',
+                        ),
+                        AppTextFormField(
+                          onChanged: (value) {
+                            setState(() => _addressLine4 = value);
+                            _addressLine4Key.currentState?.validate();
+                          },
+                          label: 'Address Line 4',
+                          key: _addressLine4Key,
+                          initialValue: '',
+                          textInputAction: TextInputAction.next,
+                          styleType: AppStyleTypes.SECONDARY,
+                          onFieldSubmitted: (_) =>
+                              FocusScope.of(context).nextFocus(),
+                          onSaved: (_) => _addressLine4 = _!,
+                          validator: (value) => value!.length > 0
+                              ? null
+                              : 'Please enter a valid address',
+                        ),
                       ],
                     ),
-                  ),
-                ),
-                Expanded(
-                  flex: 3,
-                  child: Placeholder(
-                    color: Colors.red,
                   ),
                 ),
                 Container(
