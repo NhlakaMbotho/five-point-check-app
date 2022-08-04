@@ -1,12 +1,12 @@
 import 'package:driving_school_app/constants/colors.dart';
 import 'package:driving_school_app/models/user.dart';
+import 'package:driving_school_app/models/user_create.dart';
 import 'package:driving_school_app/providers/user.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:provider/provider.dart';
 
 import 'app_button.dart';
-import 'app_text_form_field.dart';
 import 'user_form.dart';
 
 Future<void> _showMyDialog(context) async {
@@ -44,16 +44,23 @@ class ProfileEdit extends StatelessWidget {
       child: Row(children: [
         Flexible(
           flex: 4,
-          child: UserForm(),
+          child: UserForm(
+            user: Provider.of<UserProvider>(context).user,
+            isEdit: true,
+            saveHandler: saveChanges,
+            resetHandler: () => {},
+          ),
         ),
         Flexible(
           flex: 2,
-          child: Placeholder(
-            color: Colors.red,
-          ),
+          child: SizedBox(),
         )
       ]),
     );
+  }
+
+  saveChanges(UserCreateModel user) {
+    print('user to be saved $user');
   }
 }
 

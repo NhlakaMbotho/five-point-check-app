@@ -1,17 +1,38 @@
+import 'package:driving_school_app/models/user_create.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
-import 'package:provider/provider.dart';
 
 import '../constants/colors.dart';
 import '../models/user.dart';
-import '../providers/user.provider.dart';
 import 'app_button.dart';
 import 'app_text_form_field.dart';
 import 'profile_edit.dart';
 
 class UserForm extends StatefulWidget {
+  User? _user = null;
+  final bool isEdit;
+  final void Function(UserCreateModel user) saveHandler;
+  void Function()? backHandler;
+  void Function()? resetHandler;
+  UserForm({
+    User? user,
+    required bool isEdit,
+    required void Function(UserCreateModel user) saveHandler,
+    void Function()? backHandler,
+    void Function()? resetHandler,
+  })  : isEdit = isEdit,
+        saveHandler = saveHandler,
+        backHandler = backHandler,
+        resetHandler = resetHandler {
+    user = _user;
+  }
   @override
-  State<UserForm> createState() => _UserFormState();
+  State<UserForm> createState() => _UserFormState(
+      user: _user,
+      isEdit: isEdit,
+      saveHandler: saveHandler,
+      backHandler: backHandler,
+      resetHandler: resetHandler);
 }
 
 class _UserFormState extends State<UserForm> {
@@ -20,30 +41,44 @@ class _UserFormState extends State<UserForm> {
   final _lastNameKey = GlobalKey<FormFieldState>();
   final _emailKey = GlobalKey<FormFieldState>();
   final _cellNoKey = GlobalKey<FormFieldState>();
-  final _dateOfBirthKey = GlobalKey<FormFieldState>();
   final _addressLine1Key = GlobalKey<FormFieldState>();
   final _addressLine2Key = GlobalKey<FormFieldState>();
   final _addressLine3Key = GlobalKey<FormFieldState>();
   final _addressLine4Key = GlobalKey<FormFieldState>();
   final _addressLine5Key = GlobalKey<FormFieldState>();
+  final bool isEdit;
+  UserCreateModel? _user = UserCreateModel();
+  void Function(UserCreateModel user) saveHandler;
+  void Function()? backHandler;
+  void Function()? resetHandler;
+  _UserFormState({
+    User? user,
+    required bool isEdit,
+    required void Function(UserCreateModel user) saveHandler,
+    void Function()? backHandler,
+    void Function()? resetHandler,
+  })  : isEdit = isEdit,
+        saveHandler = saveHandler,
+        backHandler = backHandler,
+        resetHandler = resetHandler {
+    if (user != null) {
+      _user = UserCreateModel.fromExistingUser(user);
+    }
+    if (isEdit && resetHandler == null) {
+      throw Exception('Please provide implementation to handle reset button');
+    } else if (!isEdit && backHandler == null) {
+      throw Exception('Please provide implementation to handle back button');
+    }
+  }
 
-  String _firstName = '';
-  String _lastName = '';
-  String _email = '';
-  String _cellNo = '';
-  String _addressLine1 = '';
-  String _addressLine2 = '';
-  String _addressLine3 = '';
-  String _addressLine4 = '';
-  String _addressLine5 = '';
-  DateTime _dateOfBirth = DateTime.now();
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserProvider>(context).user;
-    initValues(user);
     return Column(
       children: [
-        ProfileAvatarWrapper(firstName: _firstName, lastName: _lastName),
+        ProfileAvatarWrapper(
+          firstName: _user!.firstName,
+          lastName: _user!.lastName,
+        ),
         Flexible(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -53,6 +88,7 @@ class _UserFormState extends State<UserForm> {
                 Expanded(
                   flex: 1,
                   child: Form(
+                    key: _form,
                     child: GridView(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
@@ -64,16 +100,16 @@ class _UserFormState extends State<UserForm> {
                         AppTextFormField(
                           label: 'First Name',
                           onChanged: (value) {
-                            setState(() => _firstName = value);
+                            setState(() => _user!.firstName = value);
                             _firstNameKey.currentState?.validate();
                           },
                           key: _firstNameKey,
-                          initialValue: user.firstName,
+                          initialValue: _user!.firstName,
                           textInputAction: TextInputAction.next,
                           styleType: AppStyleTypes.SECONDARY,
                           onFieldSubmitted: (_) =>
                               FocusScope.of(context).nextFocus(),
-                          onSaved: (_) => _firstName = _!,
+                          onSaved: (_) => _user!.firstName = _!,
                           validator: (value) => value!.length > 0
                               ? null
                               : 'Please enter a valid first name',
@@ -81,16 +117,16 @@ class _UserFormState extends State<UserForm> {
                         AppTextFormField(
                           label: 'Last Name',
                           onChanged: (value) {
-                            setState(() => _lastName = value);
+                            setState(() => _user!.lastName = value);
                             _lastNameKey.currentState?.validate();
                           },
                           key: _lastNameKey,
-                          initialValue: user.lastName,
+                          initialValue: _user!.lastName,
                           textInputAction: TextInputAction.next,
                           styleType: AppStyleTypes.SECONDARY,
                           onFieldSubmitted: (_) =>
                               FocusScope.of(context).nextFocus(),
-                          onSaved: (_) => _lastName = _!,
+                          onSaved: (_) => _user!.lastName = _!,
                           validator: (value) => value!.length > 0
                               ? null
                               : 'Please enter a valid last name',
@@ -98,28 +134,28 @@ class _UserFormState extends State<UserForm> {
                         AppTextFormField(
                           label: 'Email',
                           onChanged: (value) {
-                            setState(() => _email = value);
+                            setState(() => _user!.email = value);
                             _emailKey.currentState?.validate();
                           },
                           key: _emailKey,
-                          initialValue: user.email,
+                          initialValue: _user!.email,
                           textInputAction: TextInputAction.next,
                           styleType: AppStyleTypes.SECONDARY,
                           onFieldSubmitted: (_) =>
                               FocusScope.of(context).nextFocus(),
-                          onSaved: (_) => _email = _!,
+                          onSaved: (_) => _user!.email = _!,
                           validator: (value) => value!.length > 0
                               ? null
                               : 'Please enter a valid email address',
                         ),
                         AppTextFormField(
                           onChanged: (value) {
-                            setState(() => _cellNo = value);
+                            setState(() => _user!.phoneNo = value);
                             _cellNoKey.currentState?.validate();
                           },
                           label: 'Phone No',
                           key: _cellNoKey,
-                          initialValue: '',
+                          initialValue: _user!.phoneNo,
                           textInputAction: TextInputAction.next,
                           styleType: AppStyleTypes.SECONDARY,
                           inputFormatters: [
@@ -127,14 +163,14 @@ class _UserFormState extends State<UserForm> {
                           ],
                           onFieldSubmitted: (_) =>
                               FocusScope.of(context).nextFocus(),
-                          onSaved: (_) => _cellNo = _!,
+                          onSaved: (_) => _user!.phoneNo = _!,
                           validator: (value) => value!.length > 0
                               ? null
                               : 'Please enter a valid address',
                         ),
                         AppTextFormField(
                           onChanged: (value) {
-                            setState(() => _addressLine1 = value);
+                            setState(() => _user!.addressLine1 = value);
                             _addressLine1Key.currentState?.validate();
                           },
                           label: 'Address Line 1',
@@ -144,14 +180,14 @@ class _UserFormState extends State<UserForm> {
                           styleType: AppStyleTypes.SECONDARY,
                           onFieldSubmitted: (_) =>
                               FocusScope.of(context).nextFocus(),
-                          onSaved: (_) => _addressLine1 = _!,
+                          onSaved: (_) => _user!.addressLine1 = _!,
                           validator: (value) => value!.length > 0
                               ? null
                               : 'Please enter a valid address',
                         ),
                         AppTextFormField(
                           onChanged: (value) {
-                            setState(() => _addressLine2 = value);
+                            setState(() => _user!.addressLine2 = value);
                             _addressLine2Key.currentState?.validate();
                           },
                           label: 'Address Line 2',
@@ -161,14 +197,14 @@ class _UserFormState extends State<UserForm> {
                           styleType: AppStyleTypes.SECONDARY,
                           onFieldSubmitted: (_) =>
                               FocusScope.of(context).nextFocus(),
-                          onSaved: (_) => _addressLine2 = _!,
+                          onSaved: (_) => _user!.addressLine2 = _!,
                           validator: (value) => value!.length > 0
                               ? null
                               : 'Please enter a valid address',
                         ),
                         AppTextFormField(
                           onChanged: (value) {
-                            setState(() => _addressLine3 = value);
+                            setState(() => _user!.addressLine3 = value);
                             _addressLine3Key.currentState?.validate();
                           },
                           label: 'Address Line 3',
@@ -178,14 +214,14 @@ class _UserFormState extends State<UserForm> {
                           styleType: AppStyleTypes.SECONDARY,
                           onFieldSubmitted: (_) =>
                               FocusScope.of(context).nextFocus(),
-                          onSaved: (_) => _addressLine3 = _!,
+                          onSaved: (_) => _user!.addressLine3 = _!,
                           validator: (value) => value!.length > 0
                               ? null
                               : 'Please enter a valid address',
                         ),
                         AppTextFormField(
                           onChanged: (value) {
-                            setState(() => _addressLine4 = value);
+                            setState(() => _user!.addressLine4 = value);
                             _addressLine4Key.currentState?.validate();
                           },
                           label: 'Address Line 4',
@@ -195,7 +231,24 @@ class _UserFormState extends State<UserForm> {
                           styleType: AppStyleTypes.SECONDARY,
                           onFieldSubmitted: (_) =>
                               FocusScope.of(context).nextFocus(),
-                          onSaved: (_) => _addressLine4 = _!,
+                          onSaved: (_) => _user!.addressLine4 = _!,
+                          validator: (value) => value!.length > 0
+                              ? null
+                              : 'Please enter a valid address',
+                        ),
+                        AppTextFormField(
+                          onChanged: (value) {
+                            setState(() => _user!.addressLine5 = value);
+                            _addressLine5Key.currentState?.validate();
+                          },
+                          label: 'Address Line 5',
+                          key: _addressLine5Key,
+                          initialValue: '',
+                          textInputAction: TextInputAction.next,
+                          styleType: AppStyleTypes.SECONDARY,
+                          onFieldSubmitted: (_) =>
+                              FocusScope.of(context).nextFocus(),
+                          onSaved: (_) => _user!.addressLine5 = _!,
                           validator: (value) => value!.length > 0
                               ? null
                               : 'Please enter a valid address',
@@ -210,15 +263,15 @@ class _UserFormState extends State<UserForm> {
                     children: [
                       Expanded(
                         child: AppButton(
-                          child: Text('Reset'),
-                          onPressed: () {},
+                          child: Text(isEdit ? 'Reset' : 'Back'),
+                          onPressed: isEdit ? resetHandler : backHandler,
                         ),
                       ),
                       SizedBox(width: 20),
                       Expanded(
                         child: AppButton(
                           child: Text('Save'),
-                          onPressed: () {},
+                          onPressed: () => saveHandler(_user!),
                           selected: true,
                         ),
                       ),
@@ -231,10 +284,5 @@ class _UserFormState extends State<UserForm> {
         )
       ],
     );
-  }
-
-  void initValues(User user) {
-    _firstName = _firstName.length > 0 ? _firstName : user.firstName;
-    _lastName = _lastName.length > 0 ? _lastName : user.lastName;
   }
 }

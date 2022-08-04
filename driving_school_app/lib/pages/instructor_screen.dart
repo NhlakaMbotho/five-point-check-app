@@ -5,9 +5,12 @@ import 'package:flutter/material.dart';
 class InstructorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return AutoTabsRouter(routes: [
-      InstructorsListRoute(),
-      UserCreateRoute(),
-    ]);
+    return AutoTabsRouter(
+      routes: [
+        InstructorsListRoute(),
+        UserCreateRoute(),
+      ],
+      homeIndex: 0,
+    );
   }
 }
