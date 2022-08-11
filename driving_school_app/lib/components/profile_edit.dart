@@ -1,9 +1,7 @@
 import 'package:driving_school_app/constants/colors.dart';
-import 'package:driving_school_app/models/user.dart';
 import 'package:driving_school_app/models/user_create.dart';
 import 'package:driving_school_app/providers/user.provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:provider/provider.dart';
 
 import 'app_button.dart';
@@ -45,6 +43,7 @@ class ProfileEdit extends StatelessWidget {
         Flexible(
           flex: 4,
           child: UserForm(
+            title: 'Change Account Information',
             user: Provider.of<UserProvider>(context).user,
             isEdit: true,
             saveHandler: saveChanges,
@@ -95,7 +94,7 @@ class ProfileAvatarWrapper extends StatelessWidget {
       height: 220,
       child: Center(
         child: Container(
-          margin: EdgeInsets.all(20),
+          margin: EdgeInsets.only(left: 20, bottom: 20, right: 20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: AppColors.GreyLight.withOpacity(.4),

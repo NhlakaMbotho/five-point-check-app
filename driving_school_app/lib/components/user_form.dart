@@ -11,11 +11,13 @@ import 'profile_edit.dart';
 class UserForm extends StatefulWidget {
   User? _user = null;
   final bool isEdit;
+  final String title;
   final void Function(UserCreateModel user) saveHandler;
   void Function()? backHandler;
   void Function()? resetHandler;
   UserForm({
     User? user,
+    required String title,
     required bool isEdit,
     required void Function(UserCreateModel user) saveHandler,
     void Function()? backHandler,
@@ -23,6 +25,7 @@ class UserForm extends StatefulWidget {
   })  : isEdit = isEdit,
         saveHandler = saveHandler,
         backHandler = backHandler,
+        title = title,
         resetHandler = resetHandler {
     user = _user;
   }
@@ -32,6 +35,7 @@ class UserForm extends StatefulWidget {
       isEdit: isEdit,
       saveHandler: saveHandler,
       backHandler: backHandler,
+      title: title,
       resetHandler: resetHandler);
 }
 
@@ -47,6 +51,7 @@ class _UserFormState extends State<UserForm> {
   final _addressLine4Key = GlobalKey<FormFieldState>();
   final _addressLine5Key = GlobalKey<FormFieldState>();
   final bool isEdit;
+  final String title;
   UserCreateModel? _user = UserCreateModel();
   void Function(UserCreateModel user) saveHandler;
   void Function()? backHandler;
@@ -54,10 +59,12 @@ class _UserFormState extends State<UserForm> {
   _UserFormState({
     User? user,
     required bool isEdit,
+    required String title,
     required void Function(UserCreateModel user) saveHandler,
     void Function()? backHandler,
     void Function()? resetHandler,
   })  : isEdit = isEdit,
+        title = title,
         saveHandler = saveHandler,
         backHandler = backHandler,
         resetHandler = resetHandler {
@@ -75,6 +82,13 @@ class _UserFormState extends State<UserForm> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Padding(
+          padding: EdgeInsets.all(20),
+          child: Text(
+            title,
+            style: TextStyle(fontSize: 20),
+          ),
+        ),
         ProfileAvatarWrapper(
           firstName: _user!.firstName,
           lastName: _user!.lastName,
