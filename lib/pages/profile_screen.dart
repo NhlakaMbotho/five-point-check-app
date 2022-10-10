@@ -3,6 +3,7 @@ import 'package:driving_school_app/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 import '../components/nav_item.dart';
+import '../components/scheduler/main_header.dart';
 
 enum ProfileViews { EDIT, SECURITY }
 
@@ -28,36 +29,34 @@ class ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: MainAppBar('Profile'),
       body: Center(
           child: Row(
         children: [
           SizedBox(
             width: 220,
-            child: Padding(
-              padding: EdgeInsets.all(20),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-                borderOnForeground: false,
-                elevation: 0,
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: ProfileSubMenu([
-                    NavItem(
-                      Icons.edit,
-                      'Edit',
-                      () => setView(ProfileViews.EDIT),
-                      selected: selectedView == ProfileViews.EDIT,
-                    ),
-                    NavItem(
-                      Icons.security,
-                      'Security',
-                      () => setView(ProfileViews.SECURITY),
-                      selected: selectedView == ProfileViews.SECURITY,
-                    ),
-                  ]),
-                ),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+              borderOnForeground: false,
+              elevation: 0,
+              color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: ProfileSubMenu([
+                  NavItem(
+                    Icons.edit,
+                    'Edit',
+                    () => setView(ProfileViews.EDIT),
+                    selected: selectedView == ProfileViews.EDIT,
+                  ),
+                  NavItem(
+                    Icons.security,
+                    'Security',
+                    () => setView(ProfileViews.SECURITY),
+                    selected: selectedView == ProfileViews.SECURITY,
+                  ),
+                ]),
               ),
             ),
           ),

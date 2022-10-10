@@ -1,19 +1,21 @@
 import 'package:driving_school_app/components/client_list.dart';
 import 'package:driving_school_app/constants/colors.dart';
 import 'package:flutter/material.dart';
+import '../components/scheduler/main_header.dart';
 import '../components/table_header.dart';
 
 class ClientsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: MainAppBar('Clients'),
       body: Center(
           child: Row(
         children: [
           Expanded(
             child: Column(
               children: [
-                TableHeader(UserType.INSTRUCTOR),
+                TableHeader(UserType.CLIENT),
                 Expanded(
                   flex: 4,
                   child: Card(

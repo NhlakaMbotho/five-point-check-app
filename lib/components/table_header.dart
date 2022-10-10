@@ -1,5 +1,4 @@
 import 'package:driving_school_app/constants/colors.dart';
-import 'package:driving_school_app/models/user.dart';
 import 'package:flutter/material.dart';
 import 'instructor_list.dart';
 
@@ -10,7 +9,7 @@ class TableHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 40,
-      margin: EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 2),
+      margin: EdgeInsets.only(left: 10, right: 10, bottom: 2),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(14),

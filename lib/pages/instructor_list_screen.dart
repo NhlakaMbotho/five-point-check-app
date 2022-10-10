@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:driving_school_app/constants/colors.dart';
 import 'package:flutter/material.dart';
 import '../components/instructor_list.dart';
+import '../components/scheduler/main_header.dart';
 import '../components/table_header.dart';
 
 class InstructorsListPage extends StatelessWidget {
@@ -9,8 +10,8 @@ class InstructorsListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final tabsRouter = AutoTabsRouter.of(context);
     return Scaffold(
-      body: Center(
-          child: Row(
+      appBar: MainAppBar('Instructors'),
+      body: Row(
         children: [
           Expanded(
             child: Column(
@@ -36,7 +37,7 @@ class InstructorsListPage extends StatelessWidget {
             ),
           ),
         ],
-      )),
+      ),
       backgroundColor: AppColors.GreyLight,
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton.small(

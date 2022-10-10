@@ -102,7 +102,6 @@ class ProfileAvatarWrapper extends StatelessWidget {
           child: ListView(
             children: [
               Container(
-                margin: EdgeInsets.only(top: 20),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   shape: BoxShape.circle,
