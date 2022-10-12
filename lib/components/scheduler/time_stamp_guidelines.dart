@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../models/scheduler_dimensions.dart';
 import '../../providers/instructor_provider.dart';
 

@@ -1,13 +1,9 @@
+import 'package:driving_school_app/providers/sequence_step_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../constants/colors.dart';
-
-enum SequenceState { INIT, ACTIVE, COMPLETE, ERROR }
-
-class SequenceStep {
-  String title;
-  SequenceState state;
-  SequenceStep(this.title, this.state) {}
-}
+import '../constants/sequence_step.dart';
+import '../models/sequence_step.dart';
 
 class StepStyling {
   final Color innerText;
@@ -24,56 +20,61 @@ class StepStyling {
 }
 
 class SequenceStepWidget extends StatelessWidget {
-  MapEntry<int, SequenceStep> _step;
+  final MapEntry<int, SequenceStep> _step;
 
   SequenceStepWidget(this._step);
 
   @override
   Widget build(BuildContext context) {
+    var _sequence = Provider.of<SequenceStepProvider>(context, listen: true);
+
     const double radius = 60;
     var styling = getStyling(_step.value);
     bool isComplete = _step.value.state == SequenceState.COMPLETE;
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          height: radius,
-          width: radius,
-          margin: EdgeInsets.symmetric(vertical: 10),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: styling.borderColor,
-              width: 1,
-              style: BorderStyle.solid,
+    return GestureDetector(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            height: radius,
+            width: radius,
+            margin: EdgeInsets.only(bottom: 10),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: styling.borderColor,
+                width: 1,
+                style: BorderStyle.solid,
+              ),
+              borderRadius: BorderRadius.circular(radius),
+              color: styling.backgroundColor,
             ),
-            borderRadius: BorderRadius.circular(radius),
-            color: styling.backgroundColor,
-          ),
-          child: Center(
-            child: isComplete
-                ? Icon(
-                    Icons.check_rounded,
-                    color: styling.innerText,
-                  )
-                : Text(
-                    (_step.key + 1).toString(),
-                    style: TextStyle(
+            child: Center(
+              child: isComplete
+                  ? Icon(
+                      Icons.check_rounded,
                       color: styling.innerText,
-                      fontSize: 18,
-                      fontWeight: FontWeight.normal,
+                    )
+                  : Text(
+                      (_step.key + 1).toString(),
+                      style: TextStyle(
+                        color: styling.innerText,
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                      ),
                     ),
-                  ),
+            ),
           ),
-        ),
-        Text(
-          _step.value.title,
-          style: TextStyle(
-            color: styling.titleText,
-            fontSize: 12,
-            fontWeight: FontWeight.w200,
-          ),
-        )
-      ],
+          Text(
+            _step.value.title,
+            style: TextStyle(
+              color: styling.titleText,
+              fontSize: 12,
+              fontWeight: FontWeight.w200,
+            ),
+          )
+        ],
+      ),
+      onTap: () => _sequence.jumpBack(_step.key),
     );
   }
 }
@@ -112,11 +113,11 @@ StepStyling getStyling(SequenceStep step) {
 }
 
 class SequenceTrack extends StatelessWidget {
-  final Map<int, SequenceStep> steps;
-  const SequenceTrack(Map<int, SequenceStep> steps) : steps = steps;
-
-  List<Widget> getLineBrokenWidgetList(List<Widget> widgets, double width) {
+  List<Widget> getLineBrokenWidgetList(
+      Map<int, SequenceStep> steps, double width) {
     List<Widget> list = [];
+    List<Widget> widgets =
+        steps.entries.map((_step) => SequenceStepWidget(_step)).toList();
     int k = 0;
 
     for (var i = 0; i < ((widgets.length * 2) - 1); i++) {
@@ -131,7 +132,8 @@ class SequenceTrack extends StatelessWidget {
           ),
         );
       } else {
-        list.add(widgets[k++]);
+        var step = steps.entries.elementAt(k++);
+        list.add(SequenceStepWidget(step));
       }
     }
 
@@ -140,13 +142,12 @@ class SequenceTrack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var _sequence = Provider.of<SequenceStepProvider>(context, listen: true);
+
     var width = MediaQuery.of(context).size.width * 0.06;
 
     return Row(
-      children: getLineBrokenWidgetList(
-        steps.entries.map((_step) => SequenceStepWidget(_step)).toList(),
-        width,
-      ),
+      children: getLineBrokenWidgetList(_sequence.steps, width),
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     );
   }

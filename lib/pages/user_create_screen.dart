@@ -1,10 +1,12 @@
-import 'dart:html';
-
 import 'package:auto_route/auto_route.dart';
-import 'package:driving_school_app/components/app_button.dart';
+import 'package:driving_school_app/providers/sequence_step_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../components/instructor_sign_up/sign_up_form.dart';
 import '../components/scheduler/main_header.dart';
 import '../components/sequence_track.dart';
+import '../constants/sequence_step.dart';
+import '../models/sequence_step.dart';
 import '../models/user_create.dart';
 
 class UserCreatePage extends StatefulWidget {
@@ -14,15 +16,17 @@ class UserCreatePage extends StatefulWidget {
 
 class _UserCreatePageState extends State<UserCreatePage> {
   int _index = 0;
-  Map<int, SequenceStep> steps = [
-    SequenceStep('Sign Up', SequenceState.COMPLETE),
-    SequenceStep('Avatar', SequenceState.ACTIVE),
-    SequenceStep('Verification', SequenceState.INIT),
-    SequenceStep('Complete', SequenceState.INIT)
-  ].asMap();
 
   @override
   Widget build(BuildContext context) {
+    var sequenceProvider =
+        Provider.of<SequenceStepProvider>(context, listen: false);
+    sequenceProvider.loadSteps([
+      SequenceStep('Sign Up', SequenceState.INIT),
+      SequenceStep('Avatar', SequenceState.INIT),
+      SequenceStep('Verification', SequenceState.INIT),
+      SequenceStep('Complete', SequenceState.INIT)
+    ]);
     var router = AutoTabsRouter.of(context);
     return Scaffold(
       appBar: const MainAppBar('Enroll Instructor'),
@@ -35,41 +39,15 @@ class _UserCreatePageState extends State<UserCreatePage> {
                 child: Column(
                   children: [
                     Expanded(
-                      flex: 1,
                       child: Row(children: [
                         Expanded(child: SizedBox(), flex: 1),
-                        Expanded(child: SequenceTrack(steps), flex: 3),
+                        Expanded(child: SequenceTrack(), flex: 3),
                         Expanded(child: SizedBox(), flex: 1),
                       ]),
                     ),
                     Expanded(
+                      child: showView(sequenceProvider.activeStep),
                       flex: 5,
-                      child: Placeholder(
-                        color: Colors.white,
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Center(
-                        child: SizedBox(
-                          width: 200,
-                          child: AppButton(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text('Continue'),
-                                SizedBox(width: 14),
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: 10,
-                                )
-                              ],
-                            ),
-                            onPressed: (() => router.navigateBack()),
-                            selected: true,
-                          ),
-                        ),
-                      ),
                     )
                   ],
                 ),
@@ -88,5 +66,19 @@ class _UserCreatePageState extends State<UserCreatePage> {
 
   saveChanges(UserCreateModel user) {
     print('user to be saved $user');
+  }
+
+  showView(MapEntry<int, SequenceStep> currentActiveEntry) {
+    switch (currentActiveEntry.key) {
+      case 0:
+        return InstructorSignUpForm();
+      case 1:
+        return Center(child: Text('Avatar'));
+      case 2:
+        return Center(child: Text('Verification'));
+      case 3:
+        return Center(child: Text('Complete'));
+      default:
+    }
   }
 }

@@ -1,4 +1,8 @@
 {
   "java.configuration.updateBuildConfiguration": "automatic",
-  "dart.flutterHotReloadOnSave": "all"
+  "dart.flutterHotReloadOnSave": "all",
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 500,
+  "dart.flutterGenerateLocalizationsOnSave": "all",
+  "dart.hotReloadOnSave": "all"
 }

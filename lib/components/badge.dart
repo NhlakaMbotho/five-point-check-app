@@ -11,12 +11,13 @@ class Badge extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-          child: Text(
-        value,
-        style: TextStyle(
-          color: primary ? Colors.white : AppColors.Dark,
+        child: Text(
+          value,
+          style: TextStyle(
+            color: primary ? Colors.white : AppColors.Dark,
+          ),
         ),
-      )),
+      ),
       width: 30,
       height: 30,
       decoration: BoxDecoration(

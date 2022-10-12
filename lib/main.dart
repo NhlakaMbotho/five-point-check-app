@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'constants/colors.dart';
 import 'providers/instructor_provider.dart';
+import 'providers/sequence_step_provider.dart';
 import 'routes/router.gr.dart';
 
 void main() async {
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         ListenableProvider(create: (_) => InstructorProvider()),
         ListenableProvider(create: (_) => AuthProvider()),
         ListenableProvider(create: (_) => UserProvider()),
+        ListenableProvider(create: (_) => SequenceStepProvider()),
       ],
       child: Consumer<AuthProvider>(builder: (context, authentication, _) {
         if (!authentication.isAuthenticated) {
