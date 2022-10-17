@@ -11,6 +11,7 @@ class SequenceStepProvider with ChangeNotifier {
   }
 
   loadSteps(List<SequenceStep> newList) {
+    
     _steps = newList.asMap();
     _currentPosition = 0;
     if (_steps.length > 0) {
@@ -47,6 +48,10 @@ class SequenceStepProvider with ChangeNotifier {
       updateStep(currentPosition, SequenceState.ACTIVE);
     }
     notifyListeners();
+  }
+
+  bool canNavigateBack() {
+    return _currentPosition > 0;
   }
 
   void decrementPosition() {

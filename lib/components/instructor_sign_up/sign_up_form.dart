@@ -1,10 +1,17 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:driving_school_app/models/user.dart';
 import 'package:driving_school_app/models/user_create.dart';
+import 'package:driving_school_app/providers/sequence_step_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants/colors.dart';
+import '../../mixins/base.mixin.dart';
+import '../../mixins/post-frame.mixin.dart';
 import '../app_button.dart';
 import '../app_text_form_field.dart';
+import 'sequence_footer.dart';
 
 class InstructorSignUpForm extends StatefulWidget {
   InstructorSignUpForm();
@@ -12,7 +19,8 @@ class InstructorSignUpForm extends StatefulWidget {
   State<InstructorSignUpForm> createState() => _UserFormState();
 }
 
-class _UserFormState extends State<InstructorSignUpForm> {
+class _UserFormState extends State<InstructorSignUpForm>
+    with PostFrameMixin, BaseMixin {
   final _form = GlobalKey<FormState>();
   final _firstNameKey = GlobalKey<FormFieldState>();
   final _lastNameKey = GlobalKey<FormFieldState>();
@@ -23,94 +31,156 @@ class _UserFormState extends State<InstructorSignUpForm> {
   final _addressLine3Key = GlobalKey<FormFieldState>();
   final _addressLine4Key = GlobalKey<FormFieldState>();
   final _addressLine5Key = GlobalKey<FormFieldState>();
-  UserCreateModel? _user = UserCreateModel();
+
+  String firstName = '';
+  String lastName = '';
+  String email = '';
+  String phoneNo = '';
+  String line1 = '';
+  String line2 = '';
+  String line3 = '';
+  String line4 = '';
+
   _UserFormState();
 
   @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constrains) {
-      print('width ${constrains.maxWidth} heigh ${constrains.maxHeight}');
+  void initState() {
+    print('set state called!!!!');
+  }
 
-      return Container(
-        child: GridView.count(
-          crossAxisCount: 2,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 20,
-          children: [
-            AppTextFormField(
-              label: 'First Name',
-              onChanged: (value) {
-                setState(() => _user!.firstName = value);
-                _firstNameKey.currentState?.validate();
-              },
-              key: _firstNameKey,
-              initialValue: _user!.firstName,
-              textInputAction: TextInputAction.next,
-              styleType: AppStyleTypes.SECONDARY,
-              onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-              onSaved: (_) => _user!.firstName = _!,
-              validator: (value) =>
-                  value!.length > 0 ? null : 'Please enter a valid first name',
-            ),
-            AppTextFormField(
-              label: 'Last Name',
-              onChanged: (value) {
-                setState(() => _user!.lastName = value);
-                _lastNameKey.currentState?.validate();
-              },
-              key: _lastNameKey,
-              initialValue: _user!.lastName,
-              textInputAction: TextInputAction.next,
-              styleType: AppStyleTypes.SECONDARY,
-              onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-              onSaved: (_) => _user!.lastName = _!,
-              validator: (value) =>
-                  value!.length > 0 ? null : 'Please enter a valid last name',
-            ),
-            AppTextFormField(
-              label: 'Email',
-              onChanged: (value) {
-                setState(() => _user!.email = value);
-                _emailKey.currentState?.validate();
-              },
-              key: _emailKey,
-              initialValue: _user!.email,
-              textInputAction: TextInputAction.next,
-              styleType: AppStyleTypes.SECONDARY,
-              onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-              onSaved: (_) => _user!.email = _!,
-              validator: (value) => value!.length > 0
-                  ? null
-                  : 'Please enter a valid email address',
-            ),
-            AppTextFormField(
-              onChanged: (value) {
-                setState(() => _user!.phoneNo = value);
-                _cellNoKey.currentState?.validate();
-              },
-              label: 'Phone No',
-              key: _cellNoKey,
-              initialValue: _user!.phoneNo,
-              textInputAction: TextInputAction.next,
-              styleType: AppStyleTypes.SECONDARY,
-              inputFormatters: [MaskedInputFormatter('(###) ###-####')],
-              onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-              onSaved: (_) => _user!.phoneNo = _!,
-              validator: (value) =>
-                  value!.length > 0 ? null : 'Please enter a valid address',
-            ),
-          ],
+  @override
+  Widget build(BuildContext context) {
+    return GridView(
+      shrinkWrap: true,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 20,
+        mainAxisExtent: 60,
+      ),
+      children: [
+        AppTextFormField(
+          label: 'First Name',
+          onChanged: (value) {
+            setState(() => firstName = value);
+            _firstNameKey.currentState?.validate();
+          },
+          key: _firstNameKey,
+          initialValue: firstName,
+          textInputAction: TextInputAction.next,
+          styleType: AppStyleTypes.SECONDARY,
+          onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+          onSaved: (_) => firstName = _!,
+          validator: (value) =>
+              value!.length > 0 ? null : 'Please enter a valid first name',
         ),
-        // decoration: BoxDecoration(
-        //   border: Border.all(
-        //     color: Colors.black,
-        //     style: BorderStyle.solid,
-        //     width: 1,
-        //   ),
-        // ),
-        // height: constrains.maxHeight * .4,
-        // width: constrains.maxWidth * .6,
-      );
-    });
+        AppTextFormField(
+          label: 'Last Name',
+          onChanged: (value) {
+            setState(() => lastName = value);
+            _lastNameKey.currentState?.validate();
+          },
+          key: _lastNameKey,
+          initialValue: lastName,
+          textInputAction: TextInputAction.next,
+          styleType: AppStyleTypes.SECONDARY,
+          onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+          onSaved: (_) => lastName = _!,
+          validator: (value) =>
+              value!.length > 0 ? null : 'Please enter a valid last name',
+        ),
+        AppTextFormField(
+          label: 'Email',
+          onChanged: (value) {
+            setState(() => email = value);
+            _emailKey.currentState?.validate();
+          },
+          key: _emailKey,
+          initialValue: email,
+          textInputAction: TextInputAction.next,
+          styleType: AppStyleTypes.SECONDARY,
+          onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+          onSaved: (_) => email = _!,
+          validator: (value) =>
+              value!.length > 0 ? null : 'Please enter a valid email address',
+        ),
+        AppTextFormField(
+          onChanged: (value) {
+            setState(() => phoneNo = value);
+            _cellNoKey.currentState?.validate();
+          },
+          label: 'Phone No',
+          key: _cellNoKey,
+          initialValue: phoneNo,
+          textInputAction: TextInputAction.next,
+          styleType: AppStyleTypes.SECONDARY,
+          inputFormatters: [MaskedInputFormatter('(###) ###-####')],
+          onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+          onSaved: (_) => phoneNo = _!,
+          validator: (value) =>
+              value!.length > 0 ? null : 'Please enter a valid address',
+        ),
+        AppTextFormField(
+          onChanged: (value) {
+            setState(() => line1 = value);
+            _addressLine1Key.currentState?.validate();
+          },
+          label: 'Address Line 1',
+          key: _addressLine1Key,
+          initialValue: '',
+          textInputAction: TextInputAction.next,
+          styleType: AppStyleTypes.SECONDARY,
+          onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+          onSaved: (_) => line1 = _!,
+          validator: (value) =>
+              value!.length > 0 ? null : 'Please enter a valid address',
+        ),
+        AppTextFormField(
+          onChanged: (value) {
+            setState(() => line2 = value);
+            _addressLine2Key.currentState?.validate();
+          },
+          label: 'Address Line 2',
+          key: _addressLine2Key,
+          initialValue: '',
+          textInputAction: TextInputAction.next,
+          styleType: AppStyleTypes.SECONDARY,
+          onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+          onSaved: (_) => line2 = _!,
+          validator: (value) =>
+              value!.length > 0 ? null : 'Please enter a valid address',
+        ),
+        AppTextFormField(
+          onChanged: (value) {
+            setState(() => line3 = value);
+            _addressLine3Key.currentState?.validate();
+          },
+          label: 'Address Line 3',
+          key: _addressLine3Key,
+          initialValue: '',
+          textInputAction: TextInputAction.next,
+          styleType: AppStyleTypes.SECONDARY,
+          onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+          onSaved: (_) => line3 = _!,
+          validator: (value) =>
+              value!.length > 0 ? null : 'Please enter a valid address',
+        ),
+        AppTextFormField(
+          onChanged: (value) {
+            setState(() => line4 = value);
+            _addressLine4Key.currentState?.validate();
+          },
+          label: 'Address Line 4',
+          key: _addressLine4Key,
+          initialValue: '',
+          textInputAction: TextInputAction.next,
+          styleType: AppStyleTypes.SECONDARY,
+          onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+          onSaved: (_) => line4 = _!,
+          validator: (value) =>
+              value!.length > 0 ? null : 'Please enter a valid address',
+        )
+      ],
+    );
   }
 }
