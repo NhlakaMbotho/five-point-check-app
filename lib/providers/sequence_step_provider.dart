@@ -11,7 +11,6 @@ class SequenceStepProvider with ChangeNotifier {
   }
 
   loadSteps(List<SequenceStep> newList) {
-    
     _steps = newList.asMap();
     _currentPosition = 0;
     if (_steps.length > 0) {
@@ -26,6 +25,11 @@ class SequenceStepProvider with ChangeNotifier {
 
   void updateStep(int key, SequenceState statue) {
     if (steps.containsKey(key)) {
+      int i = _steps.length - 1;
+      while (i > key) {
+        steps[i]?.state = SequenceState.INIT;
+        i--;
+      }
       steps[key]?.state = statue;
     }
   }

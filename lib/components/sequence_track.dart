@@ -28,7 +28,7 @@ class SequenceStepWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var _sequence = Provider.of<SequenceStepProvider>(context, listen: true);
 
-    const double radius = 60;
+    const double radius = 46;
     var styling = getStyling(_step.value);
     bool isComplete = _step.value.state == SequenceState.COMPLETE;
     return GestureDetector(
@@ -53,12 +53,13 @@ class SequenceStepWidget extends StatelessWidget {
                   ? Icon(
                       Icons.check_rounded,
                       color: styling.innerText,
+                      size: 16,
                     )
                   : Text(
                       (_step.key + 1).toString(),
                       style: TextStyle(
                         color: styling.innerText,
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.normal,
                       ),
                     ),
@@ -129,6 +130,7 @@ class SequenceTrack extends StatelessWidget {
             color: isPreviousStepComplete ? Colors.green : AppColors.Primary,
             height: 1,
             width: width,
+            margin: EdgeInsets.only(bottom: 22),
           ),
         );
       } else {
@@ -144,11 +146,11 @@ class SequenceTrack extends StatelessWidget {
   Widget build(BuildContext context) {
     var _sequence = Provider.of<SequenceStepProvider>(context, listen: true);
 
-    var width = MediaQuery.of(context).size.width * 0.06;
+    var width = MediaQuery.of(context).size.width * 0.08;
 
     return Row(
       children: getLineBrokenWidgetList(_sequence.steps, width),
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.center,
     );
   }
 }
