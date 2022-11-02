@@ -5,14 +5,42 @@ import '../constants/colors.dart';
 class AppButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final Widget child;
-  final bool selected;
+  final AppStyleTypes type;
+  MaterialStateProperty<double> elevation = MaterialStateProperty.all(20);
   AppButton({
     required VoidCallback? onPressed,
     required Widget child,
-    bool selected = false,
+    MaterialStateProperty<double>? elevation,
+    AppStyleTypes type = AppStyleTypes.PRIMARY,
   })  : onPressed = onPressed,
-        selected = selected,
-        child = child;
+        type = type,
+        child = child {
+    if (elevation != null) {
+      this.elevation = elevation;
+    }
+  }
+
+  get backgroundColor {
+    switch (type) {
+      case AppStyleTypes.PRIMARY:
+        return AppColors.Primary;
+      case AppStyleTypes.SECONDARY:
+        return Colors.white;
+      case AppStyleTypes.TERTIARY:
+        return AppColors.Dark;
+      default:
+        return AppColors.Primary;
+    }
+  }
+
+  get foregroundColor {
+    switch (type) {
+      case AppStyleTypes.SECONDARY:
+        return AppColors.Primary;
+      default:
+        return Colors.white;
+    }
+  }
 
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -22,15 +50,11 @@ class AppButton extends StatelessWidget {
           style: ButtonStyle(
             minimumSize:
                 MaterialStateProperty.all(Size(constraints.maxWidth, 50)),
-            backgroundColor: MaterialStateProperty.all(
-              selected ? AppColors.Primary : Colors.white,
-            ),
+            backgroundColor: MaterialStateProperty.all(backgroundColor),
             shadowColor:
                 MaterialStateProperty.all(AppColors.Primary.withOpacity(.1)),
-            foregroundColor: MaterialStateProperty.all(
-              selected ? Colors.white : AppColors.Primary,
-            ),
-            elevation: selected ? MaterialStateProperty.all(20) : null,
+            foregroundColor: MaterialStateProperty.all(foregroundColor),
+            elevation: elevation,
             shape: MaterialStateProperty.all(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18),

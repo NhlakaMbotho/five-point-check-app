@@ -1,13 +1,18 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:driving_school_app/components/app_text_form_field.dart';
 import 'package:driving_school_app/constants/colors.dart';
 import 'package:driving_school_app/providers/sequence_step_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import '../components/sequence_tabs/avatar_upload.dart';
 import '../components/instructor_sign_up/sequence_footer.dart';
 import '../components/instructor_sign_up/sign_up_form.dart';
 import '../components/scheduler/main_header.dart';
+import '../components/sequence_tabs/complete_tab.dart';
 import '../components/sequence_track.dart';
+import '../components/sequence_tabs/verification_step.dart';
 import '../constants/sequence_step.dart';
 import '../mixins/base.mixin.dart';
 import '../mixins/post-frame.mixin.dart';
@@ -33,8 +38,8 @@ class _UserCreatePageState extends State<UserCreatePage>
     postFrame(() {
       sequenceProvider.loadSteps([
         SequenceStep('Sign Up', SequenceState.INIT),
-        SequenceStep('Avatar', SequenceState.INIT),
         SequenceStep('Verification', SequenceState.INIT),
+        SequenceStep('Avatar', SequenceState.INIT),
         SequenceStep('Complete', SequenceState.INIT)
       ]);
     });
@@ -78,7 +83,7 @@ class _UserCreatePageState extends State<UserCreatePage>
                       Flexible(
                         fit: FlexFit.loose,
                         flex: 1,
-                        child: SequenceFooter(200),
+                        child: SequenceFooter(300),
                       )
                     ],
                   ),
@@ -110,62 +115,13 @@ class _UserCreatePageState extends State<UserCreatePage>
       case 0:
         return InstructorSignUpForm();
       case 1:
-        return AvatarUploader();
+        return VerificationStep();
       case 2:
-        return Center(child: Text('Verification'));
+        return AvatarUploader();
       case 3:
-        return Center(child: Text('Complete'));
+        return CompleteTab();
       default:
-        return Center(child: Text('No Page'));
+        return Center(child: Text('Error'));
     }
-  }
-}
-
-class AvatarUploader extends StatefulWidget {
-  const AvatarUploader({Key? key}) : super(key: key);
-
-  @override
-  State<AvatarUploader> createState() => _AvatarState();
-}
-
-class _AvatarState extends State<AvatarUploader> {
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Center(
-          child: Container(
-            width: constraints.maxWidth * .3,
-            height: constraints.maxWidth * .2,
-            decoration: BoxDecoration(
-              color: AppColors.GreyDark.withOpacity(.20),
-              // border: Border.all(
-              //   color: AppColors.Primary,
-              //   style: BorderStyle.solid,
-              //   width: 1,
-              // ),
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Center(
-                  child: Icon(Icons.add, size: 60, color: AppColors.GreyDark),
-                ),
-                Center(
-                  child: Text(
-                    'Upload Avatar',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: AppColors.GreyDark,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        );
-      },
-    );
   }
 }

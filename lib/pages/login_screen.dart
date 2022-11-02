@@ -75,7 +75,7 @@ class _LoginPageState extends State<LoginPage> with BaseMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('DX3 Driving School'),
+        title: Text('DX3'),
         backgroundColor: AppColors.Primary,
       ),
       body: Center(
@@ -127,7 +127,6 @@ class _LoginPageState extends State<LoginPage> with BaseMixin {
                           Container(
                             margin: EdgeInsets.only(top: 20),
                             child: AppButton(
-                              selected: true,
                               onPressed: () {
                                 submitForm(context);
                                 print("logging in...");
@@ -138,6 +137,7 @@ class _LoginPageState extends State<LoginPage> with BaseMixin {
                           Container(
                             margin: EdgeInsets.only(top: 20),
                             child: AppButton(
+                              type: AppStyleTypes.SECONDARY,
                               onPressed: () {
                                 print("logging up...");
                               },

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'app_button.dart';
-import 'user_form.dart';
+import 'sequence_tabs/user_form.dart';
 
 Future<void> _showMyDialog(context) async {
   return showDialog<void>(

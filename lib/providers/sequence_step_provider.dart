@@ -77,4 +77,11 @@ class SequenceStepProvider with ChangeNotifier {
     notifyListeners();
     return true;
   }
+
+  bool get sequenceComplete {
+    var currentStep = steps.entries.elementAt(this.currentPosition);
+    return currentPosition == steps.length - 1 &&
+        currentStep != null &&
+        currentStep.value.state == SequenceState.COMPLETE;
+  }
 }

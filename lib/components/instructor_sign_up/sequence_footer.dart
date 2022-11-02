@@ -15,29 +15,44 @@ class SequenceFooter extends StatelessWidget {
     var sequenceProvider =
         Provider.of<SequenceStepProvider>(context, listen: false);
     return Center(
-      child: SizedBox(
-        width: buttonWWidth,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Expanded(
-              child: AppButton(
-                child: Text('Back'),
-                selected: true,
-                onPressed: (() => navigateBack(sequenceProvider, tabsRouter)),
+      child: sequenceProvider.sequenceComplete
+          ? null
+          : SizedBox(
+              width: buttonWWidth,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                    child: AppButton(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.keyboard_arrow_left_sharp),
+                          SizedBox(width: 10),
+                          Text('Next'),
+                        ],
+                      ),
+                      onPressed: (() =>
+                          navigateBack(sequenceProvider, tabsRouter)),
+                    ),
+                  ),
+                  SizedBox(width: 20),
+                  Expanded(
+                    child: AppButton(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Next'),
+                          SizedBox(width: 10),
+                          Icon(Icons.keyboard_arrow_right_sharp),
+                        ],
+                      ),
+                      onPressed: (() => navigateForward(sequenceProvider)),
+                    ),
+                  ),
+                ],
               ),
             ),
-            SizedBox(width: 20),
-            Expanded(
-              child: AppButton(
-                child: Text('Continue'),
-                selected: true,
-                onPressed: (() => navigateForward(sequenceProvider)),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 

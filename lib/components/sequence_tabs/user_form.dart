@@ -2,11 +2,11 @@ import 'package:driving_school_app/models/user_create.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
 
-import '../constants/colors.dart';
-import '../models/user.dart';
-import 'app_button.dart';
-import 'app_text_form_field.dart';
-import 'profile_edit.dart';
+import '../../constants/colors.dart';
+import '../../models/user.dart';
+import '../app_button.dart';
+import '../app_text_form_field.dart';
+import '../profile_edit.dart';
 
 class UserForm extends StatefulWidget {
   User? _user = null;
@@ -286,7 +286,7 @@ class _UserFormState extends State<UserForm> {
                         child: AppButton(
                           child: Text('Save'),
                           onPressed: () => saveHandler(_user!),
-                          selected: true,
+                          type: AppStyleTypes.PRIMARY,
                         ),
                       ),
                     ],

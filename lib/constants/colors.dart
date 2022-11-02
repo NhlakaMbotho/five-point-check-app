@@ -9,6 +9,7 @@ class AppColors {
   static const Color GreyDark = Color(0xFFe6e6e6);
   static const Color PrimaryLight = Color(0xFF00B7CF);
   static const Color Dark = Color(0xFF455A64);
+  static const Color Success = Colors.green;
 }
 
 enum AppStyleTypes { PRIMARY, SECONDARY, TERTIARY }

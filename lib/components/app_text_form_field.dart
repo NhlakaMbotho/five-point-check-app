@@ -40,6 +40,7 @@ class AppTextFormField extends TextFormField {
     FormFieldValidator<String>? validator,
     List<TextInputFormatter>? inputFormatters,
     AppStyleTypes styleType = AppStyleTypes.PRIMARY,
+    TextAlign textAlign: TextAlign.start,
   }) : super(
           key: key,
           onChanged: onChanged,
@@ -48,6 +49,7 @@ class AppTextFormField extends TextFormField {
           onFieldSubmitted: onFieldSubmitted,
           obscureText: obscureText,
           onSaved: onSaved,
+          textAlign: textAlign,
           validator: validator,
           inputFormatters: inputFormatters,
           decoration: AppInputDecoration(label, styleType),
