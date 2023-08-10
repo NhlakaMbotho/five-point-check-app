@@ -59,10 +59,11 @@ class InstructorRow extends StatelessWidget {
             child: Center(child: StatusWidget(AvailabilityStatus.AVAILABLE))),
         Expanded(
             flex: 2,
-            child: Center(child: Badge(user.pendingLessonsCount.toString()))),
+            child:
+                Center(child: AppBadge(user.pendingLessonsCount.toString()))),
         Expanded(
             flex: 2,
-            child: Center(child: Badge(user.totalHoursThisWeek.toString()))),
+            child: Center(child: AppBadge(user.totalHoursThisWeek.toString()))),
         Expanded(flex: 2, child: Center(child: Rating(2))),
       ],
     );

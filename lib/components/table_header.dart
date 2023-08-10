@@ -4,7 +4,7 @@ import 'instructor_list.dart';
 
 class TableHeader extends StatelessWidget {
   final UserType _type;
-  TableHeader(UserType type) : _type = type;
+  const TableHeader(UserType type) : _type = type;
   @override
   Widget build(BuildContext context) {
     return Container(

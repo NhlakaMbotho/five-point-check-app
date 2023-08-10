@@ -4,7 +4,7 @@ import '../constants/colors.dart';
 
 class StatusWidget extends StatelessWidget {
   final AvailabilityStatus status;
-  StatusWidget(AvailabilityStatus status) : status = status;
+  const StatusWidget(AvailabilityStatus status) : status = status;
 
   String get label {
     switch (status) {

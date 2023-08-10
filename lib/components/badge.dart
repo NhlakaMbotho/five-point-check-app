@@ -1,10 +1,10 @@
 import 'package:driving_school_app/constants/colors.dart';
 import 'package:flutter/material.dart';
 
-class Badge extends StatelessWidget {
+class AppBadge extends StatelessWidget {
   final String value;
   final bool primary;
-  Badge(String value, {bool primary = false})
+  AppBadge(String value, {bool primary = false})
       : value = value,
         primary = primary;
   @override

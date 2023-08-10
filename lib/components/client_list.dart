@@ -54,18 +54,18 @@ class ClientRow extends StatelessWidget {
         Expanded(
             flex: 2,
             child: Center(
-                child: Badge(
+                child: AppBadge(
               user.code.toString(),
               primary: true,
             ))),
         Expanded(
             flex: 2,
-            child:
-                Center(child: Badge(user.clientCompletedLessons.toString()))),
+            child: Center(
+                child: AppBadge(user.clientCompletedLessons.toString()))),
         Expanded(
             flex: 2,
-            child:
-                Center(child: Badge(user.clientRemainingLessons.toString()))),
+            child: Center(
+                child: AppBadge(user.clientRemainingLessons.toString()))),
       ],
     );
   }

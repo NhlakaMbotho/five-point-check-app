@@ -20,12 +20,12 @@ class User implements ResponseModel {
   String? token;
 
   User.fromJson(data)
-      : userId = data['id'],
-        username = data['username'],
-        identity = data['identity'],
-        dateOfBirth = data['dateOfBirth'],
-        firstName = data['firstName'],
-        lastName = data['lastName'],
+      : userId = data['id'] ?? null,
+        username = data['username'] ?? '',
+        identity = data['identity'] ?? '',
+        dateOfBirth = data['dateOfBirth'] ?? '',
+        firstName = data['firstName'] ?? '',
+        lastName = data['lastName'] ?? '',
         email = data['email'] ?? '',
         phoneNo = data['cellNo'] ?? '',
         role = Role(data['role']),
