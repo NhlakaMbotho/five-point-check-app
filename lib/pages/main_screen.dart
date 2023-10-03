@@ -35,7 +35,7 @@ class MainPage extends StatelessWidget {
       builder: (ctx, child, _) {
         return Row(
           children: [
-            LeftMenu(_navOptions),
+            // LeftMenu(_navOptions),
             Flexible(
               child: child,
             ),

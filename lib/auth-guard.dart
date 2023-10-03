@@ -9,12 +9,12 @@ class AuthGuard extends AutoRouteGuard {
     // true to resume/continue navigation or false to abort navigation
     // print(
     //     'Auth checked for route ${router.current.name} - ${this.authProvider!.isAuthenticated}');
-    if (Global.authenticated) {
-      // if user is authenticated we continue
-      resolver.next(true);
-    } else {
-      // we redirect the user to our login page
-      router.push(LoginRoute());
-    }
+    // if (!Global.authenticated) {
+    // if user is authenticated we continue
+    resolver.next(true);
+    // } else {
+    //   // we redirect the user to our login page
+    //   router.push(LoginRoute());
+    // }
   }
 }

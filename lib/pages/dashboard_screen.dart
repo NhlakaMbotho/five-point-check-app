@@ -10,7 +10,7 @@ class DashboardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: MainAppBar('Dashboard'),
+      // appBar: MainAppBar('Dashboard'),
       backgroundColor: AppColors.GreyLight,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,

@@ -20,8 +20,8 @@ class SchedulerDimensions {
   SchedulerDimensions(BuildContext context) {
     this.totalHours = GlobalConfig['app']['tradingHours']['count'];
     var size = MediaQuery.of(context).size;
-    this.outerWidth = size.width * 0.80;
-    this.outerHeight = size.height * 0.60;
+    this.outerWidth = size.width * 0.85;
+    this.outerHeight = size.height * 0.85;
     this.cardWidth = size.width * 0.08;
     this.cardHeight = outerHeight * 0.15;
     this.swimLaneWidth = this.cardWidth * this.totalHours;

@@ -79,9 +79,10 @@ class _SchedulerWrapperPanelState extends State<SchedulerWrapperPanel> {
       height: schedulerDimensions.outerHeight,
       decoration: BoxDecoration(
         color: AppColors.GreyLight,
-        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+        // borderRadius: BorderRadius.all(Radius.circular(20.0)),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Header(_topBarHorizontalController),
           SizedBox(

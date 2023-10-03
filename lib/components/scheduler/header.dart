@@ -69,6 +69,7 @@ class Header extends StatelessWidget {
         scrollDirection: Axis.horizontal,
       ),
       height: dimensions.topPaneHeight,
+      width: dimensions.middlePanelWidth,
       margin: EdgeInsets.only(
         left: dimensions.leftPanelWidth,
         right: dimensions.rightPanelWidth,

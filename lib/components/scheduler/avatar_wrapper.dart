@@ -62,8 +62,9 @@ class InstructorWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
+          SizedBox(height: dimensions.cardHeight * 0.1),
           Container(
-            height: dimensions.cardHeight * 0.8,
+            height: dimensions.cardHeight * 0.6,
             child: Center(
               child: Image(
                 image: this.insrtuctor.image.image,
@@ -72,7 +73,7 @@ class InstructorWidget extends StatelessWidget {
             ),
           ),
           Container(
-            height: dimensions.cardHeight * 0.2,
+            height: dimensions.cardHeight * 0.3,
             child: Center(
               child: Text(
                 this.insrtuctor.name,

@@ -19,7 +19,7 @@ import '../pages/main_screen.dart';
     AutoRoute(
       page: MainPage,
       initial: true,
-      guards: [AuthGuard],
+      guards: [],
       path: '/main',
       children: [
         AutoRoute(page: DashboardPage, path: ''),

@@ -31,7 +31,7 @@ class RightScrollBar extends StatelessWidget {
     return Container(
       child: RawScrollbar(
         thickness: 8.0,
-        isAlwaysShown: true,
+        // isAlwaysShown: true,
         thumbColor: AppColors.GreyDark,
         radius: Radius.circular(10.0),
         controller: scrollBarController,
