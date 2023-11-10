@@ -4,29 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
 class RightScrollBar extends StatelessWidget {
-  final LinkedScrollControllerGroup verticalControllers;
+  // final LinkedScrollControllerGroup verticalControllers;
   final ScrollController scrollBarController = new ScrollController();
   final double swimlaneHeight;
-  RightScrollBar(this.verticalControllers, this.swimlaneHeight);
+  RightScrollBar(this.swimlaneHeight);
 
-  handleScrollEvents() {
-    verticalControllers.addOffsetChangedListener(() {
-      if (verticalControllers.offset != scrollBarController.offset &&
-          scrollBarController.hasClients) {
-        this.scrollBarController.jumpTo(verticalControllers.offset);
-      }
-    });
+  // handleScrollEvents() {
+  //   verticalControllers.addOffsetChangedListener(() {
+  //     if (verticalControllers.offset != scrollBarController.offset &&
+  //         scrollBarController.hasClients) {
+  //       this.scrollBarController.jumpTo(verticalControllers.offset);
+  //     }
+  //   });
 
-    this.scrollBarController.addListener(() {
-      if (verticalControllers.offset != scrollBarController.offset) {
-        this.verticalControllers.jumpTo(scrollBarController.offset);
-      }
-    });
-  }
+  //   this.scrollBarController.addListener(() {
+  //     if (verticalControllers.offset != scrollBarController.offset) {
+  //       this.verticalControllers.jumpTo(scrollBarController.offset);
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
-    handleScrollEvents();
+    // handleScrollEvents();
     var dimensions = SchedulerDimensions(context);
     return Container(
       child: RawScrollbar(

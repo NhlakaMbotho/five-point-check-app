@@ -32,9 +32,7 @@ class AuthProvider extends BaseHttpProvider with ChangeNotifier {
   bool get isAuthenticated => true;
 
   getToken() {
-    if (_token != null &&
-        _expiryDate != null &&
-        _expiryDate!.isAfter(DateTime.now())) {
+    if (_token != null && _expiryDate != null && _expiryDate!.isAfter(DateTime.now())) {
       return _token;
     }
     return null;
@@ -42,15 +40,13 @@ class AuthProvider extends BaseHttpProvider with ChangeNotifier {
 
   setToken(String token) {
     this._token = token;
-    this._expiryDate = new DateTime.now()
-        .add(Duration(microseconds: Jwt.parseJwt(token)["exp"]));
+    this._expiryDate = new DateTime.now().add(Duration(microseconds: Jwt.parseJwt(token)["exp"]));
     print('Exp date: ${this._expiryDate}, get token: $isAuthenticated');
     notifyListeners();
   }
 
   Future<User> signIn(String cellNo, String password) async {
-    var response = await post<User>(
-        '/api/auth/login', {"cellNo": cellNo, "password": password});
+    var response = await post<User>('/api/auth/login', {"cellNo": cellNo, "password": password});
     var body = User.fromJson(response.getBody());
     if (body.token != null) {
       this.setToken(body.token!);

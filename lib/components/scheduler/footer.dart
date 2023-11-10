@@ -4,29 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
 class Footer extends StatelessWidget {
-  final LinkedScrollControllerGroup horizontalControllerGroup;
+  // final LinkedScrollControllerGroup horizontalControllerGroup;
   final ScrollController scrollBarController = new ScrollController();
 
-  Footer(this.horizontalControllerGroup);
+  Footer();
 
-  handleScrollEvents() {
-    horizontalControllerGroup.addOffsetChangedListener(() {
-      if (horizontalControllerGroup.offset != scrollBarController.offset &&
-          scrollBarController.hasClients) {
-        this.scrollBarController.jumpTo(horizontalControllerGroup.offset);
-      }
-    });
+  // handleScrollEvents() {
+  //   horizontalControllerGroup.addOffsetChangedListener(() {
+  //     if (horizontalControllerGroup.offset != scrollBarController.offset &&
+  //         scrollBarController.hasClients) {
+  //       this.scrollBarController.jumpTo(horizontalControllerGroup.offset);
+  //     }
+  //   });
 
-    this.scrollBarController.addListener(() {
-      if (horizontalControllerGroup.offset != scrollBarController.offset) {
-        this.horizontalControllerGroup.jumpTo(scrollBarController.offset);
-      }
-    });
-  }
+  //   this.scrollBarController.addListener(() {
+  //     if (horizontalControllerGroup.offset != scrollBarController.offset) {
+  //       this.horizontalControllerGroup.jumpTo(scrollBarController.offset);
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
-    handleScrollEvents();
+    // handleScrollEvents();
     var schedulerDimensions = SchedulerDimensions(context);
     return Container(
       child: RawScrollbar(

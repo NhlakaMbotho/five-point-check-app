@@ -1,3 +1,5 @@
+import 'package:driving_school_app/models/snap_scroll_controller.dart';
+import 'package:driving_school_app/providers/scroll_events_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -6,16 +8,23 @@ import '../../models/scheduler_dimensions.dart';
 import '../../providers/instructor_provider.dart';
 import 'session_list.dart';
 
-class BackgroundSwimlanes extends StatelessWidget {
-  final ScrollController controller;
+class BackgroundSwimlanes extends StatefulWidget {
+  BackgroundSwimlanes();
 
-  BackgroundSwimlanes(this.controller);
+  @override
+  State<BackgroundSwimlanes> createState() => _BackgroundSwimlanesState();
+}
 
+class _BackgroundSwimlanesState extends State<BackgroundSwimlanes> {
   @override
   Widget build(BuildContext context) {
     var schedulerDimensions = SchedulerDimensions(context);
-    var instructors =
-        Provider.of<InstructorProvider>(context, listen: false).getAll();
+    var controller = SnapScrollController(schedulerDimensions.cardHeight);
+
+    var instructors = Provider.of<InstructorProvider>(context, listen: false).getAll();
+
+    Provider.of<ScrollEventsProvider>(context).attachVerticalScrollInput(controller);
+
     return ListView.separated(
       itemBuilder: (_, int index) {
         return Stack(children: [

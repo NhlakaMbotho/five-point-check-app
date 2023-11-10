@@ -1,7 +1,9 @@
 import 'package:driving_school_app/config/config.dev.dart';
 import 'package:driving_school_app/constants/colors.dart';
 import 'package:driving_school_app/models/scheduler_dimensions.dart';
+import 'package:driving_school_app/providers/scroll_events_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SchedulerTimeStamp extends StatelessWidget {
   final int hour;
@@ -48,14 +50,14 @@ class SchedulerTimeStamp extends StatelessWidget {
 class Header extends StatelessWidget {
   final int count = GlobalConfig['app']['tradingHours']['count'];
   final int startHour = GlobalConfig['app']['tradingHours']['start'];
-  final ScrollController controller;
+  final ScrollController controller = ScrollController();
 
-  Header(this.controller);
+  Header();
 
   @override
   Widget build(BuildContext context) {
     var dimensions = SchedulerDimensions(context);
-
+    Provider.of<ScrollEventsProvider>(context).attachHorizontalScrollOutput(controller);
     return Container(
       child: ListView.separated(
         itemBuilder: (_, index) => SizedBox(

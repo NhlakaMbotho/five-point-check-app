@@ -63,3 +63,98 @@ class MyApp extends StatelessWidget {
 
   dispose() {}
 }
+
+// import 'package:flutter/gestures.dart';
+// import 'package:flutter/material.dart';
+
+// void main() => runApp(MyApp());
+
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Diagonal Scrolling',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//       ),
+//       home: MyHomePage(),
+//     );
+//   }
+// }
+
+// class MyHomePage extends StatefulWidget {
+//   @override
+//   State<MyHomePage> createState() => _MyHomePageState();
+// }
+
+// class _MyHomePageState extends State<MyHomePage> {
+//   ScrollController _vertical = ScrollController();
+//   ScrollController _horizontal = ScrollController();
+//   Offset? _lastOffset = null;
+
+//   init() {
+//     // _vertical.addListener(() {
+//     //   print('coords: ${_vertical.offset}');
+//     // });
+//   }
+
+//   @override
+//   initState() {
+//     init();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     print('rebuild...........');
+
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Diagonal Scrolling'),
+//       ),
+//       body: Center(
+//         child: Container(
+//           decoration: BoxDecoration(border: Border.all(color: Colors.black, width: 2)),
+//           width: 600,
+//           height: 400,
+//           child: GestureDetector(
+//             onPanUpdate: (details) {
+//               bool positionChanged = false;
+//               if (_lastOffset != null) {
+//                 final offsetDiff = _lastOffset! - details.localPosition;
+//                 if (_horizontal.offset + offsetDiff.dx <= _horizontal.position.maxScrollExtent &&
+//                     _horizontal.offset + offsetDiff.dx > _horizontal.position.minScrollExtent) {
+//                   positionChanged = true;
+//                   _horizontal.jumpTo(_horizontal.offset + offsetDiff.dx);
+//                 }
+//                 if (_vertical.offset + offsetDiff.dy <= _vertical.position.maxScrollExtent &&
+//                     _vertical.offset + offsetDiff.dy >= _vertical.position.minScrollExtent)
+//                   _vertical.jumpTo(_vertical.offset + offsetDiff.dy);
+//                 positionChanged = true;
+//               }
+//               print("test...........");
+
+//               _lastOffset = details.localPosition;
+//             },
+//             onPanEnd: (details) {
+//               _lastOffset = null;
+//             },
+//             child: SingleChildScrollView(
+//               scrollDirection: Axis.vertical,
+//               controller: _vertical,
+//               child: SingleChildScrollView(
+//                 scrollDirection: Axis.horizontal,
+//                 controller: _horizontal,
+//                 child: Container(
+//                   // Making the container larger than the screen to visualize scrolling.
+//                   width: 800,
+//                   height: 500,
+//                   child: Placeholder(), // This can be your actual content.
+//                 ),
+//               ),
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

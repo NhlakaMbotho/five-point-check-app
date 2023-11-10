@@ -9,17 +9,5 @@
       "request": "launch",
       "type": "dart"
     },
-    {
-      "name": "dx3-app (profile mode)",
-      "request": "launch",
-      "type": "dart",
-      "flutterMode": "profile"
-    },
-    {
-      "name": "dx3-app (release mode)",
-      "request": "launch",
-      "type": "dart",
-      "flutterMode": "release"
-    }
   ]
 }
