@@ -6,8 +6,7 @@ import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 class RightScrollBar extends StatelessWidget {
   // final LinkedScrollControllerGroup verticalControllers;
   final ScrollController scrollBarController = new ScrollController();
-  final double swimlaneHeight;
-  RightScrollBar(this.swimlaneHeight);
+  RightScrollBar();
 
   // handleScrollEvents() {
   //   verticalControllers.addOffsetChangedListener(() {
@@ -27,7 +26,8 @@ class RightScrollBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // handleScrollEvents();
-    var dimensions = SchedulerDimensions(context);
+    var dimensions = SchedulerDimensions.of(context);
+
     return Container(
       child: RawScrollbar(
         thickness: 8.0,
@@ -44,9 +44,9 @@ class RightScrollBar extends StatelessWidget {
             child: SizedBox(
               child: Container(
                 color: Colors.transparent,
-                height: swimlaneHeight,
+                height: dimensions.blockSize.height,
               ),
-              height: swimlaneHeight,
+              height: dimensions.blockSize.height,
               width: dimensions.rightPanelWidth,
             ),
             controller: scrollBarController,

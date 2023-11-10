@@ -56,22 +56,22 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var dimensions = SchedulerDimensions(context);
+    var dimensions = SchedulerDimensions.of(context);
     Provider.of<ScrollEventsProvider>(context).attachHorizontalScrollOutput(controller);
     return Container(
       child: ListView.separated(
         itemBuilder: (_, index) => SizedBox(
           child: SchedulerTimeStamp(startHour + index),
-          width: dimensions.cardWidth,
-          height: dimensions.topPaneHeight,
+          width: dimensions.blockSize.width,
+          height: dimensions.topPanelHeight,
         ),
         separatorBuilder: (_, index) => Divider(),
         itemCount: count,
         controller: controller,
         scrollDirection: Axis.horizontal,
       ),
-      height: dimensions.topPaneHeight,
-      width: dimensions.middlePanelWidth,
+      height: dimensions.topPanelHeight,
+      width: dimensions.blockSize.width,
       margin: EdgeInsets.only(
         left: dimensions.leftPanelWidth,
         right: dimensions.rightPanelWidth,

@@ -17,20 +17,19 @@ class MainPanel extends StatelessWidget {
 
   MainPanel({
     required double cardWidth,
-    required List<Instructor> instructors,
   }) {
     verticalController = SnapScrollController(cardWidth);
   }
 
   @override
   Widget build(BuildContext context) {
-    var schedulerDimensions = SchedulerDimensions(context);
+    var schedulerDimensions = SchedulerDimensions.of(context);
     Provider.of<ScrollEventsProvider>(context).attachHorizontalScrollInput(verticalController);
     return SizedBox(
       child: SingleChildScrollView(
         child: SizedBox(
-          height: schedulerDimensions.middlePanelHeight,
-          width: schedulerDimensions.swimLaneWidth,
+          height: schedulerDimensions.innerHeight,
+          width: schedulerDimensions.innerWidth,
           child: Stack(
             children: [
               TimestampGuideLines(),
@@ -42,8 +41,8 @@ class MainPanel extends StatelessWidget {
         dragStartBehavior: DragStartBehavior.down,
         controller: verticalController,
       ),
-      width: schedulerDimensions.middlePanelWidth,
-      height: schedulerDimensions.middlePanelHeight,
+      width: schedulerDimensions.innerWidth,
+      height: schedulerDimensions.innerHeight,
     );
   }
 }

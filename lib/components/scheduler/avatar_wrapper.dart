@@ -9,41 +9,35 @@ import 'package:provider/provider.dart';
 
 import '../../extensions/scroll_controller.dart';
 
-class LeftAvatarWrapper extends StatefulWidget {
-  final double height;
-  final double width;
-
-  LeftAvatarWrapper(this.height, this.width);
-
-  @override
-  State<LeftAvatarWrapper> createState() => _LeftAvatarWrapperState();
-}
-
-class _LeftAvatarWrapperState extends State<LeftAvatarWrapper> {
+class LeftAvatarWrapper extends StatelessWidget {
   final ScrollController _localController = ScrollController();
+
+  LeftAvatarWrapper();
 
   getInstructors(context) => Provider.of<InstructorProvider>(context, listen: false).getAll();
 
   @override
   Widget build(BuildContext context) {
     Provider.of<ScrollEventsProvider>(context).attachVerticalScrollOutput(_localController);
+
     var instructors = getInstructors(context);
-    var schedulerDimensions = SchedulerDimensions(context);
+    var dimensions = SchedulerDimensions.of(context);
+
     return SizedBox(
       child: ScrollConfiguration(
         behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
         child: ListView.separated(
           itemBuilder: (_, int index) => InstructorWidget(instructors[index]),
           separatorBuilder: (_, int index) => Divider(
-            height: schedulerDimensions.cardSeparatorHeight,
+            height: 10,
             color: AppColors.GreyLight,
           ),
           itemCount: instructors.length,
           controller: _localController,
         ),
       ),
-      width: schedulerDimensions.leftPanelWidth,
-      height: schedulerDimensions.middlePanelHeight,
+      width: dimensions.leftPanelWidth,
+      height: dimensions.preferredInnerHeight,
     );
   }
 }
@@ -53,12 +47,12 @@ class InstructorWidget extends StatelessWidget {
   InstructorWidget(this.insrtuctor);
   @override
   Widget build(BuildContext context) {
-    SchedulerDimensions dimensions = SchedulerDimensions(context);
+    var dimensions = SchedulerDimensions.of(context);
 
     return Container(
-      height: dimensions.cardHeight,
+      height: dimensions.blockSize.height,
       width: dimensions.leftPanelWidth,
-      margin: EdgeInsets.only(left: 10),
+      // margin: EdgeInsets.only(left: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(10),
@@ -68,9 +62,9 @@ class InstructorWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
-          SizedBox(height: dimensions.cardHeight * 0.1),
+          SizedBox(height: dimensions.blockSize.height * 0.1),
           Container(
-            height: dimensions.cardHeight * 0.6,
+            height: dimensions.blockSize.height * 0.6,
             child: Center(
               child: Image(
                 image: this.insrtuctor.image.image,
@@ -79,7 +73,7 @@ class InstructorWidget extends StatelessWidget {
             ),
           ),
           Container(
-            height: dimensions.cardHeight * 0.3,
+            height: dimensions.blockSize.height * 0.3,
             child: Center(
               child: Text(
                 this.insrtuctor.name,

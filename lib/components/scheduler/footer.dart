@@ -27,7 +27,7 @@ class Footer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // handleScrollEvents();
-    var schedulerDimensions = SchedulerDimensions(context);
+    var schedulerDimensions = SchedulerDimensions.of(context);
     return Container(
       child: RawScrollbar(
         thickness: 8.0,
@@ -49,7 +49,7 @@ class Footer extends StatelessWidget {
         ),
       ),
       height: 14,
-      width: schedulerDimensions.middlePanelWidth,
+      width: schedulerDimensions.preferredInnerWidth,
       margin: EdgeInsets.only(
         left: schedulerDimensions.leftPanelWidth,
         right: schedulerDimensions.rightPanelWidth,
