@@ -44,7 +44,7 @@ class Footer extends StatelessWidget {
           child: Container(
             color: Colors.transparent,
             height: schedulerDimensions.bottomPanelHeight,
-            width: schedulerDimensions.swimLaneWidth,
+            width: schedulerDimensions.swimlaneAbsoluteMaxWidth,
           ),
         ),
       ),

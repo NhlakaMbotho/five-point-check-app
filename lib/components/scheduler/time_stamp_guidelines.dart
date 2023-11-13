@@ -6,21 +6,20 @@ import '../../providers/instructor_provider.dart';
 class TimestampGuideLines extends StatelessWidget {
   TimestampGuideLines();
 
-  List<Widget> getTimestampWidgets(
-      BuildContext context, SchedulerDimensions schedulerDimensions) {
+  List<Widget> getTimestampWidgets(BuildContext context, SchedulerDimensions schedulerDimensions) {
     List<Widget> list = [];
 
     for (var i = 0; i < schedulerDimensions.totalHours; i++) {
       list.add(
         Container(
           color: Colors.transparent,
-          height: getHeight(context, schedulerDimensions.cardHeight),
-          width: schedulerDimensions.cardWidth,
+          height: getHeight(context, schedulerDimensions.blockSize.height),
+          width: schedulerDimensions.blockSize.width,
           child: Row(
             children: [
               Container(
                 width: 6,
-                height: getHeight(context, schedulerDimensions.cardHeight),
+                height: getHeight(context, schedulerDimensions.blockSize.height),
                 color: Colors.grey.withOpacity(.08),
               )
             ],
@@ -32,8 +31,7 @@ class TimestampGuideLines extends StatelessWidget {
     return list;
   }
 
-  getInstructors(context) =>
-      Provider.of<InstructorProvider>(context, listen: false).getAll();
+  getInstructors(context) => Provider.of<InstructorProvider>(context, listen: false).getAll();
 
   double getHeight(BuildContext context, cardHeight) {
     var _instructors = this.getInstructors(context);
@@ -43,13 +41,13 @@ class TimestampGuideLines extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var schedulerDimensions = SchedulerDimensions(context);
+    var schedulerDimensions = SchedulerDimensions.of(context);
     return SizedBox(
       child: Container(
         child: Row(children: getTimestampWidgets(context, schedulerDimensions)),
       ),
-      height: schedulerDimensions.middlePanelHeight,
-      width: schedulerDimensions.swimLaneWidth,
+      height: schedulerDimensions.preferredInnerHeight,
+      width: schedulerDimensions.swimlaneAbsoluteMaxWidth,
     );
   }
 }

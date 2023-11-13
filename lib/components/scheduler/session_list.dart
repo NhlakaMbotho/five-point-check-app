@@ -22,7 +22,7 @@ class InstructorSessionLine extends StatelessWidget {
       return [
         Container(
           color: Colors.transparent,
-          width: dimensions.cardWidth,
+          width: dimensions.blockSize.width,
         )
       ];
     }
@@ -32,24 +32,21 @@ class InstructorSessionLine extends StatelessWidget {
       int currentHour = getHourByIndex(i, tradingStartHour);
 
       try {
-        Lesson _lesson = instructor.lessons
-            .firstWhere((lesson) => lesson.start.hour == currentHour);
+        Lesson _lesson = instructor.lessons.firstWhere((lesson) => lesson.start.hour == currentHour);
         if (_lesson.start.hour == _lesson.endTime.hour) {
           i++;
           continue;
         }
         int hourCount = _lesson.endTime.hour - _lesson.start.hour;
-        double currentLessonWidth = dimensions.cardWidth * hourCount;
-        list.add(
-            LessonWidget(_lesson, currentLessonWidth, dimensions.cardHeight));
+        double currentLessonWidth = dimensions.blockSize.width * hourCount;
+        list.add(LessonWidget(_lesson, currentLessonWidth, dimensions.blockSize.height));
         i += hourCount;
       } on StateError {
         int k = i;
         double width = 0;
-        while (!instructor.lessons.any((lesson) =>
-                lesson.start.hour == getHourByIndex(k, tradingStartHour)) &&
+        while (!instructor.lessons.any((lesson) => lesson.start.hour == getHourByIndex(k, tradingStartHour)) &&
             k < tradingHours) {
-          width += dimensions.cardWidth;
+          width += dimensions.blockSize.width;
           k++;
         }
         if (k > i) {
@@ -64,9 +61,9 @@ class InstructorSessionLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var dimensions = SchedulerDimensions(context);
+    var dimensions = SchedulerDimensions.of(context);
     return SizedBox(
-      height: dimensions.cardHeight,
+      height: dimensions.blockSize.height,
       child: Row(
         children: getBlocks(dimensions),
       ),

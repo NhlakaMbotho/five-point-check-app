@@ -8,22 +8,18 @@ import '../../models/scheduler_dimensions.dart';
 import '../../providers/instructor_provider.dart';
 import 'session_list.dart';
 
-class BackgroundSwimlanes extends StatefulWidget {
-  BackgroundSwimlanes();
+class BackgroundSwimlanes extends StatelessWidget {
+  double blockHeight;
+  late SnapScrollController _controller;
+  BackgroundSwimlanes(this.blockHeight) : _controller = SnapScrollController(blockHeight);
 
-  @override
-  State<BackgroundSwimlanes> createState() => _BackgroundSwimlanesState();
-}
-
-class _BackgroundSwimlanesState extends State<BackgroundSwimlanes> {
   @override
   Widget build(BuildContext context) {
-    var schedulerDimensions = SchedulerDimensions(context);
-    var controller = SnapScrollController(schedulerDimensions.cardHeight);
+    var schedulerDimensions = SchedulerDimensions.of(context);
 
     var instructors = Provider.of<InstructorProvider>(context, listen: false).getAll();
 
-    Provider.of<ScrollEventsProvider>(context).attachVerticalScrollInput(controller);
+    Provider.of<ScrollEventsProvider>(context).attachVerticalScrollInput(_controller);
 
     return ListView.separated(
       itemBuilder: (_, int index) {
@@ -43,8 +39,8 @@ class _BackgroundSwimlanesState extends State<BackgroundSwimlanes> {
                 stops: <double>[0, .5, .5, 0],
               ),
             ),
-            height: schedulerDimensions.cardHeight,
-            width: schedulerDimensions.swimLaneWidth,
+            height: schedulerDimensions.blockSize.height,
+            width: schedulerDimensions.swimlaneAbsoluteMaxWidth,
           ),
           InstructorSessionLine(instructors[index])
         ]);
@@ -54,7 +50,7 @@ class _BackgroundSwimlanesState extends State<BackgroundSwimlanes> {
         color: AppColors.GreyLight,
       ),
       itemCount: instructors.length,
-      controller: controller,
+      controller: _controller,
       scrollDirection: Axis.vertical,
     );
   }

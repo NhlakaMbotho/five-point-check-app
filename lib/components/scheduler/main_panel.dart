@@ -11,38 +11,56 @@ import '../../models/scheduler_dimensions.dart';
 import 'background_swimlane.dart';
 import 'time_stamp_guidelines.dart';
 
-@immutable
-class MainPanel extends StatelessWidget {
-  late final SnapScrollController verticalController;
+class MainPanel extends StatefulWidget {
+  late final SnapScrollController horizontalController;
 
   MainPanel({
-    required double cardWidth,
+    required double blockWidth,
   }) {
-    verticalController = SnapScrollController(cardWidth);
+    horizontalController = SnapScrollController(blockWidth);
+  }
+
+  @override
+  State<MainPanel> createState() => _MainPanelState();
+}
+
+class _MainPanelState extends State<MainPanel> {
+  @override
+  dispose() {
+    Provider.of<ScrollEventsProvider>(context).dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    Future.delayed(Duration.zero, () {
+      Provider.of<ScrollEventsProvider>(context).attachHorizontalScrollInput(widget.horizontalController);
+    });
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     var schedulerDimensions = SchedulerDimensions.of(context);
-    Provider.of<ScrollEventsProvider>(context).attachHorizontalScrollInput(verticalController);
+
     return SizedBox(
       child: SingleChildScrollView(
         child: SizedBox(
-          height: schedulerDimensions.innerHeight,
-          width: schedulerDimensions.innerWidth,
+          height: schedulerDimensions.preferredInnerHeight,
+          width: schedulerDimensions.swimlaneAbsoluteMaxWidth,
           child: Stack(
             children: [
               TimestampGuideLines(),
-              BackgroundSwimlanes(),
+              BackgroundSwimlanes(schedulerDimensions.blockSize.height + schedulerDimensions.cardSeparatorHeight),
             ],
           ),
         ),
         scrollDirection: Axis.horizontal,
         dragStartBehavior: DragStartBehavior.down,
-        controller: verticalController,
+        controller: widget.horizontalController,
       ),
-      width: schedulerDimensions.innerWidth,
-      height: schedulerDimensions.innerHeight,
+      width: schedulerDimensions.preferredInnerWidth,
+      height: schedulerDimensions.preferredInnerHeight,
     );
   }
 }

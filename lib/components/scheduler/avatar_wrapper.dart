@@ -29,7 +29,7 @@ class LeftAvatarWrapper extends StatelessWidget {
         child: ListView.separated(
           itemBuilder: (_, int index) => InstructorWidget(instructors[index]),
           separatorBuilder: (_, int index) => Divider(
-            height: 10,
+            height: dimensions.cardSeparatorHeight,
             color: AppColors.GreyLight,
           ),
           itemCount: instructors.length,

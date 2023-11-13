@@ -16,7 +16,7 @@ class DashboardPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(100.0),
         child: SchedulerWidget(
-          blockHeight: MediaQuery.of(context).size.height * 0.15,
+          blockHeight: MediaQuery.of(context).size.height * 0.11,
           blockWidth: MediaQuery.of(context).size.width * 0.08,
         ),
       ),

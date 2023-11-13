@@ -44,9 +44,9 @@ class RightScrollBar extends StatelessWidget {
             child: SizedBox(
               child: Container(
                 color: Colors.transparent,
-                height: dimensions.blockSize.height,
+                height: dimensions.swimlaneAbsoluteMaxHeight,
               ),
-              height: dimensions.blockSize.height,
+              height: dimensions.swimlaneAbsoluteMaxHeight,
               width: dimensions.rightPanelWidth,
             ),
             controller: scrollBarController,

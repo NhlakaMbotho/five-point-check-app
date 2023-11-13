@@ -48,13 +48,21 @@ double _leftSideBarRatio = .13;
 double _rightSideBarRatio = .04;
 double _topPanelHeightRatio = .05;
 double _bottomPanelHeightRatio = .05;
+double _cardSeparatorHeight = 10;
 
 class SchedulerDimensions extends InheritedWidget {
   final Size blockSize;
   final BoxConstraints constraints;
   final int totalHours;
+  final int totalInstructors;
 
-  const SchedulerDimensions({required this.blockSize, required this.totalHours, required this.constraints, super.key, required super.child});
+  const SchedulerDimensions(
+      {required this.blockSize,
+      required this.totalHours,
+      required this.totalInstructors,
+      required this.constraints,
+      super.key,
+      required super.child});
 
   double get leftPanelWidth => constraints.maxWidth * _leftSideBarRatio;
 
@@ -67,6 +75,10 @@ class SchedulerDimensions extends InheritedWidget {
   double get bottomPanelHeight => constraints.maxHeight * _bottomPanelHeightRatio;
 
   double get innerHeight => constraints.maxHeight - (topPanelHeight + bottomPanelHeight);
+
+  double get swimlaneAbsoluteMaxWidth => totalHours * blockSize.width;
+
+  double get swimlaneAbsoluteMaxHeight => totalInstructors * blockSize.height;
 
   static SchedulerDimensions? _maybeOf(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<SchedulerDimensions>();
@@ -87,5 +99,5 @@ class SchedulerDimensions extends InheritedWidget {
 
   double get preferredInnerWidth => (innerWidth / blockSize.width).floor() * blockSize.width;
 
-  // double get fullSwimlaneWidth => totalHours * blockSize.width
+  double get cardSeparatorHeight => _cardSeparatorHeight;
 }
